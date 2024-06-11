@@ -10,6 +10,11 @@
 - [ ] enum
 - [ ] control flow
 - [ ] loop
+- [ ] error handling
+  - panic
+  - option
+  - result
+  - expect, unwrap, ?
 
 # TODO:
 
