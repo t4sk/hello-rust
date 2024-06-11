@@ -9,6 +9,7 @@
 - [ ] struct
 - [ ] enum
 - [ ] control flow
+- [ ] loop
 
 # TODO:
 
