@@ -15,6 +15,11 @@
   - option
   - result
   - expect, unwrap, ?
+- [ ] ownership
+  - stack (last in, first out)
+    - store data with known fixed size
+  - heap
+    - vec (stack = vec pointer, data = heap)
 
 # TODO:
 
