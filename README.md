@@ -25,6 +25,7 @@
 - [ ] collection
   - vector
   - hash map
+- [ ] trait
 
 # TODO:
 
