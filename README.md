@@ -21,6 +21,7 @@
   - heap
     - vec (stack = vec pointer, data = heap)
 - [ ] borrow
+- [ ] String and str
 
 # TODO:
 
