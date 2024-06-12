@@ -22,6 +22,9 @@
     - vec (stack = vec pointer, data = heap)
 - [ ] borrow
 - [ ] String and str
+- [ ] collection
+  - vector
+  - hash map
 
 # TODO:
 
@@ -33,3 +36,6 @@
 - destructing
   - struct
 - option
+- result
+- iterator
+- expect, unwrap
