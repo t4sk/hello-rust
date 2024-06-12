@@ -20,6 +20,7 @@
     - store data with known fixed size
   - heap
     - vec (stack = vec pointer, data = heap)
+- [ ] borrow
 
 # TODO:
 
@@ -27,6 +28,7 @@
 - async
 - ownership
 - borrow
+- lifetime
 - destructing
   - struct
 - option
