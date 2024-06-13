@@ -1,14 +1,29 @@
 - [ ] install cargo
+- [ ] println
 - [ ] variable
+  - immutable by default
+  - `let`
+  - type
+  - `mut`
+  - constant
+  - shadowing
 - [ ] scalar data types
   - i32, u32, f32, boolean, char
+  - integer overflow
 - [ ] compound data types
   - array
+    - create array with 100 elements
   - tuple
-- [ ] func
+    - pattern matching
 - [ ] struct
 - [ ] enum
+- [ ] function
+  - no return value
+  - return value
+  - implicit return
 - [ ] control flow
+  - if, else if, else
+  - if let
 - [ ] loop
 - [ ] error handling
   - panic
@@ -20,9 +35,13 @@
     - store data with known fixed size
   - heap
     - vec (stack = vec pointer, data = heap)
+  - Each value in Rust has an owner.
+  - There can only be one owner at a time.
+  - When the owner goes out of scope, the value will be dropped.
 - [ ] borrow
 - [ ] String and str
 - [ ] collection
+  - slice
   - vector
   - hash map
 - [ ] trait
@@ -32,11 +51,14 @@
 - string and str
 - async
 - ownership
+  - clone
 - borrow
+  - mutable reference
 - lifetime
 - destructing
   - struct
 - option
 - result
 - iterator
+- map
 - expect, unwrap
