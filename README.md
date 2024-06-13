@@ -16,6 +16,8 @@
   - tuple
     - pattern matching
 - [ ] struct
+  - method
+  - update syntax
 - [ ] enum
 - [ ] function
   - no return value
@@ -59,6 +61,8 @@
   - struct
 - option
 - result
+- pattern matching
 - iterator
 - map
 - expect, unwrap
+- mod
