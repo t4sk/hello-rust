@@ -27,6 +27,7 @@
   - if, else if, else
   - if let
 - [ ] loop
+  - while let
 - [ ] error handling
   - panic
   - option
@@ -60,9 +61,14 @@
 - destructing
   - struct
 - option
+  - Some(ref val)
 - result
+  - `Box<dyn Error>`
 - pattern matching
 - iterator
 - map
 - expect, unwrap
 - mod
+- generics
+- trait
+- bounds
