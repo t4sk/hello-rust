@@ -51,6 +51,8 @@
 
 # TODO:
 
+https://github.com/wh5a/rustlings-solutions/tree/main/exercises
+
 - string and str
 - async
 - ownership
@@ -58,6 +60,7 @@
 - borrow
   - mutable reference
 - lifetime
+  - https://tfpk.github.io/lifetimekata/
 - destructing
   - struct
 - option
@@ -71,4 +74,6 @@
 - mod
 - generics
 - trait
+  - impl A + B
 - bounds
+- smart pointer
