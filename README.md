@@ -7,7 +7,7 @@
   - `mut`
   - constant
   - shadowing
-- [ ] scalar data types
+- [ ] scalar types
   - i32, u32, f32, boolean, char
   - integer overflow
 - [ ] compound data types
@@ -61,6 +61,8 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
   - mutable reference
 - lifetime
   - https://tfpk.github.io/lifetimekata/
+  - static lifetime
+  - anonymous lifetime
 - destructing
   - struct
 - option
@@ -77,3 +79,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
   - impl A + B
 - bounds
 - smart pointer
+- arc
+- cow
+- thread
+- conversions

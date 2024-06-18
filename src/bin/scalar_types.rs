@@ -1,3 +1,4 @@
+// Scalar types represent a single value
 fn main() {
     // Signed integers
     // -(2**(n-1)) ~ 2**(n-1) - 1
