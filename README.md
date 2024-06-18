@@ -15,10 +15,6 @@
     - create array with 100 elements
   - tuple
     - pattern matching
-- [ ] struct
-  - method
-  - update syntax
-- [ ] enum
 - [ ] function
   - no return value
   - return value
@@ -28,11 +24,6 @@
   - if let
 - [ ] loop
   - while let
-- [ ] error handling
-  - panic
-  - option
-  - result
-  - expect, unwrap, ?
 - [ ] ownership
   - stack (last in, first out)
     - store data with known fixed size
@@ -42,6 +33,15 @@
   - There can only be one owner at a time.
   - When the owner goes out of scope, the value will be dropped.
 - [ ] borrow
+- [ ] struct
+  - method
+  - update syntax
+- [ ] enum
+- [ ] error handling
+  - panic
+  - option
+  - result
+  - expect, unwrap, ?
 - [ ] String and str
 - [ ] collection
   - slice
