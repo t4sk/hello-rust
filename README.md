@@ -58,7 +58,10 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - ownership
   - clone
 - borrow
+  - reference
   - mutable reference
+  - dreferencing `*`
+  - slice
 - lifetime
   - https://tfpk.github.io/lifetimekata/
   - static lifetime
