@@ -78,6 +78,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - expect, unwrap
 - mod
   - bin and lib crates
+  - use, pub, super, use glob
 - generics
 - trait
   - impl A + B
