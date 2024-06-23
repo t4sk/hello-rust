@@ -74,6 +74,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
   - `Box<dyn Error>`
 - pattern matching
 - iterator
+- closure, `move`, `Fn`, dynamic dispatch
 - map
 - expect, unwrap
 - mod
@@ -86,5 +87,5 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - smart pointer
 - arc
 - cow
-- thread
+- concurrency, thread, join
 - conversions
