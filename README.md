@@ -87,5 +87,10 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - smart pointer
 - arc
 - cow
-- concurrency, thread, join
+- concurrency, thread, join, channel, mutex
+- pattern matching
 - conversions
+
+# app
+
+- new_address = hash(0xFF, sender, salt, bytecode)
