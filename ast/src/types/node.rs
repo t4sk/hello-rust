@@ -102,6 +102,66 @@ pub enum FunctionKind {
     FreeFunction,
 }
 
+// Block
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct Block {
+    pub id: u32,
+    pub src: String,
+    pub statements: Vec<Statement>,
+}
+
+// ExpressionStatement
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ExpressionStatement {
+    pub id: u32,
+    pub src: String,
+    pub expression: Expression,
+}
+
+// Expression
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(tag = "nodeType")]
+pub enum Expression {
+    Assignment,
+    BinaryOperation,
+    Conditional,
+    ElementaryTypeNameExpression,
+    FunctionCall,
+    FunctionCallOptions,
+    Identifier,
+    IndexAccess,
+    IndexRangeAccess,
+    Literal,
+    MemberAccess,
+    NewExpression,
+    TupleExpression,
+    UnaryOperation,
+}
+
+// Statement
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(tag = "nodeType")]
+pub enum Statement {
+    Block(Block),
+    Break,
+    Continue,
+    DoWhileStatement,
+    EmitStatement,
+    ExpressionStatement(ExpressionStatement),
+    ForStatement,
+    IfStatement,
+    InlineAssembly,
+    PlaceholderStatement,
+    Return,
+    RevertStatement,
+    TryStatement,
+    UncheckedBlock,
+    VariableDeclarationStatement,
+    WhileStatement,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
@@ -152,11 +212,12 @@ pub enum Node {
         name: String,
         visibility: Visibility,
         state_mutability: StateMutability,
+        body: Block,
     },
     #[serde(rename_all = "camelCase")]
     ParameterList {},
     #[serde(rename_all = "camelCase")]
-    Block {},
+    Block(Block),
     #[serde(rename_all = "camelCase")]
     UncheckedBlock {},
     #[serde(rename_all = "camelCase")]
