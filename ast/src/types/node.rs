@@ -72,6 +72,36 @@ pub enum NodeType {
     Unknown,
 }
 
+// Common
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum StateMutability {
+    NonPayable,
+    Payable,
+    View,
+    Pure,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum Visibility {
+    Public,
+    Private,
+    Internal,
+    External,
+}
+
+// FunctionDeclaration
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum FunctionKind {
+    Constructor,
+    Function,
+    Receive,
+    Fallback,
+    FreeFunction,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
@@ -98,7 +128,12 @@ pub enum Node {
     #[serde(rename_all = "camelCase")]
     StructuredDocumentation {},
     #[serde(rename_all = "camelCase")]
-    VariableDeclaration {},
+    VariableDeclaration {
+        id: u32,
+        nodes: Vec<Node>,
+        name: String,
+        visibility: Visibility,
+    },
     #[serde(rename_all = "camelCase")]
     Mapping {},
     #[serde(rename_all = "camelCase")]
@@ -113,7 +148,10 @@ pub enum Node {
     FunctionDefinition {
         id: u32,
         nodes: Vec<Node>,
+        kind: FunctionKind,
         name: String,
+        visibility: Visibility,
+        state_mutability: StateMutability,
     },
     #[serde(rename_all = "camelCase")]
     ParameterList {},
