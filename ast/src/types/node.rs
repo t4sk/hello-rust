@@ -91,15 +91,53 @@ pub enum Visibility {
     External,
 }
 
-// FunctionDeclaration
-#[derive(Debug, Deserialize, PartialEq)]
+// TypeName
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum FunctionKind {
-    Constructor,
-    Receive,
-    Fallback,
-    FreeFunction,
-    Function,
+pub struct TypeDescription {
+    pub type_identifier: Option<String>,
+    pub type_string: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ArrayTypeName {
+    pub id: u32,
+    pub src: String,
+    pub base_type: Box<TypeName>,
+    pub type_description: TypeDescription,
+    pub length: Option<Expression>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ElementaryTypeName {
+    pub id: u32,
+    pub src: String,
+    pub type_description: TypeDescription,
+    pub name: String,
+    pub state_mutability: StateMutability,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FunctionTypeName {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Mapping {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserDefinedTypeName {}
+
+#[derive(Debug, Deserialize)]
+pub enum TypeName {
+    ArrayTypeName(ArrayTypeName),
+    ElementaryTypeName(ElementaryTypeName),
+    FunctionTypeName(FunctionTypeName),
+    Mapping(Mapping),
+    UserDefinedTypeName(UserDefinedTypeName),
 }
 
 // Block
@@ -178,10 +216,21 @@ pub enum Statement {
     WhileStatement,
 }
 
+// FunctionDeclaration
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub enum FunctionKind {
+    Constructor,
+    Receive,
+    Fallback,
+    FreeFunction,
+    Function,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
-    ArrayTypeName {},
+    ArrayTypeName(ArrayTypeName),
     Assignment {},
     BinaryOperation {},
     Block(Block),
@@ -194,7 +243,7 @@ pub enum Node {
         name: String,
     },
     DoWhileStatement {},
-    ElementaryTypeName {},
+    ElementaryTypeName(ElementaryTypeName),
     ElementaryTypeNameExpression {},
     EmitStatement {},
     EnumDefinition {},
@@ -215,7 +264,7 @@ pub enum Node {
         state_mutability: StateMutability,
         body: Block,
     },
-    FunctionTypeName {},
+    FunctionTypeName(FunctionTypeName),
     Identifier {},
     IdentifierPath {},
     IfStatement {},
@@ -225,7 +274,7 @@ pub enum Node {
     InheritanceSpecifier {},
     InlineAssembly {},
     Literal {},
-    Mapping {},
+    Mapping(Mapping),
     MemberAccess {},
     ModifierDefinition {},
     ModifierInvocation {},
@@ -236,7 +285,10 @@ pub enum Node {
     PragmaDirective {},
     Return {},
     RevertStatement {},
-    SourceUnit { id: u32, nodes: Vec<Node> },
+    SourceUnit {
+        id: u32,
+        nodes: Vec<Node>,
+    },
     StructDefinition {},
     StructuredDocumentation {},
     Throw {},
@@ -245,7 +297,7 @@ pub enum Node {
     TupleExpression {},
     UnaryOperation {},
     UncheckedBlock {},
-    UserDefinedTypeName {},
+    UserDefinedTypeName(UserDefinedTypeName),
     UserDefinedValueTypeDefinition {},
     UsingForDirective {},
     VariableDeclaration {
@@ -267,7 +319,10 @@ pub enum Node {
     YulTypedName {},
     YulVariableDeclaration {},
     #[serde(untagged)]
-    Unknown { id: u32, nodes: Vec<Node> },
+    Unknown {
+        id: u32,
+        nodes: Vec<Node>,
+    },
 }
 
 impl Node {
