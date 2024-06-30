@@ -2,73 +2,73 @@ use serde::Deserialize;
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub enum NodeType {
-    SourceUnit,
-    PragmaDirective,
-    ImportDirective,
-    UsingForDirective,
+    ArrayTypeName,
+    Assignment,
+    BinaryOperation,
+    Block,
+    Break,
+    Conditional,
+    Continue,
     ContractDefinition,
-    InheritanceSpecifier,
-    OverrideSpecifier,
-    IdentifierPath,
-    StructuredDocumentation,
-    VariableDeclaration,
-    Mapping,
+    DoWhileStatement,
     ElementaryTypeName,
     ElementaryTypeNameExpression,
-    ArrayTypeName,
-    TupleExpression,
-    FunctionDefinition,
-    ParameterList,
-    Block,
-    UncheckedBlock,
-    Continue,
-    Break,
-    Return,
-    Throw,
-    Literal,
-    Conditional,
-    Identifier,
-    IndexAccess,
-    IndexRangeAccess,
-    MemberAccess,
-    Assignment,
-    FunctionCall,
-    FunctionCallOptions,
-    FunctionTypeName,
-    NewExpression,
-    ExpressionStatement,
-    VariableDeclarationStatement,
-    IfStatement,
-    TryCatchClause,
-    UnaryOperation,
-    BinaryOperation,
-    EventDefinition,
-    ErrorDefinition,
     EmitStatement,
-    PlaceholderStatement,
-    TryStatement,
-    RevertStatement,
-    ForStatement,
-    WhileStatement,
-    DoWhileStatement,
-    ModifierDefinition,
-    ModifierInvocation,
     EnumDefinition,
     EnumValue,
-    StructDefinition,
-    UserDefinedTypeName,
+    ErrorDefinition,
+    EventDefinition,
+    ExpressionStatement,
+    ForStatement,
+    FunctionCall,
+    FunctionCallOptions,
+    FunctionDefinition,
+    FunctionTypeName,
+    Identifier,
+    IdentifierPath,
+    IfStatement,
+    ImportDirective,
+    IndexAccess,
+    IndexRangeAccess,
+    InheritanceSpecifier,
     InlineAssembly,
-    YulLiteral,
-    YulTypedName,
-    YulSwitch,
-    YulCase,
-    YulFunctionCall,
-    YulExpressionStatement,
-    YulAssignment,
-    YulIdentifier,
-    YulVariableDeclaration,
-    YulBlock,
+    Literal,
+    Mapping,
+    MemberAccess,
+    ModifierDefinition,
+    ModifierInvocation,
+    NewExpression,
+    OverrideSpecifier,
+    ParameterList,
+    PlaceholderStatement,
+    PragmaDirective,
+    Return,
+    RevertStatement,
+    SourceUnit,
+    StructDefinition,
+    StructuredDocumentation,
+    Throw,
+    TryCatchClause,
+    TryStatement,
+    TupleExpression,
+    UnaryOperation,
+    UncheckedBlock,
+    UserDefinedTypeName,
     UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    VariableDeclaration,
+    VariableDeclarationStatement,
+    WhileStatement,
+    YulAssignment,
+    YulBlock,
+    YulCase,
+    YulExpressionStatement,
+    YulFunctionCall,
+    YulIdentifier,
+    YulLiteral,
+    YulSwitch,
+    YulTypedName,
+    YulVariableDeclaration,
     Unknown,
 }
 
@@ -76,18 +76,18 @@ pub enum NodeType {
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum StateMutability {
-    NonPayable,
     Payable,
-    View,
+    NonPayable,
     Pure,
+    View,
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum Visibility {
-    Public,
     Private,
     Internal,
+    Public,
     External,
 }
 
@@ -96,10 +96,10 @@ pub enum Visibility {
 #[serde(rename_all = "camelCase")]
 pub enum FunctionKind {
     Constructor,
-    Function,
     Receive,
     Fallback,
     FreeFunction,
+    Function,
 }
 
 // Block
@@ -182,10 +182,6 @@ pub enum Statement {
 #[serde(tag = "nodeType")]
 pub enum Node {
     #[serde(rename_all = "camelCase")]
-    SourceUnit { id: u32, nodes: Vec<Node> },
-    #[serde(rename_all = "camelCase")]
-    PragmaDirective {},
-    #[serde(rename_all = "camelCase")]
     ImportDirective {},
     #[serde(rename_all = "camelCase")]
     UsingForDirective {},
@@ -217,9 +213,41 @@ pub enum Node {
     #[serde(rename_all = "camelCase")]
     ElementaryTypeNameExpression {},
     #[serde(rename_all = "camelCase")]
+    TupleExpression {},
+    #[serde(rename_all = "camelCase")]
     ArrayTypeName {},
     #[serde(rename_all = "camelCase")]
-    TupleExpression {},
+    Assignment {},
+    #[serde(rename_all = "camelCase")]
+    BinaryOperation {},
+    #[serde(rename_all = "camelCase")]
+    Block(Block),
+    #[serde(rename_all = "camelCase")]
+    Break {},
+    #[serde(rename_all = "camelCase")]
+    Conditional {},
+    #[serde(rename_all = "camelCase")]
+    Continue {},
+    #[serde(rename_all = "camelCase")]
+    DoWhileStatement {},
+    #[serde(rename_all = "camelCase")]
+    EmitStatement {},
+    #[serde(rename_all = "camelCase")]
+    EnumDefinition {},
+    #[serde(rename_all = "camelCase")]
+    EnumValue {},
+    #[serde(rename_all = "camelCase")]
+    ErrorDefinition {},
+    #[serde(rename_all = "camelCase")]
+    EventDefinition {},
+    #[serde(rename_all = "camelCase")]
+    ExpressionStatement {},
+    #[serde(rename_all = "camelCase")]
+    ForStatement {},
+    #[serde(rename_all = "camelCase")]
+    FunctionCall {},
+    #[serde(rename_all = "camelCase")]
+    FunctionCallOptions {},
     #[serde(rename_all = "camelCase")]
     FunctionDefinition {
         id: u32,
@@ -231,110 +259,87 @@ pub enum Node {
         body: Block,
     },
     #[serde(rename_all = "camelCase")]
-    ParameterList {},
-    #[serde(rename_all = "camelCase")]
-    Block(Block),
-    #[serde(rename_all = "camelCase")]
-    UncheckedBlock {},
-    #[serde(rename_all = "camelCase")]
-    Continue {},
-    #[serde(rename_all = "camelCase")]
-    Break {},
-    #[serde(rename_all = "camelCase")]
-    Return {},
-    #[serde(rename_all = "camelCase")]
-    Throw {},
-    #[serde(rename_all = "camelCase")]
-    Literal {},
-    #[serde(rename_all = "camelCase")]
-    Conditional {},
+    FunctionTypeName {},
     #[serde(rename_all = "camelCase")]
     Identifier {},
+    #[serde(rename_all = "camelCase")]
+    IfStatement {},
     #[serde(rename_all = "camelCase")]
     IndexAccess {},
     #[serde(rename_all = "camelCase")]
     IndexRangeAccess {},
+    InlineAssembly {},
+    #[serde(rename_all = "camelCase")]
+    Literal {},
     #[serde(rename_all = "camelCase")]
     MemberAccess {},
-    #[serde(rename_all = "camelCase")]
-    Assignment {},
-    #[serde(rename_all = "camelCase")]
-    FunctionCall {},
-    #[serde(rename_all = "camelCase")]
-    FunctionCallOptions {},
-    #[serde(rename_all = "camelCase")]
-    FunctionTypeName {},
-    #[serde(rename_all = "camelCase")]
-    NewExpression {},
-    #[serde(rename_all = "camelCase")]
-    ExpressionStatement {},
-    #[serde(rename_all = "camelCase")]
-    VariableDeclarationStatement {},
-    #[serde(rename_all = "camelCase")]
-    IfStatement {},
-    #[serde(rename_all = "camelCase")]
-    TryCatchClause {},
-    #[serde(rename_all = "camelCase")]
-    UnaryOperation {},
-    #[serde(rename_all = "camelCase")]
-    BinaryOperation {},
-    #[serde(rename_all = "camelCase")]
-    EventDefinition {},
-    #[serde(rename_all = "camelCase")]
-    ErrorDefinition {},
-    #[serde(rename_all = "camelCase")]
-    EmitStatement {},
-    #[serde(rename_all = "camelCase")]
-    PlaceholderStatement {},
-    #[serde(rename_all = "camelCase")]
-    TryStatement {},
-    #[serde(rename_all = "camelCase")]
-    RevertStatement {},
-    #[serde(rename_all = "camelCase")]
-    ForStatement {},
-    #[serde(rename_all = "camelCase")]
-    WhileStatement {},
-    #[serde(rename_all = "camelCase")]
-    DoWhileStatement {},
     #[serde(rename_all = "camelCase")]
     ModifierDefinition {},
     #[serde(rename_all = "camelCase")]
     ModifierInvocation {},
     #[serde(rename_all = "camelCase")]
-    EnumDefinition {},
+    NewExpression {},
     #[serde(rename_all = "camelCase")]
-    EnumValue {},
+    ParameterList {},
+    #[serde(rename_all = "camelCase")]
+    PlaceholderStatement {},
+    #[serde(rename_all = "camelCase")]
+    PragmaDirective {},
+    #[serde(rename_all = "camelCase")]
+    Return {},
+    #[serde(rename_all = "camelCase")]
+    RevertStatement {},
+    #[serde(rename_all = "camelCase")]
+    SourceUnit {
+        id: u32,
+        nodes: Vec<Node>,
+    },
     #[serde(rename_all = "camelCase")]
     StructDefinition {},
     #[serde(rename_all = "camelCase")]
+    Throw {},
+    #[serde(rename_all = "camelCase")]
+    TryCatchClause {},
+    #[serde(rename_all = "camelCase")]
+    TryStatement {},
+    #[serde(rename_all = "camelCase")]
+    UnaryOperation {},
+    #[serde(rename_all = "camelCase")]
+    UncheckedBlock {},
+    #[serde(rename_all = "camelCase")]
     UserDefinedTypeName {},
-    #[serde(rename_all = "camelCase")]
-    InlineAssembly {},
-    #[serde(rename_all = "camelCase")]
-    YulLiteral {},
-    #[serde(rename_all = "camelCase")]
-    YulTypedName {},
-    #[serde(rename_all = "camelCase")]
-    YulSwitch {},
-    #[serde(rename_all = "camelCase")]
-    YulCase {},
-    #[serde(rename_all = "camelCase")]
-    YulFunctionCall {},
-    #[serde(rename_all = "camelCase")]
-    YulExpressionStatement {},
-    #[serde(rename_all = "camelCase")]
-    YulAssignment {},
-    #[serde(rename_all = "camelCase")]
-    YulIdentifier {},
-    #[serde(rename_all = "camelCase")]
-    YulVariableDeclaration {},
-    #[serde(rename_all = "camelCase")]
-    YulBlock {},
     #[serde(rename_all = "camelCase")]
     UserDefinedValueTypeDefinition {},
     #[serde(rename_all = "camelCase")]
+    VariableDeclarationStatement {},
+    #[serde(rename_all = "camelCase")]
+    WhileStatement {},
+    #[serde(rename_all = "camelCase")]
+    YulAssignment {},
+    #[serde(rename_all = "camelCase")]
+    YulBlock {},
+    #[serde(rename_all = "camelCase")]
+    YulCase {},
+    #[serde(rename_all = "camelCase")]
+    YulExpressionStatement {},
+    #[serde(rename_all = "camelCase")]
+    YulFunctionCall {},
+    #[serde(rename_all = "camelCase")]
+    YulIdentifier {},
+    #[serde(rename_all = "camelCase")]
+    YulLiteral {},
+    #[serde(rename_all = "camelCase")]
+    YulSwitch {},
+    #[serde(rename_all = "camelCase")]
+    YulTypedName {},
+    #[serde(rename_all = "camelCase")]
+    YulVariableDeclaration {},
+    #[serde(rename_all = "camelCase")]
     #[serde(untagged)]
-    Unknown { id: u32, nodes: Vec<Node> },
+    Unknown {
+        id: u32,
+        nodes: Vec<Node>,
+    },
 }
 
 impl Node {
