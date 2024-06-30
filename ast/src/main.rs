@@ -51,6 +51,7 @@ fn bfs(node: &Node, node_type: NodeType, f: fn(&Node)) {
 }
 
 fn main() {
+    //    let file_path = "tmp/ERC20.json";
     let file_path = "tmp/Nest.json";
     let content = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&content).unwrap();

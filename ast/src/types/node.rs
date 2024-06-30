@@ -103,7 +103,7 @@ pub enum FunctionKind {
 }
 
 // Block
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Block {
     pub id: u32,
@@ -112,7 +112,7 @@ pub struct Block {
 }
 
 // ExpressionStatement
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
     pub id: u32,
@@ -120,17 +120,33 @@ pub struct ExpressionStatement {
     pub expression: Expression,
 }
 
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FunctionCall {
+    pub id: u32,
+    pub src: String,
+    pub expression: Box<Expression>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Identifier {
+    pub id: u32,
+    pub src: String,
+    pub name: String,
+}
+
 // Expression
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Expression {
     Assignment,
     BinaryOperation,
     Conditional,
     ElementaryTypeNameExpression,
-    FunctionCall,
+    FunctionCall(FunctionCall),
     FunctionCallOptions,
-    Identifier,
+    Identifier(Identifier),
     IndexAccess,
     IndexRangeAccess,
     Literal,
@@ -141,7 +157,7 @@ pub enum Expression {
 }
 
 // Statement
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Statement {
     Block(Block),
