@@ -73,6 +73,23 @@ pub enum NodeType {
 }
 
 // Common
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum StorageLocation {
+    Default,
+    Memory,
+    Calldata,
+    Storage,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum Mutability {
+    Immutable,
+    Mutable,
+    Constant,
+}
+
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum StateMutability {
@@ -89,6 +106,67 @@ pub enum Visibility {
     Internal,
     Public,
     External,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct StructuredDocumentation {
+    pub id: u32,
+    pub src: String,
+    pub text: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IdentifierPath {
+    pub id: u32,
+    pub src: String,
+    pub name: String,
+    pub referenced_declaration: Option<u32>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum UserDefinedTypeNameOrIdentifierPath {
+    UserDefinedTypeName(UserDefinedTypeName),
+    IdentifierPath(IdentifierPath),
+}
+
+#[derive(Debug, Deserialize)]
+pub struct OverrideSpecifier {
+    pub id: u32,
+    pub src: String,
+    pub overrides: Vec<UserDefinedTypeNameOrIdentifierPath>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VariableDeclaration {
+    pub id: u32,
+    pub src: String,
+    pub base_functions: Option<Vec<u32>>,
+    pub constant: bool,
+    pub documentation: Option<StructuredDocumentation>,
+    pub function_selector: Option<String>,
+    pub indexed: Option<bool>,
+    pub mutability: Mutability,
+    pub name: String,
+    pub name_location: Option<String>,
+    pub overrides: Option<OverrideSpecifier>,
+    pub scope: u32,
+    pub state_variable: bool,
+    pub storage_location: StorageLocation,
+    pub type_description: TypeDescription,
+    pub type_name: Option<TypeName>,
+    pub value: Option<Expression>,
+    pub visibility: Visibility,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ParameterList {
+    pub id: u32,
+    pub src: String,
+    pub parameters: Vec<VariableDeclaration>,
 }
 
 // TypeName
@@ -121,12 +199,20 @@ pub struct ElementaryTypeName {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FunctionTypeName {}
+pub struct FunctionTypeName {
+    pub id: u32,
+    pub src: String,
+    pub type_description: TypeDescription,
+    pub state_mutability: StateMutability,
+    pub visibility: Visibility,
+}
 
+// TODO:
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Mapping {}
 
+// TODO:
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDefinedTypeName {}
