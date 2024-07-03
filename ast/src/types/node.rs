@@ -155,7 +155,7 @@ pub struct VariableDeclaration {
     pub scope: u32,
     pub state_variable: bool,
     pub storage_location: StorageLocation,
-    pub type_description: TypeDescription,
+    pub type_description: TypeDescriptions,
     pub type_name: Option<TypeName>,
     pub value: Option<Expression>,
     pub visibility: Visibility,
@@ -172,7 +172,7 @@ pub struct ParameterList {
 // TypeName
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TypeDescription {
+pub struct TypeDescriptions {
     pub type_identifier: Option<String>,
     pub type_string: Option<String>,
 }
@@ -183,7 +183,7 @@ pub struct ArrayTypeName {
     pub id: u32,
     pub src: String,
     pub base_type: Box<TypeName>,
-    pub type_description: TypeDescription,
+    pub type_description: TypeDescriptions,
     pub length: Option<Expression>,
 }
 
@@ -192,7 +192,7 @@ pub struct ArrayTypeName {
 pub struct ElementaryTypeName {
     pub id: u32,
     pub src: String,
-    pub type_description: TypeDescription,
+    pub type_description: TypeDescriptions,
     pub name: String,
     pub state_mutability: StateMutability,
 }
@@ -202,22 +202,38 @@ pub struct ElementaryTypeName {
 pub struct FunctionTypeName {
     pub id: u32,
     pub src: String,
-    pub type_description: TypeDescription,
+    pub type_description: TypeDescriptions,
     pub state_mutability: StateMutability,
     pub visibility: Visibility,
 }
 
-// TODO:
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Mapping {}
+pub struct Mapping {
+    pub id: u32,
+    pub src: String,
+    pub key_name: Option<String>,
+    pub key_name_location: Option<String>,
+    pub key_type: Box<TypeName>,
+    pub type_description: TypeDescriptions,
+    pub value_name: Option<String>,
+    pub value_name_location: Option<String>,
+    pub value_type: Box<TypeName>,
+}
 
-// TODO:
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserDefinedTypeName {}
+pub struct UserDefinedTypeName {
+    pub id: u32,
+    pub src: String,
+    pub name: Option<String>,
+    pub path_node: Option<IdentifierPath>,
+    pub reference_declaration: u32,
+    pub type_description: TypeDescriptions,
+}
 
 #[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
 pub enum TypeName {
     ArrayTypeName(ArrayTypeName),
     ElementaryTypeName(ElementaryTypeName),
@@ -244,13 +260,100 @@ pub struct ExpressionStatement {
     pub expression: Expression,
 }
 
+// TODO:
+#[derive(Debug, Deserialize)]
+pub struct Assignment {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub left_hand_side: Box<Expression>,
+    pub operator: String,
+    pub right_hand_side: Box<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BinaryOperation {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub common_type: TypeDescriptions,
+    pub function: Option<u32>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub left_expression: Box<Expression>,
+    pub operator: String,
+    pub right_expression: Box<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Conditional {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub condition: Box<Expression>,
+    pub false_expression: Box<Expression>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub true_expression: Box<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ElementaryTypeNameExpression {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+    pub type_name: Box<TypeName>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum FunctionCallKind {
+    FunctionCall,
+    TypeConversion,
+    StructConstructorCall,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
     pub id: u32,
     pub src: String,
-    pub expression: Box<Expression>,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub arguments: Vec<Expression>,
+    pub expression: Vec<Expression>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub kind: FunctionCallKind,
+    pub l_value_requested: bool,
+    pub name_locations: Option<Vec<String>>,
+    pub names: Vec<String>,
+    pub try_call: bool,
+    pub type_descriptions: TypeDescriptions,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FunctionCallOptions {}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -260,24 +363,52 @@ pub struct Identifier {
     pub name: String,
 }
 
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IndexAccess {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IndexRangeAccess {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Literal {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct MemberAccess {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NewExpress {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TupleExpress {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UnaryOperation {}
+
 // Expression
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Expression {
-    Assignment,
-    BinaryOperation,
-    Conditional,
-    ElementaryTypeNameExpression,
+    Assignment(Assignment),
+    BinaryOperation(BinaryOperation),
+    Conditional(Conditional),
+    ElementaryTypeNameExpression(ElementaryTypeNameExpression),
     FunctionCall(FunctionCall),
-    FunctionCallOptions,
+    FunctionCallOptions(FunctionCallOptions),
     Identifier(Identifier),
-    IndexAccess,
-    IndexRangeAccess,
-    Literal,
-    MemberAccess,
-    NewExpression,
-    TupleExpression,
-    UnaryOperation,
+    IndexAccess(IndexAccess),
+    IndexRangeAccess(IndexRangeAccess),
+    Literal(Literal),
+    MemberAccess(MemberAccess),
+    NewExpression(NewExpress),
+    TupleExpression(TupleExpress),
+    UnaryOperation(UnaryOperation),
 }
 
 // Statement
@@ -317,7 +448,7 @@ pub enum FunctionKind {
 #[serde(tag = "nodeType")]
 pub enum Node {
     ArrayTypeName(ArrayTypeName),
-    Assignment {},
+    Assignment(Assignment),
     BinaryOperation {},
     Block(Block),
     Break {},
