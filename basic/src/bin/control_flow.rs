@@ -10,6 +10,12 @@ fn main() {
         println!("x >= 3");
     }
 
+    // Assigning value from if / else
+    let x = 1;
+    let y = if x % 2 == 0 { "even" } else { "odd" };
+    // Note - semicolon above
+    println!("{} is {}", x, y);
+
     // match
     let x = 1;
 
@@ -19,12 +25,6 @@ fn main() {
         3 => println!("3"),
         _ => println!("other"),
     }
-
-    // Assigning value from if / else
-    let x = 1;
-    let y = if x % 2 == 0 { "even" } else { "odd" };
-    // Note - semicolon above
-    println!("{} is {}", x, y);
 
     // Assigning value from match
     let x = 4;

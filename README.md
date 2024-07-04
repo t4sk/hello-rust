@@ -19,10 +19,12 @@
   - no return value
   - return value
   - implicit return
-- [ ] control flow
+- [x] control flow
   - if, else if, else
-  - if let
-- [ ] loop
+  - let if
+  - match
+  - let match
+- [x] loop
   - while let
 - [ ] ownership
   - stack (last in, first out)
