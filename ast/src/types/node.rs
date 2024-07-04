@@ -513,35 +513,103 @@ pub struct Block {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Break {}
+pub struct Break {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Continue {}
+pub struct Continue {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct DoWhileStatement {}
+pub struct DoWhileStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub body: Box<Statement>,
+    pub condition: Box<Statement>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct EmitStatement {}
+pub struct EmitStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub event_call: FunctionCall,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ExpressionStatement {}
+pub struct ExpressionStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub expression: Box<Expression>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum ExpressionStatementOrVariableDeclarationStatement {
+    ExpressionStatement(ExpressionStatement),
+    VariableDeclarationStatement(VariableDeclarationStatement),
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ForStatement {}
+pub struct ForStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub body: Box<Statement>,
+    pub condition: Option<Expression>,
+    pub initialization_expression: Option<ExpressionStatementOrVariableDeclarationStatement>,
+    pub is_simple_counter_loop: bool,
+    pub loope_expression: Option<ExpressionStatement>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct IfStatement {}
+pub struct IfStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub condition: Box<Statement>,
+    pub false_body: Option<Box<Statement>>,
+    pub true_body: Box<Statement>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum YulBlock {
+    // TODO:
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum ExternalReference {
+    // TODO:
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct InlineAssembly {}
+pub struct InlineAssembly {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    #[serde(rename = "AST")]
+    pub ast: YulBlock,
+    pub evm_version: String,
+    pub external_references: Vec<ExternalReference>,
+    pub flags: Option<Vec<String>>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
