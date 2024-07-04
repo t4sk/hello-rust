@@ -353,7 +353,19 @@ pub struct FunctionCall {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FunctionCallOptions {}
+pub struct FunctionCallOptions {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub expression: Box<Expression>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub names: Vec<String>,
+    pub options: Vec<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -361,35 +373,132 @@ pub struct Identifier {
     pub id: u32,
     pub src: String,
     pub name: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub overloaded_declarations: Vec<u32>,
+    pub referenced_declaration: Option<u32>,
+    pub type_descriptions: TypeDescriptions,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct IndexAccess {}
+pub struct IndexAccess {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub base_expression: Box<Expression>,
+    pub index_expression: Option<Box<Expression>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct IndexRangeAccess {}
+pub struct IndexRangeAccess {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub base_expression: Box<Expression>,
+    pub end_expression: Option<Box<Expression>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub start_expression: Option<Box<Expression>>,
+    pub type_descriptions: TypeDescriptions,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Literal {}
+pub enum LiteralKind {
+    String,
+    Number,
+    Bool,
+    HexString,
+    UnicodeString,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct MemberAccess {}
+pub struct Literal {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub hex_value: String,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub kind: LiteralKind,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub subdenomination: String,
+    pub type_descriptions: TypeDescriptions,
+    pub value: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct NewExpress {}
+pub struct MemberAccess {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub expression: Box<Expression>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub member_location: String,
+    pub member_name: String,
+    pub reference_declaration: Option<u32>,
+    pub type_descriptions: TypeDescriptions,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TupleExpress {}
+pub struct NewExpression {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+    pub type_name: Box<TypeName>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UnaryOperation {}
+pub struct TupleExpression {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub components: Option<Vec<Expression>>,
+    pub is_constant: bool,
+    pub is_inline_array: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UnaryOperation {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub function: Option<u32>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub operator: String,
+    pub prefix: bool,
+    pub sub_expression: Box<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
 
 // Expression
 #[derive(Debug, Deserialize)]
@@ -406,8 +515,8 @@ pub enum Expression {
     IndexRangeAccess(IndexRangeAccess),
     Literal(Literal),
     MemberAccess(MemberAccess),
-    NewExpression(NewExpress),
-    TupleExpression(TupleExpress),
+    NewExpression(NewExpression),
+    TupleExpression(TupleExpression),
     UnaryOperation(UnaryOperation),
 }
 
