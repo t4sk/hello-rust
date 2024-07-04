@@ -1,21 +1,21 @@
 - [ ] install cargo
 - [ ] println
-- [ ] variable
+- [x] variable
   - immutable by default
   - `let`
   - type
   - `mut`
   - constant
   - shadowing
-- [ ] scalar types
+- [x] scalar types
   - i32, u32, f32, boolean, char
   - integer overflow
-- [ ] compound data types
+- [x] compound data types
   - array
     - create array with 100 elements
   - tuple
     - pattern matching
-- [ ] function
+- [x] function
   - no return value
   - return value
   - implicit return
