@@ -242,26 +242,8 @@ pub enum TypeName {
     UserDefinedTypeName(UserDefinedTypeName),
 }
 
-// Block
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Block {
-    pub id: u32,
-    pub src: String,
-    pub statements: Vec<Statement>,
-}
-
-// ExpressionStatement
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExpressionStatement {
-    pub id: u32,
-    pub src: String,
-    pub expression: Expression,
-}
-
-// TODO:
-#[derive(Debug, Deserialize)]
 pub struct Assignment {
     pub id: u32,
     pub src: String,
@@ -520,26 +502,95 @@ pub enum Expression {
     UnaryOperation(UnaryOperation),
 }
 
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Block {
+    pub id: u32,
+    pub src: String,
+    pub statements: Option<Vec<Statement>>,
+    pub documentation: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Break {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Continue {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DoWhileStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EmitStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ExpressionStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ForStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IfStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InlineAssembly {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PlaceholderStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Return {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RevertStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TryStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UncheckedBlock {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct VariableDeclarationStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WhileStatement {}
+
 // Statement
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Statement {
     Block(Block),
-    Break,
-    Continue,
-    DoWhileStatement,
-    EmitStatement,
+    Break(Break),
+    Continue(Continue),
+    DoWhileStatement(DoWhileStatement),
+    EmitStatement(EmitStatement),
     ExpressionStatement(ExpressionStatement),
-    ForStatement,
-    IfStatement,
-    InlineAssembly,
-    PlaceholderStatement,
-    Return,
-    RevertStatement,
-    TryStatement,
-    UncheckedBlock,
-    VariableDeclarationStatement,
-    WhileStatement,
+    ForStatement(ForStatement),
+    IfStatement(IfStatement),
+    InlineAssembly(InlineAssembly),
+    PlaceholderStatement(PlaceholderStatement),
+    Return(Return),
+    RevertStatement(RevertStatement),
+    TryStatement(TryStatement),
+    UncheckedBlock(UncheckedBlock),
+    VariableDeclarationStatement(VariableDeclarationStatement),
+    WhileStatement(WhileStatement),
 }
 
 // FunctionDeclaration

@@ -16,11 +16,15 @@ fn main() {
     s.append(&nonce);
 
     let encoded = rlp::encode(&s.out());
-    println!("{:?}", encoded);
+    // 0xd694000000000000000000000000000000000000000080
+    println!("encoded {:?}", encoded.encode_hex());
 
+    // TODO: return first 20 bytes
     let b32 = keccak256(encoded);
     println!("zero zero addr 0x{}", b32.encode_hex::<String>());
 }
+
+// https://ethereum.stackexchange.com/questions/760/how-is-the-address-of-an-ethereum-contract-computed
 
 // https://docs.rs/ethers/latest/ethers/core/utils/rlp/fn.encode.html
 // https://docs.rs/ethers/latest/ethers/core/utils/fn.keccak256.html
