@@ -32,9 +32,11 @@
   - heap
     - vec (stack = vec pointer, data = heap)
   - Each value in Rust has an owner.
-  - There can only be one owner at a time.
+  - There can only be one owner at a time. (Transfer of ownership)
   - When the owner goes out of scope, the value will be dropped.
+  - passing variable into function
 - [ ] borrow
+- [ ] String and str
 - [ ] struct
   - method
   - update syntax
@@ -44,7 +46,6 @@
   - option
   - result
   - expect, unwrap, ?
-- [ ] String and str
 - [ ] collection
   - slice
   - vector
