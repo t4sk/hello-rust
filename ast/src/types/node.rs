@@ -598,6 +598,11 @@ pub enum ExternalReference {
     // TODO:
 }
 
+// TODO:
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TryCatchClause {}
+
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InlineAssembly {
@@ -613,31 +618,70 @@ pub struct InlineAssembly {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PlaceholderStatement {}
+pub struct PlaceholderStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Return {}
+pub struct Return {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub expression: Option<Expression>,
+    pub function_return_parameters: u32,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct RevertStatement {}
+pub struct RevertStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub error_call: FunctionCall,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TryStatement {}
+pub struct TryStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub clauses: Vec<TryCatchClause>,
+    pub external_call: FunctionCall,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UncheckedBlock {}
+pub struct UncheckedBlock {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub statements: Vec<Statement>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct VariableDeclarationStatement {}
+pub struct VariableDeclarationStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub assignments: Option<Vec<u32>>,
+    pub declarations: Option<Vec<VariableDeclaration>>,
+    pub initial_value: Option<Expression>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct WhileStatement {}
+pub struct WhileStatement {
+    pub id: u32,
+    pub src: String,
+    pub documentation: Option<String>,
+    pub condition: Expression,
+    pub body: Box<Statement>,
+}
 
 // Statement
 #[derive(Debug, Deserialize)]
