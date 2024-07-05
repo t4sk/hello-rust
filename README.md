@@ -26,7 +26,7 @@
   - let match
 - [x] loop
   - while let
-- [ ] ownership
+- [x] ownership
   - stack (last in, first out)
     - store data with known fixed size
   - heap
@@ -36,6 +36,9 @@
   - When the owner goes out of scope, the value will be dropped.
   - passing variable into function
 - [ ] borrow
+  - reference
+  - mutable reference
+  - no dangling refe
 - [ ] String and str
 - [ ] struct
   - method
