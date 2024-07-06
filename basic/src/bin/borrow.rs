@@ -30,7 +30,7 @@ fn main() {
     // let s1 = &mut s;
     // let s2 = &mut s;
     // println!("{} {}", s1, s2);
-    
+
     // Multiple mutable reference (only one at a time)
     let mut s = String::from("hello");
     {
@@ -61,14 +61,9 @@ fn main() {
 // fn main() {
 //     let reference_to_nothing = dangle();
 // }
-// 
+//
 // fn dangle() -> &String {
 //     let s = String::from("hello");
-// 
+//
 //     &s
 // }
-
-
-
-
-}

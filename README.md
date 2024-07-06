@@ -39,7 +39,8 @@
   - reference
   - mutable reference
   - no dangling refe
-- [ ] String and str
+- [ ] slice
+    - String and str
 - [ ] struct
   - method
   - update syntax

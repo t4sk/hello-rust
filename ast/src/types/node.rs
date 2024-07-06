@@ -587,21 +587,14 @@ pub struct IfStatement {
 }
 
 #[derive(Debug, Deserialize)]
-#[serde(tag = "nodeType")]
-pub enum YulBlock {
-    // TODO:
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(tag = "nodeType")]
-pub enum ExternalReference {
-    // TODO:
-}
-
-// TODO:
-#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TryCatchClause {}
+pub struct TryCatchClause {
+    pub id: u32,
+    pub src: String,
+    pub block: Block,
+    pub error_name: String,
+    pub parameters: Option<ParameterList>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -703,6 +696,31 @@ pub enum Statement {
     UncheckedBlock(UncheckedBlock),
     VariableDeclarationStatement(VariableDeclarationStatement),
     WhileStatement(WhileStatement),
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum YulStatement {
+    YulStatement,
+    YulAssignment,
+    Yul
+}
+
+
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulBlock {
+    pub id: u32,
+    pub src: String,
+    pub native_src: Option<String>,
+    pub statements: Vec<YulStatement>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(tag = "nodeType")]
+pub enum ExternalReference {
+    // TODO:
 }
 
 // FunctionDeclaration
