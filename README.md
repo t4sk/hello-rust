@@ -35,16 +35,21 @@
   - There can only be one owner at a time. (Transfer of ownership)
   - When the owner goes out of scope, the value will be dropped.
   - passing variable into function
-- [ ] borrow
+- [x] borrow
   - reference
   - mutable reference
   - no dangling refe
-- [ ] slice
+- [x] slice
     - String and str
-- [ ] struct
+- [x] struct
   - method
   - update syntax
-- [ ] enum
+  - derive
+  - impl
+- [x] enum
+  - pattern matching
+  - option
+  - if let
 - [ ] error handling
   - panic
   - option
