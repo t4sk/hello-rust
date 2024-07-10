@@ -1,108 +1,111 @@
-- [ ] install cargo
-- [ ] println
-- [x] variable
-  - immutable by default
-  - `let`
-  - type
-  - `mut`
-  - constant
-  - shadowing
-- [x] scalar types
-  - i32, u32, f32, boolean, char
-  - integer overflow
-- [x] compound data types
-  - array
-    - create array with 100 elements
-  - tuple
-    - pattern matching
-- [x] function
-  - no return value
-  - return value
-  - implicit return
-- [x] control flow
-  - if, else if, else
-  - let if
-  - match
-  - let match
-- [x] loop
-  - while let
-- [x] ownership
-  - stack (last in, first out)
-    - store data with known fixed size
-  - heap
-    - vec (stack = vec pointer, data = heap)
-  - Each value in Rust has an owner.
-  - There can only be one owner at a time. (Transfer of ownership)
-  - When the owner goes out of scope, the value will be dropped.
-  - passing variable into function
-- [x] borrow
-  - reference
-  - mutable reference
-  - no dangling refe
-- [x] slice
-    - String and str
-- [x] struct
-  - method
-  - update syntax
-  - derive
-  - impl
-- [x] enum
-  - pattern matching
-  - option
-  - if let
-- [ ] error handling
-  - panic
-  - option
-  - result
-  - expect, unwrap, ?
-- [ ] collection
-  - slice
-  - vector
-  - hash map
-- [ ] trait
+-   [ ] install cargo
+-   [ ] println
+-   [x] variable
+    -   immutable by default
+    -   `let`
+    -   type
+    -   `mut`
+    -   constant
+    -   shadowing
+-   [x] scalar types
+    -   i32, u32, f32, boolean, char
+    -   integer overflow
+-   [x] compound data types
+    -   array
+        -   create array with 100 elements
+    -   tuple
+        -   pattern matching
+-   [x] function
+    -   no return value
+    -   return value
+    -   implicit return
+-   [x] control flow
+    -   if, else if, else
+    -   let if
+    -   match
+    -   let match
+-   [x] loop
+    -   while let
+-   [x] ownership
+    -   stack (last in, first out)
+        -   store data with known fixed size
+    -   heap
+        -   vec (stack = vec pointer, data = heap)
+    -   Each value in Rust has an owner.
+    -   There can only be one owner at a time. (Transfer of ownership)
+    -   When the owner goes out of scope, the value will be dropped.
+    -   passing variable into function
+-   [x] borrow
+    -   reference
+    -   mutable reference
+    -   no dangling refe
+-   [x] slice
+    -   String and str
+        -   format!
+-   [x] struct
+    -   method
+    -   update syntax
+    -   derive
+    -   impl
+-   [x] enum
+    -   pattern matching
+    -   option
+    -   if let
+-   [ ] error handling
+    -   panic
+    -   option
+    -   result
+    -   expect, unwrap, ?
+-   [ ] collection
+    -   vector
+    -   slice (TODO)
+    -   hash map
+-   [ ] iter (TODO)
+-   [ ] trait
+-   [ ] mod
 
 # TODO:
 
 https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
-- string and str
-- async
-- ownership
-  - clone
-- borrow
-  - reference
-  - mutable reference
-  - dreferencing `*`
-  - slice
-- lifetime
-  - https://tfpk.github.io/lifetimekata/
-  - static lifetime
-  - anonymous lifetime
-- destructing
-  - struct
-- option
-  - Some(ref val)
-- result
-  - `Box<dyn Error>`
-- pattern matching
-- iterator
-- closure, `move`, `Fn`, dynamic dispatch
-- map
-- expect, unwrap
-- mod
-  - bin and lib crates
-  - use, pub, super, use glob
-- generics
-- trait
-  - impl A + B
-- bounds
-- smart pointer
-- arc
-- cow
-- concurrency, thread, join, channel, mutex
-- pattern matching
-- conversions
+-   string and str
+-   async
+-   ownership
+    -   clone
+-   borrow
+    -   reference
+    -   mutable reference
+    -   dreferencing `*`
+    -   slice
+-   lifetime
+    -   https://tfpk.github.io/lifetimekata/
+    -   static lifetime
+    -   anonymous lifetime
+-   destructing
+    -   struct
+-   option
+    -   Some(ref val)
+-   result
+    -   `Box<dyn Error>`
+-   pattern matching
+-   iterator
+-   closure, `move`, `Fn`, dynamic dispatch
+-   map
+-   expect, unwrap
+-   mod
+    -   bin and lib crates
+    -   use, pub, super, use glob
+-   generics
+-   trait
+    -   impl A + B
+-   bounds
+-   smart pointer
+-   arc
+-   cow
+-   concurrency, thread, join, channel, mutex
+-   pattern matching
+-   conversions
 
 # app
 
-- new_address = hash(0xFF, sender, salt, bytecode)
+-   new_address = hash(0xFF, sender, salt, bytecode)
