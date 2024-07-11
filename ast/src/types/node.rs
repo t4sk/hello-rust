@@ -72,21 +72,11 @@ pub enum NodeType {
     Unknown,
 }
 
-// Common
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum StorageLocation {
-    Default,
-    Memory,
-    Calldata,
-    Storage,
-}
-
 #[derive(Debug, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum Mutability {
-    Immutable,
     Mutable,
+    Immutable,
     Constant,
 }
 
@@ -106,6 +96,15 @@ pub enum Visibility {
     Internal,
     Public,
     External,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum StorageLocation {
+    Calldata,
+    Default,
+    Memory,
+    Storage,
 }
 
 #[derive(Debug, Deserialize)]
@@ -700,14 +699,29 @@ pub enum Statement {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulExpression {
-    // TODO:
+#[serde(tag = "nodeType")]
+pub enum YulExpression {
+    // TODO
+    YulFunctionCall,
+    YulIdentifier,
+    YulLiteral,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+#[serde(tag = "nodeType")]
+pub enum YulLiteral {
+    // TODO
+    YulLiteralName,
+    YulLiteralHexValue,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct YulIdentifier {
-    // TODO:
+    pub src: String,
+    pub native_src: Option<String>,
+    pub name: String,
 }
 
 #[derive(Debug, Deserialize)]
