@@ -701,12 +701,19 @@ pub enum Statement {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum YulStatement {
-    YulStatement,
     YulAssignment,
-    Yul
+    YulBlock,
+    YulBreak,
+    YulContinue,
+    YulExpressionStatement,
+    YulIf,
+    YulSwitch,
+    YulVariableDeclaration,
 }
 
-
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulAssignment {}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -716,6 +723,30 @@ pub struct YulBlock {
     pub native_src: Option<String>,
     pub statements: Vec<YulStatement>,
 }
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulBreak {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulContinue {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulExpressionStatement {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulIf {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulSwitch {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulVariableDeclaration {}
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
