@@ -699,6 +699,24 @@ pub enum Statement {
 }
 
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulExpression {
+    // TODO:
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulIdentifier {
+    // TODO:
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulTypedName {
+    // TODO:
+}
+
+#[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum YulStatement {
     YulAssignment,
@@ -713,12 +731,16 @@ pub enum YulStatement {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulAssignment {}
+pub struct YulAssignment {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub value: YulExpression,
+    pub variable_names: Vec<YulIdentifier>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct YulBlock {
-    pub id: u32,
     pub src: String,
     pub native_src: Option<String>,
     pub statements: Vec<YulStatement>,
@@ -726,27 +748,50 @@ pub struct YulBlock {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulBreak {}
+pub struct YulBreak {
+    pub src: String,
+    pub native_src: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulContinue {}
+pub struct YulContinue {
+    pub src: String,
+    pub native_src: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulExpressionStatement {}
+pub struct YulExpressionStatement {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub expression: YulExpression,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulIf {}
+pub struct YulIf {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub body: YulBlock,
+    pub condition: YulExpression,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulSwitch {}
+pub struct YulSwitch {
+    pub src: String,
+    pub native_src: Option<String>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct YulVariableDeclaration {}
+pub struct YulVariableDeclaration {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub value: Option<YulExpression>,
+    pub variables: Vec<YulTypedName>,
+}
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
