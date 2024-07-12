@@ -55,12 +55,17 @@
     -   panic
     -   option
     -   result
-    -   expect, unwrap, ?
+    -   ?
+    -   box dyn error
+    -   [ ] expect, unwrap
+-   [x] generic types
+-   [ ] trait
+-   [ ] lifetimes
 -   [ ] collection
     -   vector
-    -   slice (TODO)
+    -   [ ] slice
     -   hash map
--   [ ] iter (TODO)
+-   [ ] iter
 -   [ ] trait
 -   [ ] mod
 

@@ -701,19 +701,18 @@ pub enum Statement {
 #[serde(rename_all = "camelCase")]
 #[serde(tag = "nodeType")]
 pub enum YulExpression {
-    // TODO
-    YulFunctionCall,
-    YulIdentifier,
-    YulLiteral,
+    YulFunctionCall(YulFunctionCall),
+    YulIdentifier(YulIdentifier),
+    YulLiteral(YulLiteral),
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-#[serde(tag = "nodeType")]
-pub enum YulLiteral {
-    // TODO
-    YulLiteralName,
-    YulLiteralHexValue,
+pub struct YulFunctionCall {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub arguments: Vec<YulExpression>,
+    pub function_name: YulIdentifier,
 }
 
 #[derive(Debug, Deserialize)]
@@ -726,8 +725,37 @@ pub struct YulIdentifier {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
+#[serde(tag = "nodeType")]
+pub enum YulLiteral {
+    YulLiteralValue(YulLiteralValue),
+    YulLiteralHexValue(YulLiteralHexValue),
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulLiteralValue {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub kind: String,
+    pub value: String,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct YulLiteralHexValue {
+    pub src: String,
+    pub native_src: Option<String>,
+    pub kind: String,
+    pub hex_value: String,
+    pub value: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct YulTypedName {
-    // TODO:
+    pub src: String,
+    pub native_src: Option<String>,
+    pub name: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -827,11 +855,11 @@ pub enum FunctionKind {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
-    ArrayTypeName(ArrayTypeName),
+    ArrayTypeName(ArrayTypeName),:wq
     Assignment(Assignment),
-    BinaryOperation {},
+    BinaryOperation(BinaryOperation),
     Block(Block),
-    Break {},
+    Break
     Conditional {},
     Continue {},
     ContractDefinition {
