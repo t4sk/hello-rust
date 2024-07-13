@@ -10,6 +10,10 @@ struct Dog {
 
 trait Eat {
     fn chomp(&self);
+    // default implementation
+    //fn chomp(&self) {
+    //    println!("chomp!");
+    //}
 }
 
 impl Eat for Cat {
