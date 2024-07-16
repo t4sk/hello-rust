@@ -60,7 +60,12 @@
     -   [ ] expect, unwrap
 -   [x] generic types
 -   [ ] trait
+    -   default
+    -   trait parameter
+    -   trait bound (TODO)
+        -   where
 -   [ ] lifetimes
+    -   static
 -   [ ] collection
     -   vector
     -   [ ] slice
