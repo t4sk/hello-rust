@@ -1,4 +1,6 @@
 // Closures are functions that can capture the enclosing environment
+// - can save in a variable
+// - can pass as function argument
 fn main() {
     let outer_var = 42;
 
@@ -16,4 +18,9 @@ fn main() {
 
     println!("{}", contains(&1));
     println!("{}", contains(&4));
+
+    let id = |x| x;
+    let s = id("hello".to_string());
+    // infered type is locked to String -> String
+    //let n = id(5);
 }

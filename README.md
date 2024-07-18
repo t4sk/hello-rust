@@ -70,8 +70,9 @@
     -   vector
     -   [ ] slice
     -   hash map
--   [ ] iter
--   [ ] trait
+-   [ ] closures
+    -
+-   [ ] iterators
 -   [ ] mod
 
 # TODO:
@@ -118,4 +119,6 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 # app
 
+-   closure - newton's method
 -   new_address = hash(0xFF, sender, salt, bytecode)
+-   spinner
