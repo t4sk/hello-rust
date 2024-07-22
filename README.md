@@ -71,7 +71,8 @@
     -   [ ] slice
     -   hash map
 -   [ ] closures
-    -
+    -   `move`, `Fn`, dynamic dispatch
+    -   difference between func pointer and fn traits and closure
 -   [ ] iterators
 -   [ ] mod
 
@@ -86,7 +87,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 -   borrow
     -   reference
     -   mutable reference
-    -   dreferencing `*`
+    -   dereferencing `*`
     -   slice
 -   lifetime
     -   https://tfpk.github.io/lifetimekata/
