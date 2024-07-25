@@ -71,7 +71,7 @@
     -   [ ] slice
     -   hash map
 -   [ ] closures
-    -   `move`, `Fn`, dynamic dispatch
+    -   `move`, `Fn`, fn traits (Fn, FnMut, FnOnce), where syntax, dynamic dispatch
     -   difference between func pointer and fn traits and closure
 -   [ ] iterators
 -   [ ] mod
