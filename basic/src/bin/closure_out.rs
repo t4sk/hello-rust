@@ -15,6 +15,12 @@ fn create_fn_once() -> impl FnOnce() {
     move || println!("fn once {}", text)
 }
 
+// TODO: dyn
+// fn create_fn_once() -> dyn FnOnce() {
+//     let text = "hello".to_string();
+//     move || println!("fn once {}", text)
+// }
+
 fn main() {
     let f = create_fn();
     f();

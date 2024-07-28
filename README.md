@@ -73,7 +73,7 @@
 -   [ ] closures
     -   `move`, `Fn`, fn traits (Fn, FnMut, FnOnce), where syntax, dynamic dispatch
     -   difference between func pointer and fn traits and closure
--   [ ] iterators
+-   [x] iterators
 -   [ ] mod
 
 # TODO:
@@ -117,6 +117,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 -   concurrency, thread, join, channel, mutex
 -   pattern matching
 -   conversions
+-   associated types
 
 # app
 
