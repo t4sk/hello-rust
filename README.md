@@ -63,6 +63,7 @@
     -   default
     -   trait parameter
     -   trait bound (TODO)
+    -   trait object (TODO)
         -   where
 -   [ ] lifetimes
     -   static
