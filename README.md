@@ -12,9 +12,13 @@
     -   integer overflow
 -   [x] compound data types
     -   array
-        -   create array with 100 elements
+        -   array - collection of elements with length known at compile time
+        -   slice - collection of elements with length known at runtime
+        -   [ ] slice?
     -   tuple
         -   pattern matching
+-   [ ] string and str
+    -   str - string with length known at runtime
 -   [x] function
     -   no return value
     -   return value
