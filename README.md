@@ -113,6 +113,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
     -   impl A + B
 -   bounds
 -   smart pointer
+    -   ref cell
 -   arc
 -   cow
 -   concurrency, thread, join, channel, mutex
