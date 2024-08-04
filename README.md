@@ -29,8 +29,10 @@
     -   let if
     -   match
     -   let match
+-   [ ] returning values from block expression
 -   [x] loop
     -   while let
+    -   returning values from loop
 -   [x] ownership
     -   stack (last in, first out)
         -   store data with known fixed size

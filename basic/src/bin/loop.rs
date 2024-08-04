@@ -26,4 +26,14 @@ fn main() {
     for x in xs.iter() {
         println!("for loop iter {}", x);
     }
+
+    // return value from loop
+    let mut i: u32 = 0;
+    let v = loop {
+        i += 1;
+        if i > 3 {
+            break "i > 3";
+        }
+    };
+    println!("return value from loop {}", v);
 }
