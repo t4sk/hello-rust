@@ -1,4 +1,5 @@
 -   [ ] install cargo
+-   [x] hello world
 -   [ ] println
 -   [x] variable
     -   immutable by default
