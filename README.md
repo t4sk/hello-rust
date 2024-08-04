@@ -10,6 +10,7 @@
 -   [x] scalar types
     -   i32, u32, f32, boolean, char
     -   integer overflow
+-   [x] type conversion
 -   [x] compound data types
     -   array
         -   array - collection of elements with length known at compile time
