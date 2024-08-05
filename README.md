@@ -1,6 +1,5 @@
 -   [ ] install cargo
 -   [x] hello world
--   [ ] println
 -   [x] variable
     -   immutable by default
     -   `let`
@@ -11,7 +10,6 @@
 -   [x] scalar types
     -   i32, u32, f32, boolean, char
     -   integer overflow
--   [x] type conversion
 -   [x] compound data types
     -   array
         -   array - collection of elements with length known at compile time
@@ -19,6 +17,7 @@
         -   [ ] slice?
     -   tuple
         -   pattern matching
+-   [x] type conversion
 -   [ ] string and str
     -   str - string with length known at runtime
 -   [x] function
