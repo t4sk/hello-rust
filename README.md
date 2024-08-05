@@ -88,7 +88,6 @@
 https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 -   raw multi line string `r#`
--   string and str
 -   async
 -   ownership
     -   clone
