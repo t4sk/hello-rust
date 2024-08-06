@@ -54,9 +54,15 @@
     -   derive
     -   impl
 -   [x] enum
-    -   pattern matching
-    -   option
+-   [ ]control flow
+    -   if / else
+    -   loop
+    -   while
+    -   for and range
+    -   match
     -   if let
+    -   let else
+    -   while let
 -   [ ] error handling
     -   panic
     -   option
@@ -72,6 +78,7 @@
     -   trait object (TODO)
         -   where
     -   From and Into
+    -   fmt::Display
 -   [ ] lifetimes
     -   static
 -   [ ] collection
