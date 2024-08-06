@@ -71,6 +71,7 @@
     -   trait bound (TODO)
     -   trait object (TODO)
         -   where
+    -   From and Into
 -   [ ] lifetimes
     -   static
 -   [ ] collection
