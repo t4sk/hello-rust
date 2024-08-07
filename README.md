@@ -54,15 +54,15 @@
     -   derive
     -   impl
 -   [x] enum
--   [ ]control flow
-    -   if / else
-    -   loop
-    -   while
-    -   for and range
-    -   match
-    -   if let
-    -   let else
-    -   while let
+-   [x] control flow
+    -   [x] if / else
+    -   [x] match
+    -   [x] if let
+    -   [x] let else
+    -   [x] loop
+    -   [x] while
+    -   [x] for and range
+    -   [x] while let
 -   [ ] error handling
     -   panic
     -   option
