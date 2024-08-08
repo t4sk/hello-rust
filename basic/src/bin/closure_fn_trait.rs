@@ -16,15 +16,21 @@ fn func() {
 
 fn main() {
     // Needed for function inputs and outputs
+
     // FnOnce
+    // the closure uses the captured value by value (T)
     // applies to closures that can be called once.
     // All closures implement at least this trait, because all closures can be called.
-    // A closure that moves captured values out of its body will only implement FnOnce and none of the other Fn traits, because it can only be called once.
+    // A closure that moves captured values out of its body will only implement
+    // FnOnce and none of the other Fn traits, because it can only be called once.
 
     // FnMut
-    // applies to closures that don’t move captured values out of their body, but that might mutate the captured values. These closures can be called more than once.
+    // the closure uses the captured value by mutable reference (&mut T)
+    // applies to closures that don’t move captured values out of their body,
+    // but that might mutate the captured values. These closures can be called more than once.
 
     // Fn
+    // the closure uses the captured value by reference (&T)
     // applies to closures that don’t move captured values out of their body
     // and that don’t mutate captured values,
     // as well as closures that capture nothing from their environment.

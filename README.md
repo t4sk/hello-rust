@@ -85,7 +85,8 @@
     -   vector
     -   [ ] slice
     -   hash map
--   [ ] closures
+-   [ ] closures (TODO)
+    -   fn traits (Fn, FnMut and FnOnce)
     -   `move`, `Fn`, fn traits (Fn, FnMut, FnOnce), where syntax, dynamic dispatch
     -   difference between func pointer and fn traits and closure
 -   [x] iterators
