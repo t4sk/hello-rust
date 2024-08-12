@@ -27,13 +27,11 @@
     -   [x] if let
     -   [x] let else
 -   [x] loop
-    - [ ] while
-    - [ ] for and range
-    - [ ] while let
--   [ ] returning values from block expression
--   [x] loop
-    -   while let
-    -   returning values from loop
+    - [x] for and range
+    - [x] while
+    - [x] while let
+    - [x] returning values from loop
+-   [x] returning values from block expression
 -   [x] ownership
     -   stack (last in, first out)
         -   store data with known fixed size
