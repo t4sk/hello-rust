@@ -17,17 +17,19 @@
         -   slice - collection of elements with length known at runtime
     -   tuple
         -   pattern matching
--   [ ] string and str
-    -   str - string with length known at runtime
 -   [x] function
     -   no return value
     -   return value
     -   implicit return
 -   [x] control flow
-    -   if, else if, else
-    -   let if
-    -   match
-    -   let match
+    -   [x] if / else
+    -   [x] match
+    -   [x] if let
+    -   [x] let else
+-   [x] loop
+    - [ ] while
+    - [ ] for and range
+    - [ ] while let
 -   [ ] returning values from block expression
 -   [x] loop
     -   while let
@@ -54,15 +56,9 @@
     -   derive
     -   impl
 -   [x] enum
--   [x] control flow
-    -   [x] if / else
-    -   [x] match
-    -   [x] if let
-    -   [x] let else
-    -   [x] loop
-    -   [x] while
-    -   [x] for and range
-    -   [x] while let
+-   [ ] string and str
+    -   str - string with length known at runtime
+
 -   [ ] error handling
     -   panic
     -   option
