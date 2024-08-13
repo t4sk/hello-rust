@@ -1,58 +1,83 @@
+#![allow(unused)]
+
 fn print_msg(msg: &String) {
     println!("Message is {}", msg);
+} // Here, s goes out of scope. But because it does not have ownership of what
+  // it refers to, it is not dropped.
+
+fn print_vec(v: Vec<i32>) { // Takes ownership of v
+    println!("{:?}", v);
+} // v is dropped
+
+fn print_vec_return_ownership(v: Vec<i32>) -> Vec<i32> { // Takes ownership of v
+    println!("{:?}", v);
+    v
 }
-// Here, s goes out of scope. But because it does not have ownership of what
-// it refers to, it is not dropped.
+
+fn print_vec_borrow(v: &Vec<i32>) {
+    println!("{:?}", v);
+}
 
 fn add_to_vec(v: &mut Vec<i32>) {
     v.push(4);
 }
 
 fn main() {
-    let msg1 = "cat".to_string();
+    // Borrow example
+    let v = vec![1, 2, 3];
+    print_vec(v);
+    // This will not compile
+    // println!("{:?}", v);
+
+    // Return ownership
+    let v = vec![1, 2, 3];
+    let v = print_vec_return_ownership(v);
+    println!("{:?}", v);
+
+    // Borrow
+    let v = vec![1, 2, 3];
+    print_vec_borrow(&v) ;
+    println!("{:?}", v);
+
+    // Mutable borrow example
+    let mut v = vec![1, 2, 3];
+    add_to_vec(&mut v);
+    println!("{:?}", v);
+
+    let s = "cat".to_string();
     // Creates a full copy
-    let msg2 = msg1.clone();
+    let s1 = s.clone();
 
     // Borrow
     // - creates reference
     // - doesn't transfer ownership
     // - can create one mutable reference
     // - or any number of immutable references
-    // let msg3 = &msg1;
-    print_msg(&msg1);
 
-    let mut v = vec![1, 2, 3];
-    add_to_vec(&mut v);
-    println!("{:?}", v);
-
-    // One mutable reference (at a time) - code below will not compile
-    // let mut s = String::from("hello");
-    // let s1 = &mut s;
+    // One mutable reference (at a time) //
+    let mut s = String::from("cat");
+    let s1 = &mut s;
+    // This will not compile
     // let s2 = &mut s;
-    // println!("{} {}", s1, s2);
+    s1.push_str(" meow");
 
-    // Multiple mutable reference (only one at a time)
-    let mut s = String::from("hello");
+    // Multiple mutable reference (only one at a time) //
     {
         let s1 = &mut s;
-        s1.push_str("world");
-        println!("s1 {}", s1);
+        s1.push_str(" meow");
+        println!("{}", s1);
     }
 
     let s2 = &mut s;
     s2.push_str("!");
-    println!("s2 {}", s2);
+    println!("{}", s2);
 
     // Multiple immutable reference
-    let mut s = String::from("hello");
-
-    let r1 = &s; // no problem
-    let r2 = &s; // no problem
-    println!("{r1} and {r2}");
-    // variables r1 and r2 will not be used after this point
-
-    let r3 = &mut s; // no problem
-    println!("{r3}");
+    let mut s = String::from("dog");
+    let s1 = &s;
+    let s2 = &s;
+    println!("s1 {}", s1);
+    println!("s2 {}", s2);
 }
 
 // Dangling reference

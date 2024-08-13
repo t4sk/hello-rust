@@ -1,18 +1,15 @@
-// - each value has only one owner at a time
-// - value is dropped when the owner goes out of scope
+// Each value has only one owner at a time
+// Value is dropped when the owner goes out of scope
 
 // scope - range within a program where an item (variable and function) is valid
 
-fn print_hello(s: String) {
+fn take(s: String) {
     println!("{}", s);
 }
 
 fn main() {
     {
-        // s is not valid here, it’s not yet declared
-        let s = "hello"; // s is valid from this point forward
-
-        // do stuff with s
+        let s = "hello";
         println!("{}", s);
     } // this scope is now over, and s is no longer valid
 
@@ -28,7 +25,7 @@ fn main() {
     // Value is dropped when the owner goes out of scope
     // This will not compile
     // let s = "Hello".to_string();
-    // print_hello(s);
+    // take(s);
     // println!("Again: {}", s);
 
     // Move - transfer ownership

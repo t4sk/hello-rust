@@ -27,12 +27,12 @@
     -   [x] if let
     -   [x] let else
 -   [x] loop
-    - [x] for and range
-    - [x] while
-    - [x] while let
-    - [x] returning values from loop
+    -   [x] for and range
+    -   [x] while
+    -   [x] while let
+    -   [x] returning values from loop
 -   [x] returning values from block expression
--   [x] ownership
+-   [ ] ownership
     -   stack (last in, first out)
         -   store data with known fixed size
     -   heap
@@ -55,6 +55,7 @@
     -   impl
 -   [x] enum
 -   [ ] string and str
+
     -   str - string with length known at runtime
 
 -   [ ] error handling
@@ -135,3 +136,4 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 -   closure - newton's method
 -   new_address = hash(0xFF, sender, salt, bytecode)
 -   spinner
+- rust clojure immutable vec
