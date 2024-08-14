@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn zeros(nums: &[u32]) -> &[u32] {
     for (i, &num) in nums.iter().enumerate() {
         if num != 0 {

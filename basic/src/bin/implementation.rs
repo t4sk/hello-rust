@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 struct Val<T> {
-    val: T
+    val: T,
 }
 
 impl<T> Val<T> {
@@ -11,7 +11,6 @@ impl<T> Val<T> {
 }
 
 fn main() {
-    let x = Val {val: 123i32};
+    let x = Val { val: 123i32 };
     println!("{}", x.get_value());
-
 }

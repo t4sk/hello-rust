@@ -8,9 +8,4 @@ fn main() {
     // all elements = 0
     let arr: [i32; 10] = [0; 10];
     println!("arr {:?}", arr);
-
-    // slice - pointer to section of an array
-    let arr: [u32; 5] = [1, 2, 3, 4, 5];
-    let slice = &arr[1..3];
-    println!("slice {:?}", slice);
 }

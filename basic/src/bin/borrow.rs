@@ -5,11 +5,13 @@ fn print_msg(msg: &String) {
 } // Here, s goes out of scope. But because it does not have ownership of what
   // it refers to, it is not dropped.
 
-fn print_vec(v: Vec<i32>) { // Takes ownership of v
+fn print_vec(v: Vec<i32>) {
+    // Takes ownership of v
     println!("{:?}", v);
 } // v is dropped
 
-fn print_vec_return_ownership(v: Vec<i32>) -> Vec<i32> { // Takes ownership of v
+fn print_vec_return_ownership(v: Vec<i32>) -> Vec<i32> {
+    // Takes ownership of v
     println!("{:?}", v);
     v
 }
@@ -36,7 +38,7 @@ fn main() {
 
     // Borrow
     let v = vec![1, 2, 3];
-    print_vec_borrow(&v) ;
+    print_vec_borrow(&v);
     println!("{:?}", v);
 
     // Mutable borrow example
