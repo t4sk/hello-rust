@@ -1,5 +1,11 @@
+#![allow(unused)]
+
+// A trait defines the functionality a particular type has and can share with
+// other types
+
 // data -> struct
 // behavior -> trait
+
 struct Cat {
     name: String,
 }
@@ -28,14 +34,34 @@ impl Eat for Dog {
     }
 }
 
+trait Emoji {
+    fn print_emoji(&self);
+}
+
+impl Emoji for Cat {
+    fn print_emoji(&self) {
+        println!("🐱 {}", self.name);
+    }
+}
+
+impl Emoji for Dog {
+    fn print_emoji(&self) {
+        println!("🐶 {}", self.name);
+    }
+}
+
 fn main() {
     let cat = Cat {
         name: "Luna".to_string(),
     };
+
     let dog = Dog {
         name: "Kabosu".to_string(),
     };
 
     cat.chomp();
     dog.chomp();
+
+    cat.print_emoji();
+    dog.print_emoji();
 }

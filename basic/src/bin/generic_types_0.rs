@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn max<T: std::cmp::PartialOrd>(arr: &[T]) -> &T {
     let mut largest = &arr[0];
 

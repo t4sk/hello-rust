@@ -62,12 +62,13 @@
     -   box dyn error
     -   [ ] expect, unwrap
 -   [x] generic types
+    - `impl <T> MyStruct<T>`
 -   [ ] trait
-    -   default
-    -   trait parameter
-    -   trait bound (TODO)
-    -   trait object (TODO)
-        -   where
+    -   [x] default
+    -   [x] trait fn input
+    -   [ ] trait bound, `+`, `where`
+    -   [ ] trait object
+        -   [ ] where
     - TODO: return impl from func
     -   From and Into
     -   fmt::Display

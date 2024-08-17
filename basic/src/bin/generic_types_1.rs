@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 // struct
 struct Point<T> {
     x: T,
