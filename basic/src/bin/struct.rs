@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 // Classic
 struct Point {
     x: i32,
