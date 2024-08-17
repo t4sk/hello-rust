@@ -55,9 +55,7 @@
     -   impl
 -   [x] enum
 -   [ ] string and str
-
     -   str - string with length known at runtime
-
 -   [ ] error handling
     -   panic
     -   option
@@ -72,6 +70,7 @@
     -   trait bound (TODO)
     -   trait object (TODO)
         -   where
+    - TODO: return impl from func
     -   From and Into
     -   fmt::Display
 -   [ ] lifetimes
@@ -119,6 +118,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
     -   bin and lib crates
     -   use, pub, super, use glob
 -   generics
+    - implementation
 -   trait
     -   impl A + B
 -   bounds
