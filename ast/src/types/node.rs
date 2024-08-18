@@ -852,6 +852,27 @@ pub enum FunctionKind {
     Function,
 }
 
+// TODO
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InheritanceSpecifier {}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ContractDefinition {
+    pub r#abstract: bool,
+    pub base_contracts: Vec<InheritanceSpecifier>,
+    pub canonical_name: Option<String>,
+    pub contract_dependencies: Vec<u32>,
+    // contract | interface | library
+    pub contract_kind: String,
+    pub documentation: Option<StructuredDocumentation>,
+    pub src: String,
+    pub native_src: Option<String>,
+    pub value: Option<YulExpression>,
+    pub variables: Vec<YulTypedName>,
+}
+
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
@@ -859,14 +880,10 @@ pub enum Node {
     Assignment(Assignment),
     BinaryOperation(BinaryOperation),
     Block(Block),
-    Break,
-    Conditional {},
-    Continue {},
-    ContractDefinition {
-        id: u32,
-        nodes: Vec<Node>,
-        name: String,
-    },
+    Break(Break),
+    Conditional(Conditional),
+    Continue(Continue),
+    ContractDefinition(ContractDefinition),
     DoWhileStatement {},
     ElementaryTypeName(ElementaryTypeName),
     ElementaryTypeNameExpression {},
@@ -1027,7 +1044,7 @@ impl Node {
     pub fn get_nodes(&self) -> Option<&Vec<Node>> {
         match self {
             Node::SourceUnit { nodes, .. } => Some(&nodes),
-            Node::ContractDefinition { nodes, .. } => Some(&nodes),
+            // Node::ContractDefinition(node) => Some(node),
             Node::FunctionDefinition { nodes, .. } => Some(&nodes),
             Node::Unknown { nodes, .. } => Some(&nodes),
             _ => None,
