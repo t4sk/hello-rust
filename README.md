@@ -46,16 +46,15 @@
     -   mutable reference
     -   no dangling refe
 -   [x] slice
-    -   String and str
-        -   format!
--   [x] struct
+-   [ ] string and str
+    -   str - string with length known at runtime
+    - `r#`
+-   [ ] struct
     -   method
     -   update syntax
     -   derive
     -   impl
 -   [x] enum
--   [ ] string and str
-    -   str - string with length known at runtime
 -   [ ] error handling
     -   panic
     -   option

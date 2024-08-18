@@ -5,7 +5,6 @@ fn string_length(s: String) -> usize {
 
 fn str_length(s: &str) -> usize {
     s.len()
-    // String is dropped here
 }
 
 // String = Vec<u8> valid UTF-8
@@ -24,6 +23,7 @@ fn main() {
     println!("Str length = {}", len);
     println!("msg = {}", msg);
 
+    // Multiline str
     let s = r#"
         { "a": 1,
           "b": { "c": 2 },
