@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn string_length(s: String) -> usize {
     s.len()
     // String is dropped here
