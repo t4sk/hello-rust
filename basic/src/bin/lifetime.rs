@@ -1,3 +1,7 @@
+#![allow(unused)]
+
+// every reference has a lifetime
+
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() {
         x
@@ -26,8 +30,6 @@ fn main() {
     let book = Book { title };
 
     book.print();
-
-    // TODO: lifetime elision
 
     // static lifetime
     let s: &'static str = "STATIC";
