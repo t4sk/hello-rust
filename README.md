@@ -66,7 +66,7 @@
 -   [ ] trait
     -   [x] default
     -   [x] trait fn input
-    -   [ ] trait bound, `+`, `where`
+    -   [x] trait bound, `+`, `where`
     -   [ ] trait object
         -   [ ] where
     - TODO: return impl from func
