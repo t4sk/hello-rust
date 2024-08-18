@@ -68,11 +68,10 @@
     -   [x] trait fn input
     -   [x] trait bound, `+`, `where`
     -   [ ] trait object
-        -   [ ] where
-    - TODO: return impl from func
-    -   From and Into
-    -   fmt::Display
--   [ ] lifetimes
+    - [ ] return impl from func
+    - [ ] From and Into
+    - [ ] fmt::Display
+-   [x] lifetimes
     -   static
 -   [ ] collection
     -   vector
@@ -85,50 +84,21 @@
 -   [x] iterators
 -   [ ] mod
 
-# TODO:
-
-https://github.com/wh5a/rustlings-solutions/tree/main/exercises
-
--   raw multi line string `r#`
--   async
--   ownership
-    -   clone
--   borrow
-    -   reference
-    -   mutable reference
-    -   dereferencing `*`
-    -   slice
--   lifetime
-    -   https://tfpk.github.io/lifetimekata/
-    -   static lifetime
-    -   anonymous lifetime
--   destructing
-    -   struct
--   option
-    -   Some(ref val)
--   result
-    -   `Box<dyn Error>`
--   pattern matching
--   iterator
--   closure, `move`, `Fn`, dynamic dispatch
--   map
--   expect, unwrap
--   mod
-    -   bin and lib crates
-    -   use, pub, super, use glob
--   generics
-    - implementation
--   trait
-    -   impl A + B
--   bounds
--   smart pointer
-    -   ref cell
+- closure
+- iterator
+- smart pointers
+- concurrency
+    - thread
+    - channel
+    - mutex
+    - async
+- dereference
+-   `Box<dyn Error>`
 -   arc
 -   cow
--   concurrency, thread, join, channel, mutex
--   pattern matching
--   conversions
 -   associated types
+
+https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 # app
 
