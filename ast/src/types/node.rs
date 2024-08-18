@@ -855,11 +855,11 @@ pub enum FunctionKind {
 #[derive(Debug, Deserialize)]
 #[serde(tag = "nodeType")]
 pub enum Node {
-    ArrayTypeName(ArrayTypeName),:wq
+    ArrayTypeName(ArrayTypeName),
     Assignment(Assignment),
     BinaryOperation(BinaryOperation),
     Block(Block),
-    Break
+    Break,
     Conditional {},
     Continue {},
     ContractDefinition {
