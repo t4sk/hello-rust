@@ -1,26 +1,49 @@
+#![allow(unused)]
 // Closures are functions that can capture the enclosing environment
 // - can save in a variable
 // - can pass as function argument
 fn main() {
-    let outer_var = 42;
+    // Inference and annotation
+    let val = 42;
 
-    let closure_annotated = |i: i32| -> i32 { i + outer_var };
-    let closure_inferred = |i| i + outer_var;
+    let annotated = |i: i32| -> i32 { i + val };
+    let inferred = |i| i + val;
 
-    // Call the closures.
-    println!("closure_annotated: {}", closure_annotated(1));
-    println!("closure_inferred: {}", closure_inferred(1));
+    println!("closure_annotated: {}", annotated(1));
+    println!("closure_inferred: {}", inferred(1));
 
-    // Using move before vertical pipes forces closure to take ownership of captured variables:
-    let haystack = vec![1, 2, 3];
-
-    let contains = move |needle| haystack.contains(needle);
-
-    println!("{}", contains(&1));
-    println!("{}", contains(&4));
-
+    // Infered type is locked to String -> String
     let id = |x| x;
-    let s = id("hello".to_string());
-    // infered type is locked to String -> String
-    //let n = id(5);
+    let s = id(String::from("hello"));
+
+    // Closures capture value from environment in 3 ways
+    // 1. borrowing immutable
+    // 2. borrowing mutable
+    // 3. taking ownership
+
+    // Borrow immutable
+    let color = String::from("red");
+    let borrow_imut = || println!("color: {}", color);
+
+    println!("color: {}", color);
+    borrow_imut();
+    println!("color: {}", color);
+
+    // Borrow mutable
+    let mut count = 0;
+    let mut inc = || count += 1;
+
+    inc();
+    inc();
+    inc();
+    println!("count {}", count);
+
+    // Taking ownership - use `move` to force ownership
+    let list = vec![1, 2, 3];
+    let f = std::thread::spawn(move || println!("list {:?}", list))
+        .join()
+        .unwrap();
+
+    // This will not compile
+    // println!("list {:?}", list);
 }
