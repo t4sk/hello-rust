@@ -44,6 +44,6 @@ fn main() {
         .join()
         .unwrap();
 
-    // This will not compile
+    // This will not compile - ownership has moved inside the thread
     // println!("list {:?}", list);
 }
