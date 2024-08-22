@@ -83,10 +83,13 @@
     -   [ ] slice
     -   hash map
 -   [ ] mod
+- [ ] smart pointers
+    - [ ] Box
+    - [ ] Rc
+    
 
 - closure
 - iterator
-- smart pointers
 - concurrency
   - thread
   - channel
