@@ -84,12 +84,10 @@
     -   hash map
 -   [ ] mod
 - [ ] smart pointers
-    - [ ] Box
-    - [ ] Rc
+    - [x] Box
+    - [x] Rc
     
 
-- closure
-- iterator
 - concurrency
   - thread
   - channel
