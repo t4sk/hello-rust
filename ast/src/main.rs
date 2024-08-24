@@ -11,5 +11,6 @@ fn main() {
     // println!("{:#?}", ast);
     for node in ast.ast.nodes.iter() {
         println!("{:?}", node.r#type());
+        // TOOD: print types
     }
 }
