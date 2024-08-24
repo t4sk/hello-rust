@@ -292,6 +292,7 @@ pub struct Ast {
     pub ast: AstNodes,
 }
 
+// TODO: remove?
 #[derive(Debug, Deserialize, PartialEq)]
 pub enum NodeType {
     ArrayTypeName,
