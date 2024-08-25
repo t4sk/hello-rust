@@ -1,4 +1,11 @@
+#![allow(unused)]
 // Return closure as output
+
+/*
+ move keyword must be used, which signals that all captures occur by value.
+This is required because any captures by reference would be dropped as soon as the
+function exited, leaving invalid references in the closure.
+*/
 
 fn create_fn() -> impl Fn() {
     let text = "hello".to_string();
@@ -26,7 +33,6 @@ fn main() {
     f();
     f();
 
-    // TODO: why mut on f?
     let mut f = create_fn_mut();
     f();
     f();
