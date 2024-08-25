@@ -74,7 +74,7 @@
 -   [x] lifetimes
     -   static
 -   [ ] closures
-    -   fn traits (Fn, FnMut and FnOnce)
+    - [ ] fn traits (Fn, FnMut and FnOnce) (TODO)
     -   where syntax, dynamic dispatch
     -   difference between func pointer and fn traits and closure
 -   [x] iterators
