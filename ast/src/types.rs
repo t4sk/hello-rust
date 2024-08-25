@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum Mutability {
     Mutable,
@@ -8,7 +8,7 @@ pub enum Mutability {
     Constant,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StateMutability {
     Payable,
@@ -17,7 +17,7 @@ pub enum StateMutability {
     View,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum Visibility {
     Private,
@@ -26,7 +26,7 @@ pub enum Visibility {
     External,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum StorageLocation {
     Calldata,
@@ -35,7 +35,7 @@ pub enum StorageLocation {
     Storage,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum FunctionKind {
     Constructor,
@@ -45,7 +45,7 @@ pub enum FunctionKind {
     Function,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ContractDefinition {
     pub id: u32,
@@ -54,7 +54,7 @@ pub struct ContractDefinition {
     pub nodes: Vec<Node>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
     pub id: u32,
@@ -62,7 +62,7 @@ pub struct ExpressionStatement {
     pub expression: Box<Expression>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Statement {
     Block,
@@ -83,7 +83,7 @@ pub enum Statement {
     WhileStatement,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Block {
     pub id: u32,
@@ -91,7 +91,7 @@ pub struct Block {
     pub statements: Option<Vec<Statement>>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub enum FunctionCallKind {
     FunctionCall,
@@ -99,7 +99,7 @@ pub enum FunctionCallKind {
     StructConstructorCall,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
     pub id: u32,
@@ -118,7 +118,7 @@ pub struct FunctionCall {
     // pub type_descriptions: TypeDescriptions,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCallOptions {
     pub id: u32,
@@ -134,7 +134,7 @@ pub struct FunctionCallOptions {
     pub type_descriptions: TypeDescriptions,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Expression {
     Assignment,
@@ -153,7 +153,7 @@ pub enum Expression {
     UnaryOperation,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ArrayTypeName {
     pub id: u32,
@@ -162,7 +162,7 @@ pub struct ArrayTypeName {
     pub length: Option<Expression>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeName {
     pub id: u32,
@@ -171,7 +171,7 @@ pub struct ElementaryTypeName {
     pub state_mutability: Option<StateMutability>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionTypeName {
     pub id: u32,
@@ -180,7 +180,7 @@ pub struct FunctionTypeName {
     pub visibility: Visibility,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Mapping {
     pub id: u32,
@@ -193,7 +193,7 @@ pub struct Mapping {
     pub value_type: Box<TypeName>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentifierPath {
     pub id: u32,
@@ -202,7 +202,7 @@ pub struct IdentifierPath {
     pub referenced_declaration: Option<u32>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDefinedTypeName {
     pub id: u32,
@@ -212,7 +212,7 @@ pub struct UserDefinedTypeName {
     pub reference_declaration: u32,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum TypeName {
     ArrayTypeName(ArrayTypeName),
@@ -222,14 +222,14 @@ pub enum TypeName {
     UserDefinedTypeName(UserDefinedTypeName),
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct TypeDescriptions {
     pub type_identifier: Option<String>,
     pub type_string: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclaration {
     pub id: u32,
@@ -244,7 +244,7 @@ pub struct VariableDeclaration {
     pub type_name: Option<TypeName>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterList {
     pub id: u32,
@@ -252,7 +252,7 @@ pub struct ParameterList {
     pub parameters: Vec<VariableDeclaration>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionDefinition {
     pub id: u32,
@@ -268,7 +268,7 @@ pub struct FunctionDefinition {
     pub return_parameters: ParameterList,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Node {
     ContractDefinition(ContractDefinition),
@@ -281,19 +281,19 @@ pub enum Node {
     },
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct AstNodes {
     pub nodes: Vec<Node>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Ast {
     // pub ast: Value
     pub ast: AstNodes,
 }
 
 // TODO: remove?
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Debug, Deserialize, PartialEq, Clone)]
 pub enum NodeType {
     ArrayTypeName,
     Assignment,

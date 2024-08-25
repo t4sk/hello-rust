@@ -23,6 +23,26 @@ fn main() {
                         }
                         types::Node::FunctionDefinition(func_def) => {
                             println!("- {:?}", func_def.name);
+                            if let Some(body) = &func_def.body {
+                                if let Some(statements) = &body.statements {
+                                    for s in statements.iter() {
+                                        match s {
+                                            types::Statement::ExpressionStatement(
+                                                exp_statement,
+                                            ) => {
+                                                let exp = *exp_statement.expression.clone();
+                                                match exp {
+                                                    types::Expression::FunctionCall(func_call) => {
+                                                        println!("{:?}", func_call);
+                                                    }
+                                                    _ => (),
+                                                }
+                                            }
+                                            _ => (),
+                                        }
+                                    }
+                                }
+                            }
                         }
                         _ => (),
                     }
