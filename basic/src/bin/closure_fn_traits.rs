@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn f_once<F: FnOnce() -> T, T>(f: F) -> T {
     f()
     // Cannot call more than once
@@ -32,7 +34,7 @@ fn main() {
     //      and don't mutate captured values
     //    - uses captured value by ref (&T)
 
-    // FnOnce, FnMut, Fn used for function inputs
+    // FnOnce, FnMut, Fn used for function inputs and outputs
 
     // FnOnce
     let v = vec![1, 2, 3];
