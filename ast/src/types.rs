@@ -149,6 +149,23 @@ pub struct Identifier {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct MemberAccess {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub expression: Box<Expression>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub member_location: Option<String>,
+    pub member_name: String,
+    pub reference_declaration: Option<NodeId>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Expression {
     Assignment,
@@ -161,7 +178,7 @@ pub enum Expression {
     IndexAccess,
     IndexRangeAccess,
     Literal,
-    MemberAccess,
+    MemberAccess(MemberAccess),
     NewExpression,
     TupleExpression,
     UnaryOperation,
