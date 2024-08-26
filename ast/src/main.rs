@@ -5,11 +5,14 @@ pub mod types;
 use types::{Ast, NodeType};
 
 fn main() {
-    let file_path = "tmp/ERC20.json";
+    // TODO:
+    let file_path = "tmp/CoinJoin.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
     // println!("{:#?}", ast);
+    // return;
+
     for node in ast.ast.nodes.iter() {
         match node {
             types::Node::ContractDefinition(contract_def) => {
@@ -33,7 +36,7 @@ fn main() {
                                                 let exp = *exp_statement.expression.clone();
                                                 match exp {
                                                     types::Expression::FunctionCall(func_call) => {
-                                                        println!("{:?}", func_call);
+                                                        println!("{:#?}", func_call);
                                                     }
                                                     _ => (),
                                                 }

@@ -1,5 +1,7 @@
 use serde::Deserialize;
 
+pub type NodeId = i64;
+
 #[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
 pub enum Mutability {
@@ -48,7 +50,7 @@ pub enum FunctionKind {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ContractDefinition {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub name: String,
     pub nodes: Vec<Node>,
@@ -57,7 +59,7 @@ pub struct ContractDefinition {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub expression: Box<Expression>,
 }
@@ -65,7 +67,7 @@ pub struct ExpressionStatement {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Statement {
-    Block,
+    Block(Block),
     Break,
     Continue,
     DoWhileStatement,
@@ -86,7 +88,7 @@ pub enum Statement {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Block {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub statements: Option<Vec<Statement>>,
 }
@@ -102,11 +104,11 @@ pub enum FunctionCallKind {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub argument_types: Option<Vec<TypeDescriptions>>,
     pub arguments: Vec<Expression>,
-    pub expression: Vec<Expression>,
+    pub expression: Box<Expression>,
     pub is_constant: bool,
     pub is_l_value: bool,
     pub is_pure: bool,
@@ -115,22 +117,34 @@ pub struct FunctionCall {
     pub name_locations: Option<Vec<String>>,
     pub names: Vec<String>,
     pub try_call: bool,
-    // pub type_descriptions: TypeDescriptions,
+    pub type_descriptions: TypeDescriptions,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCallOptions {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub argument_types: Option<Vec<TypeDescriptions>>,
     pub expression: Box<Expression>,
     pub is_constant: bool,
-    pub is_l_value: bool,
+    pub is_l_value: Option<bool>,
     pub is_pure: bool,
     pub l_value_requested: bool,
     pub names: Vec<String>,
     pub options: Vec<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct Identifier {
+    pub id: NodeId,
+    pub src: String,
+    pub name: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub overloaded_declarations: Vec<NodeId>,
+    pub referenced_declaration: Option<NodeId>,
     pub type_descriptions: TypeDescriptions,
 }
 
@@ -143,7 +157,7 @@ pub enum Expression {
     ElementaryTypeNameExpression,
     FunctionCall(FunctionCall),
     FunctionCallOptions(FunctionCallOptions),
-    Identifier,
+    Identifier(Identifier),
     IndexAccess,
     IndexRangeAccess,
     Literal,
@@ -156,7 +170,7 @@ pub enum Expression {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ArrayTypeName {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub base_type: Box<TypeName>,
     pub length: Option<Expression>,
@@ -165,7 +179,7 @@ pub struct ArrayTypeName {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeName {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub name: String,
     pub state_mutability: Option<StateMutability>,
@@ -174,7 +188,7 @@ pub struct ElementaryTypeName {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionTypeName {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub state_mutability: StateMutability,
     pub visibility: Visibility,
@@ -183,7 +197,7 @@ pub struct FunctionTypeName {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Mapping {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub key_name: Option<String>,
     pub key_name_location: Option<String>,
@@ -196,20 +210,20 @@ pub struct Mapping {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentifierPath {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub name: String,
-    pub referenced_declaration: Option<u32>,
+    pub referenced_declaration: Option<NodeId>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct UserDefinedTypeName {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub name: Option<String>,
     pub path_node: Option<IdentifierPath>,
-    pub reference_declaration: u32,
+    pub reference_declaration: NodeId,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -232,7 +246,7 @@ pub struct TypeDescriptions {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclaration {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub constant: bool,
     pub function_selector: Option<String>,
@@ -247,7 +261,7 @@ pub struct VariableDeclaration {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterList {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub parameters: Vec<VariableDeclaration>,
 }
@@ -255,17 +269,17 @@ pub struct ParameterList {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionDefinition {
-    pub id: u32,
+    pub id: NodeId,
     pub src: String,
     pub nodes: Vec<Node>,
     pub kind: FunctionKind,
     pub name: String,
-    pub visibility: Visibility,
-    pub state_mutability: StateMutability,
-    pub function_selector: Option<String>,
+    // pub visibility: Visibility,
+    // pub state_mutability: StateMutability,
+    // pub function_selector: Option<String>,
     pub body: Option<Block>,
-    pub parameters: ParameterList,
-    pub return_parameters: ParameterList,
+    // pub parameters: ParameterList,
+    // pub return_parameters: ParameterList,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -276,7 +290,7 @@ pub enum Node {
     FunctionDefinition(FunctionDefinition),
     #[serde(untagged)]
     Unknown {
-        id: u32,
+        id: NodeId,
         nodes: Vec<Node>,
     },
 }
