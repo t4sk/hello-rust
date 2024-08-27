@@ -5,7 +5,6 @@ pub mod types;
 use types::Ast;
 
 fn main() {
-    // TODO:
     let file_path = "tmp/CoinJoin.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
