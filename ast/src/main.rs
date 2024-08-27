@@ -5,7 +5,7 @@ pub mod types;
 use types::Ast;
 
 fn main() {
-    let file_path = "tmp/CoinJoin.json";
+    let file_path = "tmp/Pot.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
@@ -37,7 +37,9 @@ fn main() {
                                                         // func_call.expression -> MemberAccess -> member_name
                                                         //                                      -> expression -> Identifier -> name
                                                         match *func_call.expression {
-                                                            types::Expression::MemberAccess(mem_acc) => {
+                                                            types::Expression::MemberAccess(
+                                                                mem_acc,
+                                                            ) => {
                                                                 let func = mem_acc.member_name;
                                                                 match *mem_acc.expression {
                                                                     types::Expression::Identifier(id) => {
@@ -45,7 +47,7 @@ fn main() {
                                                                     },
                                                                     _ => ()
                                                                 }
-                                                            },
+                                                            }
                                                             _ => (),
                                                         }
                                                     }
