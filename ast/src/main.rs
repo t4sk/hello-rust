@@ -2,7 +2,7 @@ use std::fs;
 
 pub mod types;
 
-use types::{Ast, NodeType};
+use types::Ast;
 
 fn main() {
     // TODO:
@@ -16,16 +16,16 @@ fn main() {
     for node in ast.ast.nodes.iter() {
         match node {
             types::Node::ContractDefinition(contract_def) => {
-                println!("{:?}", contract_def.name);
+                println!("{}", contract_def.name);
                 for node in contract_def.nodes.iter() {
                     match node {
                         types::Node::VariableDeclaration(var_dec) => {
                             if var_dec.state_variable {
-                                println!("{:?}", var_dec.name);
+                                println!("{}", var_dec.name);
                             }
                         }
                         types::Node::FunctionDefinition(func_def) => {
-                            println!("- {:?}", func_def.name);
+                            println!("- {}", func_def.name);
                             if let Some(body) = &func_def.body {
                                 if let Some(statements) = &body.statements {
                                     for s in statements.iter() {
@@ -33,10 +33,22 @@ fn main() {
                                             types::Statement::ExpressionStatement(
                                                 exp_statement,
                                             ) => {
-                                                let exp = *exp_statement.expression.clone();
-                                                match exp {
+                                                match *exp_statement.expression.clone() {
                                                     types::Expression::FunctionCall(func_call) => {
-                                                        println!("{:#?}", func_call);
+                                                        // func_call.expression -> MemberAccess -> member_name
+                                                        //                                      -> expression -> Identifier -> name
+                                                        match *func_call.expression {
+                                                            types::Expression::MemberAccess(mem_acc) => {
+                                                                let func = mem_acc.member_name;
+                                                                match *mem_acc.expression {
+                                                                    types::Expression::Identifier(id) => {
+                                                                        println!("-- {}.{}", id.name, func);
+                                                                    },
+                                                                    _ => ()
+                                                                }
+                                                            },
+                                                            _ => (),
+                                                        }
                                                     }
                                                     _ => (),
                                                 }
