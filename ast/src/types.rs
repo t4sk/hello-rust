@@ -103,6 +103,22 @@ pub enum FunctionCallKind {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct Assignment {
+    pub id: u32,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub left_hand_side: Box<Expression>,
+    pub operator: String,
+    pub right_hand_side: Box<Expression>,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
     pub id: NodeId,
     pub src: String,
@@ -168,7 +184,7 @@ pub struct MemberAccess {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Expression {
-    Assignment,
+    Assignment(Assignment),
     BinaryOperation,
     Conditional,
     ElementaryTypeNameExpression,

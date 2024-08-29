@@ -33,6 +33,8 @@ fn main() {
     //                -> name
     //                -> referenced_declaration
 
+    // TODO: Read from state variable
+
     for node in ast.ast.nodes.iter() {
         if let types::Node::ContractDefinition(contract_def) = node {
             println!("{}", contract_def.name);
@@ -52,22 +54,17 @@ fn main() {
                                     match s {
                                         types::Statement::ExpressionStatement(exp_statement) => {
                                             match *exp_statement.expression.clone() {
-                                                // Write to state variable
-                                                // FunctionDefinition
-                                                // -> statements
-                                                //    -> ExpressionStatement
-                                                //       -> expression
-                                                //          Assignment
-                                                //          -> left_hand_side
-                                                //             -> Identifier
-                                                //                -> name
-                                                //                -> referenced_declaration
-                                                types::Assignment => {
-                                                    //
+                                                types::Expression::Assignment(assignment) => {
+                                                    if let types::Expression::Identifier(id) =
+                                                        *assignment.left_hand_side
+                                                    {
+                                                        println!(
+                                                            "write {} {:?}",
+                                                            id.name, id.referenced_declaration
+                                                        );
+                                                    }
                                                 }
                                                 types::Expression::FunctionCall(func_call) => {
-                                                    // func_call.expression -> MemberAccess -> member_name
-                                                    //                                      -> expression -> Identifier -> name
                                                     match *func_call.expression {
                                                         types::Expression::MemberAccess(
                                                             mem_acc,
