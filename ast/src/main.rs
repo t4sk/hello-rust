@@ -12,6 +12,7 @@ fn main() {
     // println!("{:#?}", ast);
     // return;
 
+    // Internal function
     // FunctionDefinition
     // -> name
     // -> statements
@@ -20,6 +21,17 @@ fn main() {
     //          -> Identifier
     //             -> name
     //
+
+    // Write to state variable
+    // FunctionDefinition
+    // -> statements
+    //    -> ExpressionStatement
+    //       -> expression
+    //          Assignment
+    //          -> left_hand_side
+    //             -> Identifier
+    //                -> name
+    //                -> referenced_declaration
 
     for node in ast.ast.nodes.iter() {
         if let types::Node::ContractDefinition(contract_def) = node {
@@ -40,6 +52,19 @@ fn main() {
                                     match s {
                                         types::Statement::ExpressionStatement(exp_statement) => {
                                             match *exp_statement.expression.clone() {
+                                                // Write to state variable
+                                                // FunctionDefinition
+                                                // -> statements
+                                                //    -> ExpressionStatement
+                                                //       -> expression
+                                                //          Assignment
+                                                //          -> left_hand_side
+                                                //             -> Identifier
+                                                //                -> name
+                                                //                -> referenced_declaration
+                                                types::Assignment => {
+                                                    //
+                                                }
                                                 types::Expression::FunctionCall(func_call) => {
                                                     // func_call.expression -> MemberAccess -> member_name
                                                     //                                      -> expression -> Identifier -> name
