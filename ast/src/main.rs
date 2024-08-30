@@ -11,6 +11,16 @@ use types::Ast;
 struct Function {
     // TODO: handle constructor, fallback, recieve
     pub name: String,
+    pub body: Vec<String>,
+}
+
+impl Function {
+    pub fn new<S: Into<String>>(name: S) -> Self {
+        Self {
+            name: name.into(),
+            body: vec![],
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -22,9 +32,9 @@ struct Contract {
 }
 
 impl Contract {
-    pub fn new(name: String) -> Self {
+    pub fn new<S: Into<String>>(name: S) -> Self {
         Self {
-            name,
+            name: name.into(),
             // TODO: store and sort by slots?
             // TODO: store types
             state_variables: vec![],
@@ -71,7 +81,7 @@ fn main() {
             if !contracts.contains_key(&contract_def.name) {
                 contracts.insert(
                     contract_def.name.to_string(),
-                    Contract::new(contract_def.name.to_string()),
+                    Contract::new(&contract_def.name),
                 );
             }
 
@@ -85,9 +95,7 @@ fn main() {
                         }
                     }
                     types::Node::FunctionDefinition(func_def) => {
-                        contract.functions.push(Function {
-                            name: func_def.name.to_string(),
-                        });
+                        let mut func = Function::new(&func_def.name);
 
                         if let Some(body) = &func_def.body {
                             if let Some(statements) = &body.statements {
@@ -110,21 +118,21 @@ fn main() {
                                                         types::Expression::MemberAccess(
                                                             mem_acc,
                                                         ) => {
-                                                            let func = mem_acc.member_name;
-                                                            match *mem_acc.expression {
-                                                                types::Expression::Identifier(
-                                                                    id,
-                                                                ) => {
-                                                                    println!(
-                                                                        "-- {}.{}",
-                                                                        id.name, func
-                                                                    );
-                                                                }
-                                                                _ => (),
-                                                            }
+                                                            let mut func_name = mem_acc.member_name;
+                                                            if let types::Expression::Identifier(
+                                                                id,
+                                                            ) = *mem_acc.expression
+                                                            {
+                                                                func_name = format!(
+                                                                    "{}.{}()",
+                                                                    id.name, func_name
+                                                                );
+                                                            };
+                                                            func.body.push(func_name)
                                                         }
                                                         types::Expression::Identifier(id) => {
-                                                            println!("-- {}", id.name);
+                                                            func.body
+                                                                .push(format!("{}()", id.name));
                                                         }
                                                         _ => (),
                                                     }
@@ -137,6 +145,8 @@ fn main() {
                                 }
                             }
                         }
+
+                        contract.functions.push(func);
                     }
                     _ => (),
                 }
