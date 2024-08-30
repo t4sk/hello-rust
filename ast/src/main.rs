@@ -1,13 +1,44 @@
+#![allow(unused)]
+
+use std::collections::HashMap;
 use std::fs;
 
 pub mod types;
 
 use types::Ast;
 
+#[derive(Debug)]
+struct Function {
+    // TODO: handle constructor, fallback, recieve
+    pub name: String,
+}
+
+#[derive(Debug)]
+struct Contract {
+    // TODO: handle inheritance
+    pub name: String,
+    pub state_variables: Vec<String>,
+    pub functions: Vec<Function>,
+}
+
+impl Contract {
+    pub fn new(name: String) -> Self {
+        Self {
+            name,
+            // TODO: store and sort by slots?
+            // TODO: store types
+            state_variables: vec![],
+            functions: vec![],
+        }
+    }
+}
+
 fn main() {
-    let file_path = "tmp/Ast.json";
+    let file_path = "tmp/Pot.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
+
+    let mut contracts: HashMap<String, Contract> = HashMap::new();
 
     // println!("{:#?}", ast);
     // return;
@@ -37,17 +68,27 @@ fn main() {
 
     for node in ast.ast.nodes.iter() {
         if let types::Node::ContractDefinition(contract_def) = node {
-            println!("{}", contract_def.name);
+            if !contracts.contains_key(&contract_def.name) {
+                contracts.insert(
+                    contract_def.name.to_string(),
+                    Contract::new(contract_def.name.to_string()),
+                );
+            }
+
+            let mut contract = contracts.get_mut(&contract_def.name).unwrap();
 
             for node in contract_def.nodes.iter() {
                 match node {
                     types::Node::VariableDeclaration(var_dec) => {
                         if var_dec.state_variable {
-                            println!("{}", var_dec.name);
+                            contract.state_variables.push(var_dec.name.to_string());
                         }
                     }
                     types::Node::FunctionDefinition(func_def) => {
-                        println!("- {}", func_def.name);
+                        contract.functions.push(Function {
+                            name: func_def.name.to_string(),
+                        });
+
                         if let Some(body) = &func_def.body {
                             if let Some(statements) = &body.statements {
                                 for s in statements.iter() {
@@ -102,4 +143,6 @@ fn main() {
             }
         }
     }
+
+    println!("{:#?}", contracts);
 }
