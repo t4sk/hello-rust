@@ -65,7 +65,7 @@ pub struct InheritanceSpecifier {
 }
 
 #[derive(Debug, Deserialize, Clone)]
-#[serde(rename_all = "camelCase")]
+#[serde(tag = "nodeType")]
 pub enum ContractNode {
     EnumDefinition,
     ErrorDefinition,
@@ -76,6 +76,11 @@ pub enum ContractNode {
     VariableDeclaration(VariableDeclaration),
     EventDefinition,
     ModifierDefinition,
+    #[serde(untagged)]
+    Unknown {
+        id: NodeId,
+        nodes: Vec<Node>,
+    },
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -233,7 +238,7 @@ pub struct MemberAccess {
     pub l_value_requested: bool,
     pub member_location: Option<String>,
     pub member_name: String,
-    pub reference_declaration: Option<NodeId>,
+    pub referenced_declaration: Option<NodeId>,
     pub type_descriptions: TypeDescriptions,
 }
 
@@ -312,7 +317,7 @@ pub struct UserDefinedTypeName {
     pub src: String,
     pub name: Option<String>,
     pub path_node: Option<IdentifierPath>,
-    pub reference_declaration: NodeId,
+    pub referenced_declaration: NodeId,
 }
 
 #[derive(Debug, Deserialize, Clone)]
@@ -337,14 +342,15 @@ pub struct TypeDescriptions {
 pub struct VariableDeclaration {
     pub id: NodeId,
     pub src: String,
+    pub name: String,
+    pub state_variable: bool,
     pub constant: bool,
     pub function_selector: Option<String>,
     pub mutability: Mutability,
-    pub name: String,
-    pub state_variable: bool,
     pub storage_location: StorageLocation,
     pub visibility: Visibility,
     pub type_name: Option<TypeName>,
+    pub value: Option<Expression>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
