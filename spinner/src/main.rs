@@ -1,5 +1,3 @@
-#![allow(unused)]
-
 use std::io::Write;
 use std::{thread, time};
 // mpsc - multi producer single consumer
@@ -7,15 +5,12 @@ use std::sync::mpsc::{channel, Receiver, Sender, TryRecvError};
 
 pub struct Spinner {
     tx: Sender<Option<String>>,
-    // TODO: return type
-    // TODO: why option
     join_handle: Option<thread::JoinHandle<()>>,
 }
 
 impl Drop for Spinner {
     fn drop(&mut self) {
-        // TODO: what dis?
-        self.tx.send(None);
+        self.tx.send(None).unwrap();
         self.join_handle.take().unwrap().join().unwrap();
     }
 }
@@ -28,7 +23,6 @@ impl Spinner {
         let (tx, rx): (Sender<Option<String>>, Receiver<Option<String>>) = channel();
         let mut stream = std::io::stdout();
 
-        // TODO: when to call join
         let join_handle = thread::spawn(move || {
             loop {
                 for f in frames.iter() {
@@ -61,14 +55,13 @@ impl Spinner {
     }
 
     pub fn stop(&mut self) {
-        self.tx.send(Some(String::from("stopped")));
+        self.tx.send(Some(String::from("stopped"))).unwrap();
     }
 }
-
-// TODO: implement Drop
 
 fn main() {
     let mut spinner = Spinner::new();
     thread::sleep(time::Duration::from_secs(3));
+    // Spinner is dropped here so no need to call stop
     spinner.stop();
 }
