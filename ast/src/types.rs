@@ -4,6 +4,14 @@ pub type NodeId = i64;
 
 #[derive(Debug, Deserialize, PartialEq, Clone)]
 #[serde(rename_all = "lowercase")]
+pub enum ContractKind {
+    Contract,
+    Interface,
+    Library,
+}
+
+#[derive(Debug, Deserialize, PartialEq, Clone)]
+#[serde(rename_all = "lowercase")]
 pub enum Mutability {
     Mutable,
     Immutable,
@@ -49,11 +57,59 @@ pub enum FunctionKind {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ContractDefinition {
+pub struct InheritanceSpecifier {
     pub id: NodeId,
     pub src: String,
+    // baseName: UserDefinedTypeName | IdentifierPath;
+    pub arguments: Option<Vec<Expression>>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub enum ContractNode {
+    EnumDefinition,
+    ErrorDefinition,
+    FunctionDefinition(FunctionDefinition),
+    StructDefinition,
+    UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    VariableDeclaration(VariableDeclaration),
+    EventDefinition,
+    ModifierDefinition,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ContractDefinition {
+    pub r#abstract: bool,
+    pub id: NodeId,
+    pub src: String,
+    // pub native_src: Option<String>,
     pub name: String,
-    pub nodes: Vec<Node>,
+    pub contract_kind: ContractKind,
+    pub base_contracts: Vec<InheritanceSpecifier>,
+    pub contract_dependencies: Vec<NodeId>,
+    pub linearized_base_contracts: Vec<NodeId>,
+    pub nodes: Vec<ContractNode>,
+    // pub nodes: Vec<Node>,
+    /*
+    canonicalName?: string;
+    contractDependencies: number[];
+    contractKind: "contract" | "interface" | "library";
+    documentation?: null | StructuredDocumentation;
+    fullyImplemented: boolean;
+    id: number;
+    internalFunctionIDs?: {
+        [k: string]: number | undefined;
+    };
+    linearizedBaseContracts: number[];
+    name: string;
+    nameLocation?: string;
+    scope: number;
+    src: string;
+    usedErrors?: number[];
+    usedEvents?: number[];
+    */
 }
 
 #[derive(Debug, Deserialize, Clone)]

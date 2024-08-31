@@ -10,13 +10,15 @@ use types::Ast;
 #[derive(Debug)]
 struct Function {
     // TODO: handle constructor, fallback, recieve
+    pub id: i64,
     pub name: String,
     pub body: Vec<String>,
 }
 
 impl Function {
-    pub fn new<S: Into<String>>(name: S) -> Self {
+    pub fn new<S: Into<String>>(id: i64, name: S) -> Self {
         Self {
+            id,
             name: name.into(),
             body: vec![],
         }
@@ -27,8 +29,10 @@ impl Function {
 struct Contract {
     // TODO: handle inheritance
     pub name: String,
-    pub state_variables: Vec<String>,
-    pub functions: Vec<Function>,
+    pub state_variable_ids: Vec<i64>,
+    pub state_variables: HashMap<i64, String>,
+    pub function_ids: Vec<i64>,
+    pub functions: HashMap<i64, Function>,
 }
 
 impl Contract {
@@ -37,8 +41,10 @@ impl Contract {
             name: name.into(),
             // TODO: store and sort by slots?
             // TODO: store types
-            state_variables: vec![],
-            functions: vec![],
+            state_variable_ids: vec![],
+            state_variables: HashMap::new(),
+            function_ids: vec![],
+            functions: HashMap::new(),
         }
     }
 }
@@ -89,64 +95,66 @@ fn main() {
 
             for node in contract_def.nodes.iter() {
                 match node {
-                    types::Node::VariableDeclaration(var_dec) => {
+                    types::ContractNode::VariableDeclaration(var_dec) => {
                         if var_dec.state_variable {
-                            contract.state_variables.push(var_dec.name.to_string());
+                            contract.state_variable_ids.push(var_dec.id);
+                            contract
+                                .state_variables
+                                .insert(var_dec.id, var_dec.name.to_string());
                         }
                     }
-                    types::Node::FunctionDefinition(func_def) => {
-                        let mut func = Function::new(&func_def.name);
+                    types::ContractNode::FunctionDefinition(func_def) => {
+                        contract.function_ids.push(func_def.id);
+                        let mut func = Function::new(func_def.id, &func_def.name);
 
                         if let Some(body) = &func_def.body {
                             if let Some(statements) = &body.statements {
                                 for s in statements.iter() {
-                                    match s {
-                                        types::Statement::ExpressionStatement(exp_statement) => {
-                                            match *exp_statement.expression.clone() {
-                                                types::Expression::Assignment(assignment) => {
-                                                    if let types::Expression::Identifier(id) =
-                                                        *assignment.left_hand_side
+                                    if let types::Statement::ExpressionStatement(exp_statement) = s
+                                    {
+                                        match *exp_statement.expression.clone() {
+                                            types::Expression::Assignment(assignment) => {
+                                                if let types::Expression::Identifier(id) =
+                                                    *assignment.left_hand_side
+                                                {
+                                                    let ref_dec =
+                                                        id.referenced_declaration.unwrap();
+                                                    if let Some(state_var) =
+                                                        contract.state_variables.get(&ref_dec)
                                                     {
-                                                        println!(
-                                                            "write {} {:?}",
-                                                            id.name, id.referenced_declaration
-                                                        );
+                                                        assert!(&id.name == state_var);
+                                                        func.body.push(format!("{}", state_var));
                                                     }
                                                 }
-                                                types::Expression::FunctionCall(func_call) => {
-                                                    match *func_call.expression {
-                                                        types::Expression::MemberAccess(
-                                                            mem_acc,
-                                                        ) => {
-                                                            let mut func_name = mem_acc.member_name;
-                                                            if let types::Expression::Identifier(
-                                                                id,
-                                                            ) = *mem_acc.expression
-                                                            {
-                                                                func_name = format!(
-                                                                    "{}.{}()",
-                                                                    id.name, func_name
-                                                                );
-                                                            };
-                                                            func.body.push(func_name)
-                                                        }
-                                                        types::Expression::Identifier(id) => {
-                                                            func.body
-                                                                .push(format!("{}()", id.name));
-                                                        }
-                                                        _ => (),
-                                                    }
-                                                }
-                                                _ => (),
                                             }
+                                            types::Expression::FunctionCall(func_call) => {
+                                                match *func_call.expression {
+                                                    types::Expression::MemberAccess(mem_acc) => {
+                                                        let mut func_name = mem_acc.member_name;
+                                                        if let types::Expression::Identifier(id) =
+                                                            *mem_acc.expression
+                                                        {
+                                                            func_name = format!(
+                                                                "{}.{}()",
+                                                                id.name, func_name
+                                                            );
+                                                        };
+                                                        func.body.push(func_name)
+                                                    }
+                                                    types::Expression::Identifier(id) => {
+                                                        func.body.push(format!("{}()", id.name));
+                                                    }
+                                                    _ => (),
+                                                }
+                                            }
+                                            _ => (),
                                         }
-                                        _ => (),
                                     }
                                 }
                             }
                         }
 
-                        contract.functions.push(func);
+                        contract.functions.insert(func.id, func);
                     }
                     _ => (),
                 }
