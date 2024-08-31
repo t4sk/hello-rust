@@ -56,11 +56,18 @@ pub enum FunctionKind {
 }
 
 #[derive(Debug, Deserialize, Clone)]
+#[serde(tag = "nodeType")]
+pub enum BaseName {
+    UserDefinedTypeName(UserDefinedTypeName),
+    IdentifierPath(IdentifierPath),
+}
+
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct InheritanceSpecifier {
     pub id: NodeId,
     pub src: String,
-    // baseName: UserDefinedTypeName | IdentifierPath;
+    pub base_name: BaseName,
     pub arguments: Option<Vec<Expression>>,
 }
 

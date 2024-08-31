@@ -59,6 +59,9 @@ fn main() {
     // println!("{:#?}", ast);
     // return;
 
+    // TODO: Read from state variable
+    // TODO: contract inheritance
+
     // Internal function
     // FunctionDefinition
     // -> name
@@ -80,7 +83,6 @@ fn main() {
     //                -> name
     //                -> referenced_declaration
 
-    // TODO: Read from state variable
 
     for node in ast.ast.nodes.iter() {
         if let types::Node::ContractDefinition(contract_def) = node {
@@ -90,6 +92,8 @@ fn main() {
                     Contract::new(&contract_def.name),
                 );
             }
+
+            println!("{:#?}", contract_def.base_contracts);
 
             let mut contract = contracts.get_mut(&contract_def.name).unwrap();
 
