@@ -384,9 +384,16 @@ pub struct FunctionDefinition {
     // pub return_parameters: ParameterList,
 }
 
+// https://solidity-ast.netlify.app/interfaces/sourceunit
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct SourceUnit {
+}
+
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Node {
+    SourceUnit(SourceUnit),
     ContractDefinition(ContractDefinition),
     VariableDeclaration(VariableDeclaration),
     FunctionDefinition(FunctionDefinition),
