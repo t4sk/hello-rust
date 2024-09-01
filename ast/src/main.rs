@@ -83,9 +83,8 @@ fn main() {
     //                -> name
     //                -> referenced_declaration
 
-
     for node in ast.ast.nodes.iter() {
-        if let types::Node::ContractDefinition(contract_def) = node {
+        if let types::SourceUnitNode::ContractDefinition(contract_def) = node {
             if !contracts.contains_key(&contract_def.name) {
                 contracts.insert(
                     contract_def.name.to_string(),
@@ -93,7 +92,7 @@ fn main() {
                 );
             }
 
-            println!("{:#?}", contract_def.base_contracts);
+            // println!("{:#?}", contract_def.base_contracts);
 
             let mut contract = contracts.get_mut(&contract_def.name).unwrap();
 

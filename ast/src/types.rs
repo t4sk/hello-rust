@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use std::collections::HashMap;
 
 pub type NodeId = i64;
 
@@ -376,20 +377,52 @@ pub struct FunctionDefinition {
     pub nodes: Vec<Node>,
     pub kind: FunctionKind,
     pub name: String,
-    // pub visibility: Visibility,
-    // pub state_mutability: StateMutability,
-    // pub function_selector: Option<String>,
+    pub visibility: Visibility,
+    pub state_mutability: StateMutability,
+    pub function_selector: Option<String>,
     pub body: Option<Block>,
-    // pub parameters: ParameterList,
-    // pub return_parameters: ParameterList,
+    pub parameters: ParameterList,
+    pub return_parameters: ParameterList,
 }
 
-// https://solidity-ast.netlify.app/interfaces/sourceunit
+#[derive(Debug, Deserialize, Clone)]
+#[serde(tag = "nodeType")]
+pub enum SourceUnitNode {
+    ContractDefinition(ContractDefinition),
+    EnumDefinition,
+    ErrorDefinition,
+    FunctionDefinition(FunctionDefinition),
+    ImportDirective,
+    PragmaDirective,
+    StructDefinition,
+    UserDefinedValueTypeDefinition,
+    UsingForDirective,
+    VariableDeclaration(VariableDeclaration),
+    /*
+    #[serde(untagged)]
+    Unknown {
+        id: NodeId,
+    },
+    */
+}
+
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceUnit {
+    pub id: NodeId,
+    pub src: String,
+    pub absolute_path: String,
+    pub nodes: Vec<SourceUnitNode>,
+    pub exported_symbols: Option<HashMap<String, Vec<NodeId>>>,
 }
 
+#[derive(Debug, Deserialize, Clone)]
+pub struct Ast {
+    // pub ast: Value
+    pub ast: SourceUnit,
+}
+
+// TODO: remove?
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
 pub enum Node {
@@ -402,17 +435,6 @@ pub enum Node {
         id: NodeId,
         nodes: Vec<Node>,
     },
-}
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct AstNodes {
-    pub nodes: Vec<Node>,
-}
-
-#[derive(Debug, Deserialize, Clone)]
-pub struct Ast {
-    // pub ast: Value
-    pub ast: AstNodes,
 }
 
 // TODO: remove?
