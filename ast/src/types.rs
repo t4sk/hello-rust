@@ -384,6 +384,27 @@ pub struct FunctionDefinition {
     pub parameters: ParameterList,
     pub return_parameters: ParameterList,
 }
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct SymbolAlias {
+    pub foreign: Identifier,
+    pub local: Option<String>,
+    pub name_location: Option<String>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ImportDirective {
+    pub absolute_path: String,
+    pub file: String,
+    pub id: NodeId,
+    pub name_location: Option<String>,
+    pub scope: NodeId,
+    pub source_unit: NodeId,
+    pub src: String,
+    pub symbol_aliases: Vec<SymbolAlias>,
+    pub unit_alias: String,
+}
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "nodeType")]
@@ -392,7 +413,7 @@ pub enum SourceUnitNode {
     EnumDefinition,
     ErrorDefinition,
     FunctionDefinition(FunctionDefinition),
-    ImportDirective,
+    ImportDirective(ImportDirective),
     PragmaDirective,
     StructDefinition,
     UserDefinedValueTypeDefinition,
