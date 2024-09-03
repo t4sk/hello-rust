@@ -28,6 +28,7 @@ impl Function {
 #[derive(Debug)]
 struct Contract {
     // TODO: handle inheritance
+    pub id: i64,
     pub name: String,
     pub state_variable_ids: Vec<i64>,
     pub state_variables: HashMap<i64, String>,
@@ -36,8 +37,9 @@ struct Contract {
 }
 
 impl Contract {
-    pub fn new<S: Into<String>>(name: S) -> Self {
+    pub fn new<S: Into<String>>(id: i64, name: S) -> Self {
         Self {
+            id,
             name: name.into(),
             // TODO: store and sort by slots?
             // TODO: store types
@@ -57,7 +59,7 @@ struct Import {
 }
 
 fn main() {
-    let file_path = "tmp/Pot.json";
+    let file_path = "tmp/Ast.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
@@ -69,6 +71,8 @@ fn main() {
 
     // TODO: Read from state variable
     // TODO: contract inheritance
+    // TODO: function call and assign returned value
+    // TODO: map state variable to interface
 
     // Internal function
     // FunctionDefinition
@@ -110,7 +114,7 @@ fn main() {
                 if !contracts.contains_key(&contract_def.name) {
                     contracts.insert(
                         contract_def.name.to_string(),
-                        Contract::new(&contract_def.name),
+                        Contract::new(contract_def.id, &contract_def.name),
                     );
                 }
 
@@ -197,5 +201,5 @@ fn main() {
     }
 
     println!("{:#?}", imports);
-    // println!("{:#?}", contracts);
+    println!("{:#?}", contracts);
 }
