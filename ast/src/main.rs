@@ -6,7 +6,7 @@ use std::fs;
 pub mod objects;
 pub mod types;
 
-use objects::{Contract, Function, Import, Variable};
+use objects::{Contract, Function, Import, Object, Variable};
 use types::Ast;
 
 fn main() {
@@ -14,8 +14,7 @@ fn main() {
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
-    let mut contracts: HashMap<i64, Contract> = HashMap::new();
-    let mut imports: HashMap<i64, Import> = HashMap::new();
+    let mut objects: HashMap<i64, Object> = HashMap::new();
 
     // println!("{:#?}", ast);
     // return;
@@ -51,27 +50,30 @@ fn main() {
             types::SourceUnitNode::ImportDirective(import_directive) => {
                 for sym in import_directive.symbol_aliases.iter() {
                     let id = sym.foreign.referenced_declaration.unwrap();
-                    imports.insert(
+                    objects.insert(
                         id,
-                        Import {
+                        Object::Import(Import {
                             id,
                             name: sym.foreign.name.to_string(),
                             abs_path: import_directive.absolute_path.to_string(),
-                        },
+                        }),
                     );
                 }
             }
             types::SourceUnitNode::ContractDefinition(contract_def) => {
-                if !contracts.contains_key(&contract_def.id) {
-                    contracts.insert(
+                if !objects.contains_key(&contract_def.id) {
+                    objects.insert(
                         contract_def.id,
-                        Contract::new(contract_def.id, &contract_def.name),
+                        Object::Contract(Contract::new(contract_def.id, &contract_def.name)),
                     );
                 }
 
                 // println!("{:#?}", contract_def.base_contracts);
 
-                let mut contract = contracts.get_mut(&contract_def.id).unwrap();
+                let Object::Contract(ref mut contract) = objects.get_mut(&contract_def.id).unwrap()
+                else {
+                    todo!("TODO panic");
+                };
 
                 for node in contract_def.nodes.iter() {
                     match node {
@@ -153,6 +155,5 @@ fn main() {
         }
     }
 
-    println!("{:#?}", imports);
-    println!("{:#?}", contracts);
+    println!("{:#?}", objects);
 }

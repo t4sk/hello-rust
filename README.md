@@ -98,6 +98,8 @@
 - arc
 - cow
 - associated types
+- `ref mut`
+- `todo!()`
 
 https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
