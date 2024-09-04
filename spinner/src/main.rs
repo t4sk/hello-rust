@@ -16,8 +16,8 @@ impl Drop for Spinner {
 }
 
 impl Spinner {
-    pub fn new() -> Self {
-        let frames = vec!["-", "\\", "|", "/"];
+    pub fn start() -> Self {
+        let frames = ["-", "\\", "|", "/"];
 
         // transmitter and receiver
         let (tx, rx): (Sender<Option<String>>, Receiver<Option<String>>) = channel();
@@ -37,7 +37,7 @@ impl Spinner {
                         if let Some(msg) = msg {
                             println!("\r{}", msg);
                         }
-                        return ();
+                        return;
                     }
 
                     write!(stream, "\r{}", f).unwrap();
@@ -60,7 +60,7 @@ impl Spinner {
 }
 
 fn main() {
-    let mut spinner = Spinner::new();
+    let mut spinner = Spinner::start();
     thread::sleep(time::Duration::from_secs(3));
     // Spinner is dropped here so no need to call stop
     spinner.stop();

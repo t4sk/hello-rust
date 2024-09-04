@@ -100,6 +100,7 @@
 - associated types
 - `ref mut`
 - `todo!()`
+- thread scope
 
 https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
