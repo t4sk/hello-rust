@@ -3,67 +3,18 @@
 use std::collections::HashMap;
 use std::fs;
 
+pub mod objects;
 pub mod types;
 
+use objects::{Contract, Function, Import, Variable};
 use types::Ast;
 
-#[derive(Debug)]
-struct Function {
-    // TODO: handle constructor, fallback, recieve
-    pub id: i64,
-    pub name: String,
-    pub body: Vec<String>,
-}
-
-impl Function {
-    pub fn new<S: Into<String>>(id: i64, name: S) -> Self {
-        Self {
-            id,
-            name: name.into(),
-            body: vec![],
-        }
-    }
-}
-
-#[derive(Debug)]
-struct Contract {
-    // TODO: handle inheritance
-    pub id: i64,
-    pub name: String,
-    pub state_variable_ids: Vec<i64>,
-    pub state_variables: HashMap<i64, String>,
-    pub function_ids: Vec<i64>,
-    pub functions: HashMap<i64, Function>,
-}
-
-impl Contract {
-    pub fn new<S: Into<String>>(id: i64, name: S) -> Self {
-        Self {
-            id,
-            name: name.into(),
-            // TODO: store and sort by slots?
-            // TODO: store types
-            state_variable_ids: vec![],
-            state_variables: HashMap::new(),
-            function_ids: vec![],
-            functions: HashMap::new(),
-        }
-    }
-}
-
-#[derive(Debug)]
-struct Import {
-    pub abs_path: String,
-    pub name: String,
-    pub id: i64,
-}
-
 fn main() {
-    let file_path = "tmp/Ast.json";
+    let file_path = "tmp/tmp.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
-    let mut contracts: HashMap<String, Contract> = HashMap::new();
+    let mut contracts: HashMap<i64, Contract> = HashMap::new();
     let mut imports: HashMap<i64, Import> = HashMap::new();
 
     // println!("{:#?}", ast);
@@ -111,16 +62,16 @@ fn main() {
                 }
             }
             types::SourceUnitNode::ContractDefinition(contract_def) => {
-                if !contracts.contains_key(&contract_def.name) {
+                if !contracts.contains_key(&contract_def.id) {
                     contracts.insert(
-                        contract_def.name.to_string(),
+                        contract_def.id,
                         Contract::new(contract_def.id, &contract_def.name),
                     );
                 }
 
                 // println!("{:#?}", contract_def.base_contracts);
 
-                let mut contract = contracts.get_mut(&contract_def.name).unwrap();
+                let mut contract = contracts.get_mut(&contract_def.id).unwrap();
 
                 for node in contract_def.nodes.iter() {
                     match node {
@@ -129,7 +80,7 @@ fn main() {
                                 contract.state_variable_ids.push(var_dec.id);
                                 contract
                                     .state_variables
-                                    .insert(var_dec.id, var_dec.name.to_string());
+                                    .insert(var_dec.id, Variable::new(var_dec.id, &var_dec.name));
                             }
                         }
                         types::ContractNode::FunctionDefinition(func_def) => {
@@ -144,21 +95,23 @@ fn main() {
                                         ) = s
                                         {
                                             match *exp_statement.expression.clone() {
-                                                types::Expression::Assignment(assignment) => {
-                                                    if let types::Expression::Identifier(id) =
-                                                        *assignment.left_hand_side
-                                                    {
-                                                        let ref_dec =
-                                                            id.referenced_declaration.unwrap();
-                                                        if let Some(state_var) =
-                                                            contract.state_variables.get(&ref_dec)
-                                                        {
-                                                            assert!(&id.name == state_var);
-                                                            func.body
-                                                                .push(format!("{}", state_var));
-                                                        }
-                                                    }
-                                                }
+                                                /*
+                                                                                                types::Expression::Assignment(assignment) => {
+                                                                                                    if let types::Expression::Identifier(id) =
+                                                                                                        *assignment.left_hand_side
+                                                                                                    {
+                                                                                                        let ref_dec =
+                                                                                                            id.referenced_declaration.unwrap();
+                                                                                                        if let Some(state_var) =
+                                                                                                            contract.state_variables.get(&ref_dec)
+                                                                                                        {
+                                                                                                            assert!(&id.name == state_var);
+                                                                                                            func.body
+                                                                                                                .push(format!("{}", state_var));
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                */
                                                 types::Expression::FunctionCall(func_call) => {
                                                     match *func_call.expression {
                                                         types::Expression::MemberAccess(
