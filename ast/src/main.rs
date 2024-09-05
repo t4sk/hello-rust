@@ -14,7 +14,7 @@ fn main() {
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
-    let mut graph: HashMap<i64, Node> = HashMap::new();
+    let mut graph_nodes: HashMap<i64, Node> = HashMap::new();
 
     // println!("{:#?}", ast);
     // return;
@@ -50,7 +50,7 @@ fn main() {
             types::SourceUnitNode::ImportDirective(import_directive) => {
                 for sym in import_directive.symbol_aliases.iter() {
                     let id = sym.foreign.referenced_declaration.unwrap();
-                    graph.insert(
+                    graph_nodes.insert(
                         id,
                         Node::Import(Import {
                             id,
@@ -61,8 +61,8 @@ fn main() {
                 }
             }
             types::SourceUnitNode::ContractDefinition(contract_def) => {
-                if !graph.contains_key(&contract_def.id) {
-                    graph.insert(
+                if !graph_nodes.contains_key(&contract_def.id) {
+                    graph_nodes.insert(
                         contract_def.id,
                         Node::Contract(Contract::new(contract_def.id, &contract_def.name)),
                     );
@@ -70,7 +70,8 @@ fn main() {
 
                 // println!("{:#?}", contract_def.base_contracts);
 
-                let Node::Contract(ref mut contract) = graph.get_mut(&contract_def.id).unwrap()
+                let Node::Contract(ref mut contract) =
+                    graph_nodes.get_mut(&contract_def.id).unwrap()
                 else {
                     todo!("TODO panic");
                 };
@@ -155,5 +156,5 @@ fn main() {
         }
     }
 
-    println!("{:#?}", graph);
+    println!("{:#?}", graph_nodes);
 }
