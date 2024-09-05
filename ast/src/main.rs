@@ -3,10 +3,10 @@
 use std::collections::HashMap;
 use std::fs;
 
-pub mod objects;
+pub mod graph;
 pub mod types;
 
-use objects::{Contract, Function, Import, Object, Variable};
+use graph::{Contract, Function, Import, Node, Variable};
 use types::Ast;
 
 fn main() {
@@ -14,7 +14,7 @@ fn main() {
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
-    let mut objects: HashMap<i64, Object> = HashMap::new();
+    let mut graph: HashMap<i64, Node> = HashMap::new();
 
     // println!("{:#?}", ast);
     // return;
@@ -50,9 +50,9 @@ fn main() {
             types::SourceUnitNode::ImportDirective(import_directive) => {
                 for sym in import_directive.symbol_aliases.iter() {
                     let id = sym.foreign.referenced_declaration.unwrap();
-                    objects.insert(
+                    graph.insert(
                         id,
-                        Object::Import(Import {
+                        Node::Import(Import {
                             id,
                             name: sym.foreign.name.to_string(),
                             abs_path: import_directive.absolute_path.to_string(),
@@ -61,16 +61,16 @@ fn main() {
                 }
             }
             types::SourceUnitNode::ContractDefinition(contract_def) => {
-                if !objects.contains_key(&contract_def.id) {
-                    objects.insert(
+                if !graph.contains_key(&contract_def.id) {
+                    graph.insert(
                         contract_def.id,
-                        Object::Contract(Contract::new(contract_def.id, &contract_def.name)),
+                        Node::Contract(Contract::new(contract_def.id, &contract_def.name)),
                     );
                 }
 
                 // println!("{:#?}", contract_def.base_contracts);
 
-                let Object::Contract(ref mut contract) = objects.get_mut(&contract_def.id).unwrap()
+                let Node::Contract(ref mut contract) = graph.get_mut(&contract_def.id).unwrap()
                 else {
                     todo!("TODO panic");
                 };
@@ -155,5 +155,5 @@ fn main() {
         }
     }
 
-    println!("{:#?}", objects);
+    println!("{:#?}", graph);
 }

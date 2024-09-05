@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 #[derive(Debug)]
-pub enum Object {
+pub enum Node {
     Variable(Variable),
     Function(Function),
     Contract(Contract),
@@ -15,7 +15,7 @@ pub enum Action {
 }
 
 #[derive(Debug)]
-pub struct Arrow(Object, Object, Action);
+pub struct Arrow(Node, Node, Action);
 
 #[derive(Debug)]
 pub struct Variable {
