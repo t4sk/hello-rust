@@ -235,6 +235,21 @@ pub struct Identifier {
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
+pub struct IndexAccess {
+    pub id: NodeId,
+    pub src: String,
+    pub argument_types: Option<Vec<TypeDescriptions>>,
+    pub base_expression: Box<Expression>,
+    pub index_expression: Option<Box<Expression>>,
+    pub is_constant: bool,
+    pub is_l_value: bool,
+    pub is_pure: bool,
+    pub l_value_requested: bool,
+    pub type_descriptions: TypeDescriptions,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MemberAccess {
     pub id: u32,
     pub src: String,
@@ -260,7 +275,7 @@ pub enum Expression {
     FunctionCall(FunctionCall),
     FunctionCallOptions(FunctionCallOptions),
     Identifier(Identifier),
-    IndexAccess,
+    IndexAccess(IndexAccess),
     IndexRangeAccess,
     Literal,
     MemberAccess(MemberAccess),

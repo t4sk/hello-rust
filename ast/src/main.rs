@@ -10,7 +10,7 @@ use graph::{Contract, Function, Import, Variable};
 use types::Ast;
 
 fn main() {
-    let file_path = "tmp/tmp.json";
+    let file_path = "tmp/ERC20.json";
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
@@ -95,25 +95,36 @@ fn main() {
                                         ) = s
                                         {
                                             match *exp_statement.expression.clone() {
-                                                /*
-                                                                                                types::Expression::Assignment(assignment) => {
-                                                                                                    if let types::Expression::Identifier(id) =
-                                                                                                        *assignment.left_hand_side
-                                                                                                    {
-                                                                                                        let ref_dec =
-                                                                                                            id.referenced_declaration.unwrap();
-                                                                                                        if let Some(state_var) =
-                                                                                                            contract.state_variables.get(&ref_dec)
-                                                                                                        {
-                                                                                                            assert!(&id.name == state_var);
-                                                                                                            func.body
-                                                                                                                .push(format!("{}", state_var));
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                */
+                                                types::Expression::Assignment(assignment) => {
+                                                    match *assignment.left_hand_side {
+                                                        types::Expression::Identifier(id) => {
+                                                            let ref_dec =
+                                                                id.referenced_declaration.unwrap();
+                                                            if let Some(state_var) = contract
+                                                                .state_variables
+                                                                .get(&ref_dec)
+                                                            {
+                                                                assert!(id.name == state_var.name);
+                                                                func.body.push(
+                                                                    state_var.name.to_string(),
+                                                                );
+                                                            }
+                                                        }
+                                                        types::Expression::IndexAccess(idx_acc) => {
+                                                            //
+                                                            if let types::Expression::Identifier(
+                                                                id,
+                                                            ) = *idx_acc.base_expression
+                                                            {
+                                                                func.body.push(id.name.to_string());
+                                                            }
+                                                        }
+                                                        _ => (),
+                                                    }
+                                                }
                                                 types::Expression::FunctionCall(func_call) => {
                                                     match *func_call.expression {
+                                                        // external call
                                                         types::Expression::MemberAccess(
                                                             mem_acc,
                                                         ) => {
@@ -129,6 +140,7 @@ fn main() {
                                                             };
                                                             func.body.push(func_name)
                                                         }
+                                                        // internal call
                                                         types::Expression::Identifier(id) => {
                                                             func.body
                                                                 .push(format!("{}()", id.name));

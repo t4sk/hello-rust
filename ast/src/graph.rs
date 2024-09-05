@@ -37,6 +37,7 @@ pub struct Function {
     // TODO: handle constructor, fallback, recieve
     pub id: i64,
     pub name: String,
+    // TODO: Vec<Node>
     pub body: Vec<String>,
 }
 
