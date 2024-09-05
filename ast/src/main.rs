@@ -68,8 +68,6 @@ fn main() {
                     );
                 }
 
-                // println!("{:#?}", contract_def.base_contracts);
-
                 let graph::Node::Contract(ref mut contract) =
                     graph_nodes.get_mut(&contract_def.id).unwrap()
                 else {
@@ -87,7 +85,6 @@ fn main() {
                             }
                         }
                         types::ContractNode::FunctionDefinition(func_def) => {
-                            contract.function_ids.push(func_def.id);
                             let mut func = Function::new(func_def.id, &func_def.name);
 
                             if let Some(body) = &func_def.body {
@@ -146,6 +143,7 @@ fn main() {
                                 }
                             }
 
+                            contract.function_ids.push(func_def.id);
                             contract.functions.insert(func.id, func);
                         }
                         _ => (),
