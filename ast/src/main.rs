@@ -6,7 +6,7 @@ use std::fs;
 pub mod graph;
 pub mod types;
 
-use graph::{Contract, Function, Import, Node, Variable};
+use graph::{Contract, Function, Import, Variable};
 use types::Ast;
 
 fn main() {
@@ -14,7 +14,7 @@ fn main() {
     let json = fs::read_to_string(file_path).unwrap();
     let ast = serde_json::from_str::<Ast>(&json).unwrap();
 
-    let mut graph_nodes: HashMap<i64, Node> = HashMap::new();
+    let mut graph_nodes: HashMap<i64, graph::Node> = HashMap::new();
 
     // println!("{:#?}", ast);
     // return;
@@ -52,7 +52,7 @@ fn main() {
                     let id = sym.foreign.referenced_declaration.unwrap();
                     graph_nodes.insert(
                         id,
-                        Node::Import(Import {
+                        graph::Node::Import(Import {
                             id,
                             name: sym.foreign.name.to_string(),
                             abs_path: import_directive.absolute_path.to_string(),
@@ -64,13 +64,13 @@ fn main() {
                 if !graph_nodes.contains_key(&contract_def.id) {
                     graph_nodes.insert(
                         contract_def.id,
-                        Node::Contract(Contract::new(contract_def.id, &contract_def.name)),
+                        graph::Node::Contract(Contract::new(contract_def.id, &contract_def.name)),
                     );
                 }
 
                 // println!("{:#?}", contract_def.base_contracts);
 
-                let Node::Contract(ref mut contract) =
+                let graph::Node::Contract(ref mut contract) =
                     graph_nodes.get_mut(&contract_def.id).unwrap()
                 else {
                     todo!("TODO panic");
