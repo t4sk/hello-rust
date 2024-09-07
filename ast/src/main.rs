@@ -111,12 +111,30 @@ fn main() {
                                                             }
                                                         }
                                                         types::Expression::IndexAccess(idx_acc) => {
-                                                            //
-                                                            if let types::Expression::Identifier(
-                                                                id,
-                                                            ) = *idx_acc.base_expression
-                                                            {
-                                                                func.body.push(id.name.to_string());
+                                                            match *idx_acc.base_expression {
+                                                                // access simple mapping
+                                                                types::Expression::Identifier(
+                                                                    id,
+                                                                ) => {
+                                                                    func.body
+                                                                        .push(id.name.to_string());
+                                                                }
+                                                                // TODO: algo to traverse and search for state variables
+                                                                // access nested mapping
+                                                                types::Expression::IndexAccess(
+                                                                    idx_acc,
+                                                                ) => {
+                                                                    match *idx_acc.base_expression {
+                                                                        types::Expression::Identifier(
+                                                                            id,
+                                                                        ) => {
+                                                                            func.body
+                                                                                .push(id.name.to_string());
+                                                                        },
+                                                                        _ => (),
+                                                                    }
+                                                                }
+                                                                _ => (),
                                                             }
                                                         }
                                                         _ => (),
