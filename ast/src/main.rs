@@ -40,12 +40,9 @@ fn main() {
                 }
             }
             ast::SourceUnitNode::ContractDefinition(contract_def) => {
-                if !graph_nodes.contains_key(&contract_def.id) {
-                    graph_nodes.insert(
-                        contract_def.id,
-                        graph::Node::Contract(Contract::new(contract_def.id, &contract_def.name)),
-                    );
-                }
+                graph_nodes.entry(contract_def.id).or_insert_with(|| {
+                    graph::Node::Contract(Contract::new(contract_def.id, &contract_def.name))
+                });
 
                 let graph::Node::Contract(ref mut contract) =
                     graph_nodes.get_mut(&contract_def.id).unwrap()
