@@ -108,6 +108,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 - closure - newton's method
 - new_address = hash(0xFF, sender, salt, bytecode)
+- merkle proof
 - spinner
 - real time code sharing editor
 - rust clojure immutable vec
