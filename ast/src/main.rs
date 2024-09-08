@@ -3,11 +3,11 @@
 use std::collections::HashMap;
 use std::fs;
 
+pub mod ast;
 pub mod graph;
-pub mod types;
 
+use ast::Ast;
 use graph::{Contract, Function, Import, Variable};
-use types::Ast;
 
 fn main() {
     let file_path = "tmp/ERC20.json";
@@ -24,30 +24,9 @@ fn main() {
     // TODO: function call and assign returned value
     // TODO: map state variable to interface
 
-    // Internal function
-    // FunctionDefinition
-    // -> name
-    // -> statements
-    //    -> FunctionCall
-    //       -> expression
-    //          -> Identifier
-    //             -> name
-    //
-
-    // Write to state variable
-    // FunctionDefinition
-    // -> statements
-    //    -> ExpressionStatement
-    //       -> expression
-    //          Assignment
-    //          -> left_hand_side
-    //             -> Identifier
-    //                -> name
-    //                -> referenced_declaration
-
     for node in ast.ast.nodes.iter() {
         match node {
-            types::SourceUnitNode::ImportDirective(import_directive) => {
+            ast::SourceUnitNode::ImportDirective(import_directive) => {
                 for sym in import_directive.symbol_aliases.iter() {
                     let id = sym.foreign.referenced_declaration.unwrap();
                     graph_nodes.insert(
@@ -60,7 +39,7 @@ fn main() {
                     );
                 }
             }
-            types::SourceUnitNode::ContractDefinition(contract_def) => {
+            ast::SourceUnitNode::ContractDefinition(contract_def) => {
                 if !graph_nodes.contains_key(&contract_def.id) {
                     graph_nodes.insert(
                         contract_def.id,
@@ -76,7 +55,7 @@ fn main() {
 
                 for node in contract_def.nodes.iter() {
                     match node {
-                        types::ContractNode::VariableDeclaration(var_dec) => {
+                        ast::ContractNode::VariableDeclaration(var_dec) => {
                             if var_dec.state_variable {
                                 contract.state_variable_ids.push(var_dec.id);
                                 contract
@@ -84,20 +63,19 @@ fn main() {
                                     .insert(var_dec.id, Variable::new(var_dec.id, &var_dec.name));
                             }
                         }
-                        types::ContractNode::FunctionDefinition(func_def) => {
+                        ast::ContractNode::FunctionDefinition(func_def) => {
                             let mut func = Function::new(func_def.id, &func_def.name);
 
                             if let Some(body) = &func_def.body {
                                 if let Some(statements) = &body.statements {
                                     for s in statements.iter() {
-                                        if let types::Statement::ExpressionStatement(
-                                            exp_statement,
-                                        ) = s
+                                        if let ast::Statement::ExpressionStatement(exp_statement) =
+                                            s
                                         {
                                             match *exp_statement.expression.clone() {
-                                                types::Expression::Assignment(assignment) => {
+                                                ast::Expression::Assignment(assignment) => {
                                                     match *assignment.left_hand_side {
-                                                        types::Expression::Identifier(id) => {
+                                                        ast::Expression::Identifier(id) => {
                                                             let ref_dec =
                                                                 id.referenced_declaration.unwrap();
                                                             if let Some(state_var) = contract
@@ -110,22 +88,20 @@ fn main() {
                                                                 );
                                                             }
                                                         }
-                                                        types::Expression::IndexAccess(idx_acc) => {
+                                                        ast::Expression::IndexAccess(idx_acc) => {
                                                             match *idx_acc.base_expression {
                                                                 // access simple mapping
-                                                                types::Expression::Identifier(
-                                                                    id,
-                                                                ) => {
+                                                                ast::Expression::Identifier(id) => {
                                                                     func.body
                                                                         .push(id.name.to_string());
                                                                 }
                                                                 // TODO: algo to traverse and search for state variables
                                                                 // access nested mapping
-                                                                types::Expression::IndexAccess(
+                                                                ast::Expression::IndexAccess(
                                                                     idx_acc,
                                                                 ) => {
                                                                     match *idx_acc.base_expression {
-                                                                        types::Expression::Identifier(
+                                                                        ast::Expression::Identifier(
                                                                             id,
                                                                         ) => {
                                                                             func.body
@@ -140,16 +116,13 @@ fn main() {
                                                         _ => (),
                                                     }
                                                 }
-                                                types::Expression::FunctionCall(func_call) => {
+                                                ast::Expression::FunctionCall(func_call) => {
                                                     match *func_call.expression {
                                                         // external call
-                                                        types::Expression::MemberAccess(
-                                                            mem_acc,
-                                                        ) => {
+                                                        ast::Expression::MemberAccess(mem_acc) => {
                                                             let mut func_name = mem_acc.member_name;
-                                                            if let types::Expression::Identifier(
-                                                                id,
-                                                            ) = *mem_acc.expression
+                                                            if let ast::Expression::Identifier(id) =
+                                                                *mem_acc.expression
                                                             {
                                                                 func_name = format!(
                                                                     "{}.{}()",
@@ -159,7 +132,7 @@ fn main() {
                                                             func.body.push(func_name)
                                                         }
                                                         // internal call
-                                                        types::Expression::Identifier(id) => {
+                                                        ast::Expression::Identifier(id) => {
                                                             func.body
                                                                 .push(format!("{}()", id.name));
                                                         }
