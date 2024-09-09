@@ -9,6 +9,12 @@ pub mod graph;
 use ast::Ast;
 use graph::{Contract, Function, Import, Variable};
 
+/*
+fn walk(root) {
+
+}
+*/
+
 fn main() {
     let file_path = "tmp/ERC20.json";
     let json = fs::read_to_string(file_path).unwrap();
