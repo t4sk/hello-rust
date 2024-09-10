@@ -106,10 +106,12 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 # app
 
-- closure - newton's method
-- new_address = hash(0xFF, sender, salt, bytecode)
+- [x] secant method
+- [x] create address
+- create2 address
 - merkle proof
 - FFT
-- spinner
+- zkp
+- [x] spinner
 - real time code sharing editor
 - rust clojure immutable vec
