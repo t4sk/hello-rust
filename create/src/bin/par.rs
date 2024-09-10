@@ -58,6 +58,6 @@ fn main() {
     }
 
     for (i, addr) in addrs {
-        println!("{}, {}", i, addr);
+        println!("{}, {:?}", i, addr);
     }
 }

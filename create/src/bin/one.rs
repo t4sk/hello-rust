@@ -11,6 +11,6 @@ fn main() {
 
     for i in start..(end + 1) {
         let contract_addr = calc_contract_addr(deployer_addr, i);
-        println!("{:?}, {:?}", i, contract_addr);
+        println!("{}, {:?}", i, contract_addr);
     }
 }

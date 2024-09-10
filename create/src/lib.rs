@@ -1,14 +1,17 @@
-use ethers::abi::encode;
+use ethers::core::utils::rlp::RlpStream;
 use ethers::types::Address;
 use ethers::utils::keccak256;
 
+// https://ethereum.stackexchange.com/questions/760/how-is-the-address-of-an-ethereum-contract-computed#:~:text=The%20address%20for%20an%20Ethereum,then%20hashed%20with%20Keccak%2D256.
 pub fn calc_contract_addr(deployer_addr: Address, nonce: u64) -> Address {
-    let encoded = encode(&[
-        ethers::abi::Token::Address(deployer_addr),
-        ethers::abi::Token::Uint(nonce.into()),
-    ]);
+    // RLP encode(address, nonce)
+    let mut stream = RlpStream::new();
+    stream.begin_list(2);
+    stream.append(&deployer_addr);
+    stream.append(&nonce);
+    let out = stream.out();
 
-    let hash = keccak256(encoded);
+    let hash = keccak256(out);
     Address::from_slice(&hash[12..])
 }
 
