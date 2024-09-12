@@ -69,7 +69,8 @@
     -   [x] trait bound, `+`, `where`
     -   [ ] trait object
     - [ ] return impl from func
-    - [ ] From and Into
+    - [x] From and Into
+    - [x] Add and Mul
     - [ ] fmt::Display
 -   [x] lifetimes
     -   static
@@ -88,6 +89,7 @@
     - [x] Rc
     
 
+- scope
 - concurrency
   - thread
   - channel
@@ -108,7 +110,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 - [x] secant method
 - [x] create address
-- create2 address
+- [x] create2 address
 - merkle proof
 - FFT
 - zkp
