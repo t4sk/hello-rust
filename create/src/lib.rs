@@ -1,9 +1,9 @@
 use ethers::core::utils::rlp::RlpStream;
-use ethers::types::Address;
+use ethers::types::{Address, U256};
 use ethers::utils::keccak256;
 
 // https://ethereum.stackexchange.com/questions/760/how-is-the-address-of-an-ethereum-contract-computed#:~:text=The%20address%20for%20an%20Ethereum,then%20hashed%20with%20Keccak%2D256.
-pub fn calc_contract_addr(deployer_addr: Address, nonce: u64) -> Address {
+pub fn calc_contract_addr(deployer_addr: Address, nonce: U256) -> Address {
     // RLP encode(address, nonce)
     let mut stream = RlpStream::new();
     stream.begin_list(2);
@@ -15,10 +15,10 @@ pub fn calc_contract_addr(deployer_addr: Address, nonce: u64) -> Address {
     Address::from_slice(&hash[12..])
 }
 
-pub fn parse_args(args: Vec<String>) -> (Address, u64, u64) {
+pub fn parse_args(args: Vec<String>) -> (Address, U256, U256) {
     let deployer_addr: Address = args[1].parse().unwrap();
-    let start: u64 = args[2].parse().unwrap();
-    let end: u64 = args[3].parse().unwrap();
+    let start: U256 = U256::from_dec_str(&args[2]).unwrap();
+    let end: U256 = U256::from_dec_str(&args[3]).unwrap();
 
     (deployer_addr, start, end)
 }
