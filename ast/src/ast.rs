@@ -1,5 +1,7 @@
 use serde::Deserialize;
 use std::collections::HashMap;
+use std::convert::From;
+use std::convert::Into;
 
 pub type NodeId = i64;
 
@@ -72,11 +74,23 @@ pub struct InheritanceSpecifier {
     pub arguments: Option<Vec<Expression>>,
 }
 
+impl From<InheritanceSpecifier> for Node {
+    fn from(item: InheritanceSpecifier) -> Node {
+        Node::InheritanceSpecifier(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct EnumDefinition {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<EnumDefinition> for Node {
+    fn from(item: EnumDefinition) -> Node {
+        Node::EnumDefinition(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -86,11 +100,23 @@ pub struct ErrorDefinition {
     pub src: String,
 }
 
+impl From<ErrorDefinition> for Node {
+    fn from(item: ErrorDefinition) -> Node {
+        Node::ErrorDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct StructDefinition {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<StructDefinition> for Node {
+    fn from(item: StructDefinition) -> Node {
+        Node::StructDefinition(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -100,11 +126,23 @@ pub struct UserDefinedValueTypeDefinition {
     pub src: String,
 }
 
+impl From<UserDefinedValueTypeDefinition> for Node {
+    fn from(item: UserDefinedValueTypeDefinition) -> Node {
+        Node::UserDefinedValueTypeDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UsingForDirective {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<UsingForDirective> for Node {
+    fn from(item: UsingForDirective) -> Node {
+        Node::UsingForDirective(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -114,6 +152,12 @@ pub struct EventDefinition {
     pub src: String,
 }
 
+impl From<EventDefinition> for Node {
+    fn from(item: EventDefinition) -> Node {
+        Node::EventDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ModifierDefinition {
@@ -121,11 +165,23 @@ pub struct ModifierDefinition {
     pub src: String,
 }
 
+impl From<ModifierDefinition> for Node {
+    fn from(item: ModifierDefinition) -> Node {
+        Node::ModifierDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ModifierInvocation {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<ModifierInvocation> for Node {
+    fn from(item: ModifierInvocation) -> Node {
+        Node::ModifierInvocation(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -145,6 +201,25 @@ pub enum ContractNode {
         id: NodeId,
         nodes: Vec<Node>,
     },
+}
+
+impl From<ContractNode> for Node {
+    fn from(item: ContractNode) -> Node {
+        match item {
+            ContractNode::EnumDefinition(inner) => Node::EnumDefinition(inner),
+            ContractNode::ErrorDefinition(inner) => Node::ErrorDefinition(inner),
+            ContractNode::FunctionDefinition(inner) => Node::FunctionDefinition(inner),
+            ContractNode::StructDefinition(inner) => Node::StructDefinition(inner),
+            ContractNode::UserDefinedValueTypeDefinition(inner) => {
+                Node::UserDefinedValueTypeDefinition(inner)
+            }
+            ContractNode::UsingForDirective(inner) => Node::UsingForDirective(inner),
+            ContractNode::VariableDeclaration(inner) => Node::VariableDeclaration(inner),
+            ContractNode::EventDefinition(inner) => Node::EventDefinition(inner),
+            ContractNode::ModifierDefinition(inner) => Node::ModifierDefinition(inner),
+            ContractNode::Unknown { id, nodes } => Node::Unknown { id, nodes },
+        }
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -181,6 +256,12 @@ pub struct ContractDefinition {
     */
 }
 
+impl From<ContractDefinition> for Node {
+    fn from(item: ContractDefinition) -> Node {
+        Node::ContractDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ExpressionStatement {
@@ -189,11 +270,22 @@ pub struct ExpressionStatement {
     pub expression: Box<Expression>,
 }
 
+impl From<ExpressionStatement> for Node {
+    fn from(item: ExpressionStatement) -> Node {
+        Node::ExpressionStatement(item)
+    }
+}
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Break {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<Break> for Node {
+    fn from(item: Break) -> Node {
+        Node::Break(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -203,11 +295,23 @@ pub struct Continue {
     pub src: String,
 }
 
+impl From<Continue> for Node {
+    fn from(item: Continue) -> Node {
+        Node::Continue(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct DoWhileStatement {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<DoWhileStatement> for Node {
+    fn from(item: DoWhileStatement) -> Node {
+        Node::DoWhileStatement(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -217,11 +321,23 @@ pub struct EmitStatement {
     pub src: String,
 }
 
+impl From<EmitStatement> for Node {
+    fn from(item: EmitStatement) -> Node {
+        Node::EmitStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ForStatement {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<ForStatement> for Node {
+    fn from(item: ForStatement) -> Node {
+        Node::ForStatement(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -231,11 +347,23 @@ pub struct IfStatement {
     pub src: String,
 }
 
+impl From<IfStatement> for Node {
+    fn from(item: IfStatement) -> Node {
+        Node::IfStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct InlineAssembly {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<InlineAssembly> for Node {
+    fn from(item: InlineAssembly) -> Node {
+        Node::InlineAssembly(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -245,11 +373,23 @@ pub struct PlaceholderStatement {
     pub src: String,
 }
 
+impl From<PlaceholderStatement> for Node {
+    fn from(item: PlaceholderStatement) -> Node {
+        Node::PlaceholderStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Return {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<Return> for Node {
+    fn from(item: Return) -> Node {
+        Node::Return(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -259,11 +399,23 @@ pub struct RevertStatement {
     pub src: String,
 }
 
+impl From<RevertStatement> for Node {
+    fn from(item: RevertStatement) -> Node {
+        Node::RevertStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TryStatement {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<TryStatement> for Node {
+    fn from(item: TryStatement) -> Node {
+        Node::TryStatement(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -273,6 +425,12 @@ pub struct UncheckedBlock {
     pub src: String,
 }
 
+impl From<UncheckedBlock> for Node {
+    fn from(item: UncheckedBlock) -> Node {
+        Node::UncheckedBlock(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct VariableDeclarationStatement {
@@ -280,11 +438,23 @@ pub struct VariableDeclarationStatement {
     pub src: String,
 }
 
+impl From<VariableDeclarationStatement> for Node {
+    fn from(item: VariableDeclarationStatement) -> Node {
+        Node::VariableDeclarationStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct WhileStatement {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<WhileStatement> for Node {
+    fn from(item: WhileStatement) -> Node {
+        Node::WhileStatement(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -308,12 +478,43 @@ pub enum Statement {
     WhileStatement(WhileStatement),
 }
 
+impl From<Statement> for Node {
+    fn from(item: Statement) -> Node {
+        match item {
+            Statement::Block(item) => Node::Block(item),
+            Statement::Break(item) => Node::Break(item),
+            Statement::Continue(item) => Node::Continue(item),
+            Statement::DoWhileStatement(item) => Node::DoWhileStatement(item),
+            Statement::EmitStatement(item) => Node::EmitStatement(item),
+            Statement::ExpressionStatement(item) => Node::ExpressionStatement(item),
+            Statement::ForStatement(item) => Node::ForStatement(item),
+            Statement::IfStatement(item) => Node::IfStatement(item),
+            Statement::InlineAssembly(item) => Node::InlineAssembly(item),
+            Statement::PlaceholderStatement(item) => Node::PlaceholderStatement(item),
+            Statement::Return(item) => Node::Return(item),
+            Statement::RevertStatement(item) => Node::RevertStatement(item),
+            Statement::TryStatement(item) => Node::TryStatement(item),
+            Statement::UncheckedBlock(item) => Node::UncheckedBlock(item),
+            Statement::VariableDeclarationStatement(item) => {
+                Node::VariableDeclarationStatement(item)
+            }
+            Statement::WhileStatement(item) => Node::WhileStatement(item),
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Block {
     pub id: NodeId,
     pub src: String,
     pub statements: Option<Vec<Statement>>,
+}
+
+impl From<Block> for Node {
+    fn from(item: Block) -> Node {
+        Node::Block(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -340,6 +541,12 @@ pub struct Assignment {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl From<Assignment> for Node {
+    fn from(item: Assignment) -> Node {
+        Node::Assignment(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCall {
@@ -359,6 +566,12 @@ pub struct FunctionCall {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl From<FunctionCall> for Node {
+    fn from(item: FunctionCall) -> Node {
+        Node::FunctionCall(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionCallOptions {
@@ -375,6 +588,12 @@ pub struct FunctionCallOptions {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl From<FunctionCallOptions> for Node {
+    fn from(item: FunctionCallOptions) -> Node {
+        Node::FunctionCallOptions(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Identifier {
@@ -385,6 +604,12 @@ pub struct Identifier {
     pub overloaded_declarations: Vec<NodeId>,
     pub referenced_declaration: Option<NodeId>,
     pub type_descriptions: TypeDescriptions,
+}
+
+impl From<Identifier> for Node {
+    fn from(item: Identifier) -> Node {
+        Node::Identifier(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -400,6 +625,12 @@ pub struct IndexAccess {
     pub is_pure: bool,
     pub l_value_requested: bool,
     pub type_descriptions: TypeDescriptions,
+}
+
+impl From<IndexAccess> for Node {
+    fn from(item: IndexAccess) -> Node {
+        Node::IndexAccess(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -419,11 +650,23 @@ pub struct MemberAccess {
     pub type_descriptions: TypeDescriptions,
 }
 
+impl From<MemberAccess> for Node {
+    fn from(item: MemberAccess) -> Node {
+        Node::MemberAccess(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct BinaryOperation {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<BinaryOperation> for Node {
+    fn from(item: BinaryOperation) -> Node {
+        Node::BinaryOperation(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -433,11 +676,23 @@ pub struct Conditional {
     pub src: String,
 }
 
+impl From<Conditional> for Node {
+    fn from(item: Conditional) -> Node {
+        Node::Conditional(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeNameExpression {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<ElementaryTypeNameExpression> for Node {
+    fn from(item: ElementaryTypeNameExpression) -> Node {
+        Node::ElementaryTypeNameExpression(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -447,11 +702,23 @@ pub struct IndexRangeAccess {
     pub src: String,
 }
 
+impl From<IndexRangeAccess> for Node {
+    fn from(item: IndexRangeAccess) -> Node {
+        Node::IndexRangeAccess(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Literal {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<Literal> for Node {
+    fn from(item: Literal) -> Node {
+        Node::Literal(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -461,6 +728,12 @@ pub struct NewExpression {
     pub src: String,
 }
 
+impl From<NewExpression> for Node {
+    fn from(item: NewExpression) -> Node {
+        Node::NewExpression(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TupleExpression {
@@ -468,11 +741,23 @@ pub struct TupleExpression {
     pub src: String,
 }
 
+impl From<TupleExpression> for Node {
+    fn from(item: TupleExpression) -> Node {
+        Node::TupleExpression(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct UnaryOperation {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<UnaryOperation> for Node {
+    fn from(item: UnaryOperation) -> Node {
+        Node::UnaryOperation(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -503,6 +788,12 @@ pub struct ArrayTypeName {
     pub length: Option<Expression>,
 }
 
+impl From<ArrayTypeName> for Node {
+    fn from(item: ArrayTypeName) -> Node {
+        Node::ArrayTypeName(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ElementaryTypeName {
@@ -512,6 +803,12 @@ pub struct ElementaryTypeName {
     pub state_mutability: Option<StateMutability>,
 }
 
+impl From<ElementaryTypeName> for Node {
+    fn from(item: ElementaryTypeName) -> Node {
+        Node::ElementaryTypeName(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct FunctionTypeName {
@@ -519,6 +816,12 @@ pub struct FunctionTypeName {
     pub src: String,
     pub state_mutability: StateMutability,
     pub visibility: Visibility,
+}
+
+impl From<FunctionTypeName> for Node {
+    fn from(item: FunctionTypeName) -> Node {
+        Node::FunctionTypeName(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -534,6 +837,12 @@ pub struct Mapping {
     pub value_type: Box<TypeName>,
 }
 
+impl From<Mapping> for Node {
+    fn from(item: Mapping) -> Node {
+        Node::Mapping(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct IdentifierPath {
@@ -541,6 +850,12 @@ pub struct IdentifierPath {
     pub src: String,
     pub name: String,
     pub referenced_declaration: Option<NodeId>,
+}
+
+impl From<IdentifierPath> for Node {
+    fn from(item: IdentifierPath) -> Node {
+        Node::IdentifierPath(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -553,6 +868,12 @@ pub struct UserDefinedTypeName {
     pub referenced_declaration: NodeId,
 }
 
+impl From<UserDefinedTypeName> for Node {
+    fn from(item: UserDefinedTypeName) -> Node {
+        Node::UserDefinedTypeName(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(tag = "nodeType")]
 pub enum TypeName {
@@ -563,11 +884,29 @@ pub enum TypeName {
     UserDefinedTypeName(UserDefinedTypeName),
 }
 
+impl From<TypeName> for Node {
+    fn from(item: TypeName) -> Node {
+        match item {
+            TypeName::ArrayTypeName(item) => Node::ArrayTypeName(item),
+            TypeName::ElementaryTypeName(item) => Node::ElementaryTypeName(item),
+            TypeName::FunctionTypeName(item) => Node::FunctionTypeName(item),
+            TypeName::Mapping(item) => Node::Mapping(item),
+            TypeName::UserDefinedTypeName(item) => Node::UserDefinedTypeName(item),
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TypeDescriptions {
     pub type_identifier: Option<String>,
     pub type_string: Option<String>,
+}
+
+impl From<TypeDescriptions> for Node {
+    fn from(item: TypeDescriptions) -> Node {
+        Node::TypeDescriptions(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -586,12 +925,24 @@ pub struct VariableDeclaration {
     pub value: Option<Expression>,
 }
 
+impl From<VariableDeclaration> for Node {
+    fn from(item: VariableDeclaration) -> Node {
+        Node::VariableDeclaration(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterList {
     pub id: NodeId,
     pub src: String,
     pub parameters: Vec<VariableDeclaration>,
+}
+
+impl From<ParameterList> for Node {
+    fn from(item: ParameterList) -> Node {
+        Node::ParameterList(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -609,6 +960,13 @@ pub struct FunctionDefinition {
     pub parameters: ParameterList,
     pub return_parameters: ParameterList,
 }
+
+impl From<FunctionDefinition> for Node {
+    fn from(item: FunctionDefinition) -> Node {
+        Node::FunctionDefinition(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SymbolAlias {
@@ -631,11 +989,23 @@ pub struct ImportDirective {
     pub unit_alias: String,
 }
 
+impl From<ImportDirective> for Node {
+    fn from(item: ImportDirective) -> Node {
+        Node::ImportDirective(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct PragmaDirective {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<PragmaDirective> for Node {
+    fn from(item: PragmaDirective) -> Node {
+        Node::PragmaDirective(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -659,6 +1029,25 @@ pub enum SourceUnitNode {
     */
 }
 
+impl From<SourceUnitNode> for Node {
+    fn from(item: SourceUnitNode) -> Node {
+        match item {
+            SourceUnitNode::ContractDefinition(item) => Node::ContractDefinition(item),
+            SourceUnitNode::EnumDefinition(item) => Node::EnumDefinition(item),
+            SourceUnitNode::ErrorDefinition(item) => Node::ErrorDefinition(item),
+            SourceUnitNode::FunctionDefinition(item) => Node::FunctionDefinition(item),
+            SourceUnitNode::ImportDirective(item) => Node::ImportDirective(item),
+            SourceUnitNode::PragmaDirective(item) => Node::PragmaDirective(item),
+            SourceUnitNode::StructDefinition(item) => Node::StructDefinition(item),
+            SourceUnitNode::UserDefinedValueTypeDefinition(item) => {
+                Node::UserDefinedValueTypeDefinition(item)
+            }
+            SourceUnitNode::UsingForDirective(item) => Node::UsingForDirective(item),
+            SourceUnitNode::VariableDeclaration(item) => Node::VariableDeclaration(item),
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct SourceUnit {
@@ -667,6 +1056,12 @@ pub struct SourceUnit {
     pub absolute_path: String,
     pub nodes: Vec<SourceUnitNode>,
     pub exported_symbols: Option<HashMap<String, Vec<NodeId>>>,
+}
+
+impl From<SourceUnit> for Node {
+    fn from(item: SourceUnit) -> Node {
+        Node::SourceUnit(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -682,11 +1077,23 @@ pub struct EnumValue {
     pub src: String,
 }
 
+impl From<EnumValue> for Node {
+    fn from(item: EnumValue) -> Node {
+        Node::EnumValue(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct OverrideSpecifier {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<OverrideSpecifier> for Node {
+    fn from(item: OverrideSpecifier) -> Node {
+        Node::OverrideSpecifier(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -696,11 +1103,23 @@ pub struct StructuredDocumentation {
     pub src: String,
 }
 
+impl From<StructuredDocumentation> for Node {
+    fn from(item: StructuredDocumentation) -> Node {
+        Node::StructuredDocumentation(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Throw {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<Throw> for Node {
+    fn from(item: Throw) -> Node {
+        Node::Throw(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -710,11 +1129,23 @@ pub struct TryCatchClause {
     pub src: String,
 }
 
+impl From<TryCatchClause> for Node {
+    fn from(item: TryCatchClause) -> Node {
+        Node::TryCatchClause(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulAssignment {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<YulAssignment> for Node {
+    fn from(item: YulAssignment) -> Node {
+        Node::YulAssignment(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -724,11 +1155,23 @@ pub struct YulBlock {
     pub src: String,
 }
 
+impl From<YulBlock> for Node {
+    fn from(item: YulBlock) -> Node {
+        Node::YulBlock(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulCase {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<YulCase> for Node {
+    fn from(item: YulCase) -> Node {
+        Node::YulCase(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -738,6 +1181,12 @@ pub struct YulExpressionStatement {
     pub src: String,
 }
 
+impl From<YulExpressionStatement> for Node {
+    fn from(item: YulExpressionStatement) -> Node {
+        Node::YulExpressionStatement(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulFunctionCall {
@@ -745,11 +1194,22 @@ pub struct YulFunctionCall {
     pub src: String,
 }
 
+impl From<YulFunctionCall> for Node {
+    fn from(item: YulFunctionCall) -> Node {
+        Node::YulFunctionCall(item)
+    }
+}
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulIdentifier {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<YulIdentifier> for Node {
+    fn from(item: YulIdentifier) -> Node {
+        Node::YulIdentifier(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -759,11 +1219,23 @@ pub struct YulLiteral {
     pub src: String,
 }
 
+impl From<YulLiteral> for Node {
+    fn from(item: YulLiteral) -> Node {
+        Node::YulLiteral(item)
+    }
+}
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulSwitch {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<YulSwitch> for Node {
+    fn from(item: YulSwitch) -> Node {
+        Node::YulSwitch(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -773,11 +1245,22 @@ pub struct YulTypedName {
     pub src: String,
 }
 
+impl From<YulTypedName> for Node {
+    fn from(item: YulTypedName) -> Node {
+        Node::YulTypedName(item)
+    }
+}
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct YulVariableDeclaration {
     pub id: NodeId,
     pub src: String,
+}
+
+impl From<YulVariableDeclaration> for Node {
+    fn from(item: YulVariableDeclaration) -> Node {
+        Node::YulVariableDeclaration(item)
+    }
 }
 
 #[derive(Debug, Deserialize, Clone, PartialEq)]
@@ -832,6 +1315,7 @@ pub enum Node {
     TryCatchClause(TryCatchClause),
     TryStatement(TryStatement),
     TupleExpression(TupleExpression),
+    TypeDescriptions(TypeDescriptions),
     UnaryOperation(UnaryOperation),
     UncheckedBlock(UncheckedBlock),
     UserDefinedTypeName(UserDefinedTypeName),
@@ -908,6 +1392,7 @@ pub enum NodeType {
     TryCatchClause,
     TryStatement,
     TupleExpression,
+    TypeDescriptions,
     UnaryOperation,
     UncheckedBlock,
     UserDefinedTypeName,
@@ -930,6 +1415,81 @@ pub enum NodeType {
 }
 
 impl Node {
+    pub fn nodes(&self) -> Option<&Vec<Node>> {
+        match self {
+            Node::ArrayTypeName(_) => None,
+            Node::Assignment(_) => None,
+            Node::BinaryOperation(_) => None,
+            Node::Block(_) => None,
+            Node::Break(_) => None,
+            Node::Conditional(_) => None,
+            Node::Continue(_) => None,
+            Node::ContractDefinition(node) => None,
+            Node::DoWhileStatement(_) => None,
+            Node::ElementaryTypeName(_) => None,
+            Node::ElementaryTypeNameExpression(_) => None,
+            Node::EmitStatement(_) => None,
+            Node::EnumDefinition(_) => None,
+            Node::EnumValue(_) => None,
+            Node::ErrorDefinition(_) => None,
+            Node::EventDefinition(_) => None,
+            Node::ExpressionStatement(_) => None,
+            Node::ForStatement(_) => None,
+            Node::FunctionCall(_) => None,
+            Node::FunctionCallOptions(_) => None,
+            Node::FunctionDefinition(_) => None,
+            Node::FunctionTypeName(_) => None,
+            Node::Identifier(_) => None,
+            Node::IdentifierPath(_) => None,
+            Node::IfStatement(_) => None,
+            Node::ImportDirective(_) => None,
+            Node::IndexAccess(_) => None,
+            Node::IndexRangeAccess(_) => None,
+            Node::InheritanceSpecifier(_) => None,
+            Node::InlineAssembly(_) => None,
+            Node::Literal(_) => None,
+            Node::Mapping(_) => None,
+            Node::MemberAccess(_) => None,
+            Node::ModifierDefinition(_) => None,
+            Node::ModifierInvocation(_) => None,
+            Node::NewExpression(_) => None,
+            Node::OverrideSpecifier(_) => None,
+            Node::ParameterList(_) => None,
+            Node::PlaceholderStatement(_) => None,
+            Node::PragmaDirective(_) => None,
+            Node::Return(_) => None,
+            Node::RevertStatement(_) => None,
+            Node::SourceUnit(_) => None,
+            Node::StructDefinition(_) => None,
+            Node::StructuredDocumentation(_) => None,
+            Node::Throw(_) => None,
+            Node::TryCatchClause(_) => None,
+            Node::TryStatement(_) => None,
+            Node::TupleExpression(_) => None,
+            Node::TypeDescriptions(_) => None,
+            Node::UnaryOperation(_) => None,
+            Node::UncheckedBlock(_) => None,
+            Node::UserDefinedTypeName(_) => None,
+            Node::UserDefinedValueTypeDefinition(_) => None,
+            Node::UsingForDirective(_) => None,
+            Node::VariableDeclaration(_) => None,
+            Node::VariableDeclarationStatement(_) => None,
+            Node::WhileStatement(_) => None,
+            Node::YulAssignment(_) => None,
+            Node::YulBlock(_) => None,
+            Node::YulCase(_) => None,
+            Node::YulExpressionStatement(_) => None,
+            Node::YulFunctionCall(_) => None,
+            Node::YulIdentifier(_) => None,
+            Node::YulLiteral(_) => None,
+            Node::YulSwitch(_) => None,
+            Node::YulTypedName(_) => None,
+            Node::YulVariableDeclaration(_) => None,
+            Node::Unknown { nodes, .. } => Some(nodes),
+            _ => None,
+        }
+    }
+
     pub fn r#type(&self) -> NodeType {
         match self {
             Node::ArrayTypeName(_) => NodeType::ArrayTypeName,
@@ -981,6 +1541,7 @@ impl Node {
             Node::TryCatchClause(_) => NodeType::TryCatchClause,
             Node::TryStatement(_) => NodeType::TryStatement,
             Node::TupleExpression(_) => NodeType::TupleExpression,
+            Node::TypeDescriptions(_) => NodeType::TypeDescriptions,
             Node::UnaryOperation(_) => NodeType::UnaryOperation,
             Node::UncheckedBlock(_) => NodeType::UncheckedBlock,
             Node::UserDefinedTypeName(_) => NodeType::UserDefinedTypeName,

@@ -9,11 +9,19 @@ pub mod graph;
 use ast::Ast;
 use graph::{Contract, Function, Import, Variable};
 
-/*
-fn walk(root) {
+// BFS
+fn walk(node: &ast::Node, f: fn(&ast::Node)) {
+    let mut q = vec![node];
 
+    while let Some(node) = q.pop() {
+        if let Some(nodes) = node.nodes() {
+            for node in nodes.iter() {
+                f(node);
+                q.push(node);
+            }
+        }
+    }
 }
-*/
 
 fn main() {
     let file_path = "tmp/ERC20.json";
@@ -46,6 +54,11 @@ fn main() {
                 }
             }
             ast::SourceUnitNode::ContractDefinition(contract_def) => {
+                walk(
+                    &ast::Node::ContractDefinition(contract_def.clone()),
+                    |node| println!("{:?}", node),
+                );
+
                 graph_nodes.entry(contract_def.id).or_insert_with(|| {
                     graph::Node::Contract(Contract::new(contract_def.id, &contract_def.name))
                 });
@@ -160,5 +173,5 @@ fn main() {
         }
     }
 
-    println!("{:#?}", graph_nodes);
+    // println!("{:#?}", graph_nodes);
 }
