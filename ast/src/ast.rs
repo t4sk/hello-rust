@@ -275,6 +275,7 @@ impl From<ExpressionStatement> for Node {
         Node::ExpressionStatement(item)
     }
 }
+
 #[derive(Debug, Deserialize, Clone, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Break {

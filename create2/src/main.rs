@@ -1,19 +1,15 @@
-use std::env;
 use ethers::core::abi::{encode, encode_packed, Token};
 use ethers::types::{Address, U256};
 use ethers::utils::{hex, keccak256};
+use std::env;
 
 pub fn calc_create2_addr(deployer: Address, salt: U256, init_code: &Vec<u8>) -> Address {
-    // Encode uit256 into bytes32
-    let mut bytes32 = [0u8; 32];
-    salt.to_big_endian(&mut bytes32);
-
     let init_code_hash = keccak256(encode_packed(&[Token::Bytes(init_code.to_vec())]).unwrap());
 
     let encoded = encode_packed(&[
         Token::FixedBytes(vec![0xff]),
         Token::Address(deployer),
-        Token::FixedBytes(bytes32.to_vec()),
+        Token::Uint(salt),
         Token::FixedBytes(init_code_hash.to_vec()),
     ])
     .unwrap();
