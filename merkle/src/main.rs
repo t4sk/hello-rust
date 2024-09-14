@@ -96,7 +96,10 @@ fn verify(root: [u8; 32], proof: &Vec<[u8; 32]>, leaf_hash: [u8; 32]) -> bool {
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let file = File::open(args[1].clone()).unwrap();
+    let file_path = args[1].clone();
+    let idx: usize = args[2].parse().unwrap();
+
+    let file = File::open(file_path).unwrap();
     let reader = BufReader::new(file);
 
     let mut hashes: Vec<[u8; 32]> = Vec::new();
@@ -106,7 +109,6 @@ fn main() {
     }
 
     let root = calc_root_hash(&mut hashes.clone());
-    let idx = 7;
     let proof = get_proof(&mut hashes.clone(), idx);
 
     let r: H256 = root.into();
