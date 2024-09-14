@@ -112,7 +112,7 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - [x] secant method
 - [x] create address
 - [x] create2 address
-- merkle proof
+- [x] merkle proof
 - FFT
 - zkp
 - [x] spinner
