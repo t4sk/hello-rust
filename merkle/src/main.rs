@@ -2,6 +2,7 @@ use ethers::core::abi::encode;
 use ethers::core::abi::Token;
 use ethers::types::{H256, U256};
 use ethers::utils::keccak256;
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
@@ -53,9 +54,49 @@ fn calc_root_hash(hashes: &mut Vec<[u8; 32]>) -> [u8; 32] {
     hashes[0]
 }
 
-// TODO: verify proof with OZ
+fn get_proof(hashes: &mut Vec<[u8; 32]>, idx: usize) -> Vec<[u8; 32]> {
+    let mut proof: Vec<[u8; 32]> = Vec::new();
+    let mut n = hashes.len();
+    let mut k = idx;
+
+    while n > 1 {
+        //      1
+        //    /   \
+        //   2     3
+        //  / \   / \
+        // 4   5 6   7
+        let j = if k & 1 == 1 { k - 1 } else { min(k + 1, n - 1) };
+        proof.push(hashes[j]);
+        k /= 2;
+
+        for i in (0..n).step_by(2) {
+            let left = hashes[i];
+            let right = hashes[min(i + 1, n - 1)];
+            hashes[i / 2] = hash(left, right);
+        }
+        // div by 2 and round up
+        // if n is even => n = n / 2
+        // else         => n = (n + 1) / 2
+        n = (n + (n & 1)) / 2;
+    }
+
+    proof
+}
+
+fn verify(root: [u8; 32], proof: &Vec<[u8; 32]>, leaf_hash: [u8; 32]) -> bool {
+    let mut h = leaf_hash;
+
+    for i in 0..proof.len() {
+        h = hash(proof[i], h);
+    }
+
+    h == root
+}
+
 fn main() {
-    let file = File::open("ex.txt").unwrap();
+    let args: Vec<String> = env::args().collect();
+
+    let file = File::open(args[1].clone()).unwrap();
     let reader = BufReader::new(file);
 
     let mut hashes: Vec<[u8; 32]> = Vec::new();
@@ -64,6 +105,21 @@ fn main() {
         hashes.push(hash_val(v));
     }
 
-    let root: H256 = calc_root_hash(&mut hashes).into();
-    println!("root {:#?}", root);
+    let root = calc_root_hash(&mut hashes.clone());
+    let idx = 7;
+    let proof = get_proof(&mut hashes.clone(), idx);
+
+    let r: H256 = root.into();
+    println!("root {:?}", r);
+
+    let leaf: H256 = hashes[idx].into();
+    println!("leaf {:?}", leaf);
+
+    for p in proof.iter() {
+        let h: H256 = p.into();
+        println!("proof {:#?}", h);
+    }
+
+    let is_valid = verify(root, &proof, hashes[idx]);
+    println!("{:?}", is_valid);
 }
