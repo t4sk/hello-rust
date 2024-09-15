@@ -87,9 +87,12 @@
 - [ ] smart pointers
     - [x] Box
     - [x] Rc
+    - [ ] arc
+- associated types
     
 
 - `dbg, println!("{:#?}")`
+- default
 - scope
 - concurrency
   - thread
@@ -98,9 +101,7 @@
   - async
 - dereference
 - `Box<dyn Error>`
-- arc
 - cow
-- associated types
 - `ref mut`
 - `todo!()`
 - thread scope
