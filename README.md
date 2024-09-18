@@ -79,14 +79,14 @@
   - where syntax, dynamic dispatch
   - difference between func pointer and fn traits and closure
 - [x] iterators
-  - map
-  - filter_map
-  - sort_by
+  - [ ] iter and into_iter (TODO)
+  - [x] map, filter, filter_map, fold, flatten
+  - sort_by ?
 - [ ] collection
   - vector
   - [ ] slice
   - hash map
-  - hash set
+  - [x] hash set
 - [ ] mod
 - [ ] smart pointers
   - [x] Box
