@@ -118,7 +118,8 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 - [x] create2 address
 - [x] merkle proof
 - [ ] mpt proof
-- FFT
+- [x] FFT
 - zkp
 - [x] spinner
+- [ ] anzan
 - real time code sharing editor
