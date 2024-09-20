@@ -79,7 +79,8 @@
   - where syntax, dynamic dispatch
   - difference between func pointer and fn traits and closure
 - [x] iterators
-  - [ ] iter and into_iter (TODO)
+  - [ ] iter - doesn't take ownership (iterate by reference)
+  - [ ] into_iter - takes ownership (moves items into new scope)
   - [x] map, filter, filter_map, fold, flatten
   - sort_by ?
 - [ ] collection
