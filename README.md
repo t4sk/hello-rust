@@ -114,6 +114,8 @@ https://github.com/wh5a/rustlings-solutions/tree/main/exercises
 
 # app
 
+- [ ] ast
+- [ ] graph
 - [x] secant method
 - [x] create address
 - [x] create2 address
