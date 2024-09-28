@@ -94,6 +94,12 @@
   - [x] Rc
   - [ ] arc
 - associated types
+- advanced types
+
+  - assoc type
+  - `trait Add<Rhs=Self>` (default type parameter)
+  - difference between Clone and Copy
+  - Sized
 
 - `dbg, println!("{:#?}")`
 - default
