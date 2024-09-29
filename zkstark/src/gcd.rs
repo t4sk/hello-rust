@@ -10,13 +10,13 @@ pub trait One: Sized + Add<Self, Output = Self> {
     fn one() -> Self;
 }
 
-impl Zero for u64 {
+impl Zero for u128 {
     fn zero() -> Self {
         0
     }
 }
 
-impl One for u64 {
+impl One for u128 {
     fn one() -> Self {
         1
     }
