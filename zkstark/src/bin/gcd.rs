@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 // Euclidean algorithm
-// gdc(a, b) = gcd(b, a mod b) (TODO: why?)
+// gdc(a, b) = gcd(b, a mod b)
 // example
 // gcd(180, 196) = gcd(16, 180) = gcd(4, 16) = 4
 fn gcd_rec(a: i64, b: i64) -> i64 {
@@ -59,7 +59,9 @@ fn xgcd(mut a: i64, mut b: i64) -> (i64, i64, i64) {
     let (mut x0, mut x1) = (1, 0);
     let (mut y0, mut y1) = (0, 1);
 
-    // TODO: why gcd(a, b) = gcd(b, a % b)
+    // gcd(a, b) = gcd(b, a % b)
+    // a = bq0 + r0
+    // b = r0q1 + r1
 
     // r0 = a, r1 = b
     // ax0 + by0 = r0 = r1q1 + r2, 0 <= r2 < r1
@@ -69,7 +71,7 @@ fn xgcd(mut a: i64, mut b: i64) -> (i64, i64, i64) {
     // ax_n + by_n = r_n = r_{n+1}q_{n+1} + r_{n+2}, r_{n+2} = 0
 
     // r_{n+2} = r_n - r_{n+1}q_{n+1}
-    // r2 = r0 - r1*q
+    // r2 = r0 - r1q
     // r1 = r0
 
     // ax2 + by2 = r2 = r0 - r1q1 = ax0 + by0 - (ax1 + by1)q1

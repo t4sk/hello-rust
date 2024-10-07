@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use zkstark::ff::{nth_root, FieldElement};
+use zkstark::ff::{mul, nth_root, FieldElement};
 
 // Function + concrete type implementation
 fn modulo(a: u64, b: u64) -> u64 {
@@ -33,6 +33,8 @@ where
 
 fn main() {
     let p: u128 = 1 + 407 * (1 << 119);
-    let x = nth_root(4);
+    // let x = nth_root(4);
+    let x = mul(u128::MAX, u128::MAX);
+
     println!("{:?}", x);
 }
