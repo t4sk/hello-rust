@@ -7,6 +7,43 @@ use crate::gcd::xgcd;
 
 pub const P: u128 = 1 + 407 * (1 << 119);
 
+#[derive(Debug)]
+pub struct U256 {
+    pub high: u128,
+    pub low: u128,
+}
+
+impl U256 {
+    pub fn mul(x: u128, y: u128) -> Self {
+        let mask: u128 = (1 << 64) - 1;
+
+        // (a*2^64 + b)(c*2^64 + d)
+        // ac*2^128 + (ad + bc)*2^64 + bd
+        // | 64 | 64 | 64 | 64
+        //           |   bd   |
+        //      | ad + bc |
+        // |  ac   |
+        let a: u128 = x >> 64;
+        let b: u128 = x & mask;
+        let c: u128 = y >> 64;
+        let d: u128 = y & mask;
+
+        let ac = a * c;
+        let ad = a * d;
+        let bc = b * c;
+        let bd = b * d;
+
+        let mid_low: u128 = (ad & mask) + (bc & mask);
+        let mid_high: u128 = (ad >> 64) + (bc >> 64);
+        // carry < 3 * 2**64
+        let carry: u128 = mid_low + (bd >> 64);
+        let high: u128 = ac + mid_high + (carry >> 64);
+        let low: u128 = (mid_low << 64).wrapping_add(bd);
+
+        Self { high, low }
+    }
+}
+
 pub fn add_mod(a: u128, b: u128, m: u128) -> u128 {
     assert!(a < m);
     assert!(b < m);
@@ -16,39 +53,34 @@ pub fn add_mod(a: u128, b: u128, m: u128) -> u128 {
         // m < a + b < 2m
         // 0 < a + b - m < m
         // (a + b) - m = a - (m - b)
-        a - (m - b)
+        z.wrapping_sub(m)
     } else {
         z % m
     }
 }
 
-pub fn mul(x: u128, y: u128) -> (u128, u128) {
-    let mask: u128 = (1 << 64) - 1;
+pub fn mul_mod(a: u128, b: u128, m: u128) -> u128 {
+    assert!(a < m);
+    assert!(b < m);
 
-    // (a*2^64 + b)(c*2^64 + d)
-    // ac*2^128 + (ad + bc)*2^64 + bd
-    // | 64 | 64 | 64 | 64
-    //           |   bd   |
-    //      | ad + bc |
-    // |  ac   |
-    let a: u128 = x >> 64;
-    let b: u128 = x & mask;
-    let c: u128 = y >> 64;
-    let d: u128 = y & mask;
+    // prod = x*2^128 + y
+    let prod = U256::mul(a, b);
 
-    let ac = a * c;
-    let ad = a * d;
-    let bc = b * c;
-    let bd = b * d;
+    // x*2^128 mod n = (x mod n)(2^128 mod n) mod n
+    let mut high = 1 % m;
+    for i in 0..128 {
+        // TODO: here
+        high <<= 1;
+        // high %= m;
+        println!("{} {} {}", i, high, high <= m);
+    }
 
-    let mid_low: u128 = (ad & mask) + (bc & mask);
-    let mid_high: u128 = (ad >> 64) + (bc >> 64);
-    // carry < 3 * 2**64
-    let carry: u128 = mid_low + (bd >> 64);
-    let high: u128 = ac + mid_high + (carry >> 64);
-    let low: u128 = (mid_low << 64).wrapping_add(bd);
+    println!("high {}", prod.high);
+    println!("low {}", prod.low);
+    println!("high {}", high);
 
-    (high, low)
+    let low = prod.low % m;
+    add_mod(high, low, m)
 }
 
 #[derive(Debug, Clone, Copy)]
