@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use zkstark::ff::{mul_mod, nth_root, FieldElement, U256};
+use zkstark::ff::{mul_mod, nth_root, FieldElement};
 
 // Function + concrete type implementation
 fn modulo(a: u64, b: u64) -> u64 {
