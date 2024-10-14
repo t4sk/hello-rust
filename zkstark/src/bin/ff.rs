@@ -36,6 +36,6 @@ fn main() {
     println!("p {}", p);
 
     // let x = nth_root(4);
-    let x = mul_mod((p - 1), (p - 1), p);
+    let x = mul_mod((p - 1), 1234567, p);
     println!("{:?}", x);
 }

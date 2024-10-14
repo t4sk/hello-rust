@@ -1,4 +1,5 @@
 #![allow(unused)]
+use ethnum::U256;
 use std::cmp::PartialOrd;
 use std::ops::Rem;
 use std::ops::{Add, Div, Mul, Sub};
@@ -51,34 +52,15 @@ pub fn add_mod(a: u128, b: u128, m: u128) -> u128 {
     }
 }
 
-// xy mod n = (a*2^k + b)(c*2^k + d) mod n
-//          = (ac*2^(2k) + (ad + bc)*2^k + bd) mod n
-
 pub fn mul_mod(a: u128, b: u128, m: u128) -> u128 {
     assert!(a < m);
     assert!(b < m);
 
-    // prod = x*2^128 + y
-    let (mut high, low) = mul(a, b);
+    let a: U256 = U256::from(a);
+    let b: U256 = U256::from(b);
+    let m: U256 = U256::from(m);
 
-    // x*2^128 mod n = (x mod n)(2^128 mod n) mod n
-
-    // 2^128 % m = ((-m) % 2^128) % m
-    let h = m.wrapping_neg() % m;
-    let mut high = 1 % m;
-    for i in 0..128 {
-        // TODO: here
-        high <<= 1;
-        // high %= m;
-        println!("{} {} {}", i, high, high <= m);
-    }
-
-    high = m.wrapping_neg() % m;
-
-    println!("high {}", high);
-    println!("low {}", low);
-
-    add_mod(high, low % m, m)
+    ((a * b) % m).as_u128()
 }
 
 #[derive(Debug, Clone, Copy)]
