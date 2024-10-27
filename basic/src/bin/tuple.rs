@@ -7,5 +7,10 @@ fn main() {
     println!("tup 1 = {}", tup.1);
     println!("tup 2 = {}", tup.2);
 
+    // Destructure
+    let (a, b, c) = tup;
+    println!("{} {} {}", a, b, c);
+
     let empty_tup = ();
+    let nested_tuple = (('a', 1.23), ('b', true, 1), ());
 }

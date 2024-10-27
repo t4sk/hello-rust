@@ -1,3 +1,5 @@
+#![allow(unused)]
+
 fn main() {
     // let, immutable
     let x = 5;
