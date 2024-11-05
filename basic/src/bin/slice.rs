@@ -25,10 +25,15 @@ fn main() {
     // slice is a reference to an collection so doesn't have ownership
     let s = String::from("hello world");
 
-    // &s[..5]
+    // optional 0 index
+    //  hello = &s[..5]
     let hello = &s[0..5];
-    // &s[6..]
+    // optional last index
+    //  world = &s[6..]
     let world = &s[6..11];
+
+    // Slice of the entire string
+    let hello_world = &s[..];
 
     let nums = [0, 0, 0, 0, 1, 1];
     let b: &[u32] = &nums[..];
