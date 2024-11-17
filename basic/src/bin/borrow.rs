@@ -53,7 +53,7 @@ fn main() {
     // Borrow
     // - creates reference
     // - doesn't transfer ownership
-    // - can create one mutable reference
+    // - can have only one mutable reference at a time
     // - or any number of immutable references
 
     // One mutable reference (at a time) //

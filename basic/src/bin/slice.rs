@@ -21,7 +21,20 @@ fn ones(nums: &[u32]) -> &[u32] {
     return &nums[0..0];
 }
 
+fn take(s: String) {
+    //
+}
+
+fn borrow(s: &str) {
+    //
+}
+
 fn main() {
+    let s = String::from("cat");
+    // take(s);
+    borrow(&s);
+    println!("{}", s);
+
     // slice is a reference to an collection so doesn't have ownership
     let s = String::from("hello world");
 
