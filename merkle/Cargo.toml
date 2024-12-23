@@ -1,7 +1,0 @@
-[package]
-name = "merkle"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-ethers = "2"
