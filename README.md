@@ -9,7 +9,12 @@ cargo --version
 
 # Run
 cargo run --bin hello
+
+# Cloning this repo
+git clone git@github.com:t4sk/hello-rust.git
+cd hello-rust
+cargo build
 ```
 
 - [ ] Install cargo
-- [ ] Hello world
+- [ ] [Hello world](./src/bin/hello.rs)
