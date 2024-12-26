@@ -24,8 +24,8 @@ cargo build
 
 ### Intro
 
-- [ ] Install cargo
-- [ ] [Hello world](./src/bin/hello.rs)
+- [x] Install cargo
+- [x] [Hello world](./src/bin/hello.rs)
 - [ ] [`println!`](./src/bin/print.rs)
 
 ### Data
