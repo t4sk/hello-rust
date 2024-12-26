@@ -1,6 +1,9 @@
 # Hello Rust
 
 [Install](https://www.rust-lang.org/tools/install)
+[Play ground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021)
+[Rust book](https://doc.rust-lang.org/book/title-page.html)
+[Rust by example](https://doc.rust-lang.org/rust-by-example/index.html)
 
 ```shell
 # Verify installation
