@@ -8,6 +8,8 @@
 
 [Rust by example](https://doc.rust-lang.org/rust-by-example/index.html)
 
+[Rust reference](https://doc.rust-lang.org/reference/introduction.html)
+
 ```shell
 # Verify installation
 rustc --version
