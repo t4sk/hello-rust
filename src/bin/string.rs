@@ -2,31 +2,32 @@
 
 // String = vector of u8 (Vec<u8>) valid UTF-8
 // &str = slice of u8 (&[u8]) valid UTF-8
+
+// When to use String vs &str
+// String -> mutate or data needs to be owned
+// &str -> read only
 fn main() {
     // String
     let msg: String = String::from("Hello Rust 🦀");
     let len: usize = msg.len();
     println!("String length = {len}");
 
-    // &str
+    // str
     // - String slice
+    // &str
+    // - usually used str with reference (borrowed)
     // - immutable
     let msg: String = String::from("Hello Rust 🦀");
     // String slice
     let s: &str = &msg[..5];
     println!("slice = {s}");
-    // Deref coercion
-    // Rust automatically dereferences &String into a &str
-    let s: &str = &msg;
     let len: usize = s.len();
-    println!("slice = {s}");
-    println!("str length = {len}");
+    println!("slice length = {len}");
 
     // String literal
     // - stored inside binary
     // - slice pointing to a specific part of the binary
     // - immutable because hard-coded inside binary
-    // TODO: how about &str from String?
     let hello: &str = "Hello Rust";
 
     // Multi line string literal
@@ -37,6 +38,12 @@ fn main() {
         }
     "#;
     println!("{s}");
+
+    // Deref coercion
+    // Rust automatically dereferences &String into a &str
+    let msg: String = String::from("Hello Rust 🦀");
+    let s: &str = &msg;
+    println!("slice = {s}");
 
     // Add str to string
     let mut msg = "Hello".to_string();
