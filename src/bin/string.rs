@@ -15,7 +15,7 @@ fn main() {
     // str
     // - String slice
     // &str
-    // - usually used str with reference (borrowed)
+    // - usually use str with reference (borrowed)
     // - immutable
     let msg: String = String::from("Hello Rust 🦀");
     // String slice
