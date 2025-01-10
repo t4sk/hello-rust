@@ -10,6 +10,15 @@ fn print_name(name: String) {
     println!("My name is {}", name);
 }
 
+// Diverge - never return
+fn forever() -> ! {
+    loop {}
+}
+
+fn crash() -> ! {
+    panic!("error");
+}
+
 fn main() {
     let x: u32 = 1;
     let y: u32 = 2;
