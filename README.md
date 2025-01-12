@@ -67,7 +67,7 @@ cargo build
     - `Self`, `self`
     - Associated function (static method)
     - Methods (functions called on a particular instance of type)
-- [ ] [Operators](./src/bin/operators.rs)
+- [x] [Operators](./src/bin/operators.rs)
   - Math
   - Bool
   - Comparison
@@ -75,26 +75,26 @@ cargo build
 
 ### Control flow
 
-- [ ] [if / else](./src/bin/if_else.rs)
-- [ ] [loop](./src/bin/loop.rs)
-  - [ ] for and range
-  - [ ] while
-  - [ ] returning values from loop
-  - [ ] `usize`
-  - [ ] label
-- [ ] [match](./src/bin/match.rs)
+- [x] [if / else](./src/bin/if_else.rs)
+- [x] [loop](./src/bin/loop.rs)
+  - for and range
+  - while
+  - returning values from loop
+  - `usize`
+  - label
+- [x] [match](./src/bin/match.rs)
   - match on `Option` and `Result`
   - `_` to match rest
   - `@`
-- [ ] [if let and let else](./src/bin/if_let.rs)
+- [x] [if let and let else](./src/bin/if_let.rs)
 
 ### Function
 
-- [ ] [function](./src/bin/func.rs)
+- [x] [function](./src/bin/func.rs)
   - no return value
   - return value
   - implicit return
-- [ ] [mod](./src/bin/mods.rs)
+- [x] [mod](./src/bin/mods.rs)
   - visibility, `pub`
   - `use`, `super`
   - nested
@@ -103,10 +103,10 @@ cargo build
 
 ### Error handling?
 
-- [ ] [error handling](./src/bin/error.rs)
-  - [ ] panic
-  - [ ] option
-  - [ ] result
+- [x] [error handling](./src/bin/error.rs)
+  - panic
+  - option
+  - result
 - [ ] [expect, unwrap](./src/bin/expect.rs)
 - [ ] [`?`](./src/bin/question.rs)
 - [ ] [`Box<dyn Error>`](./src/bin/box_dyn_error.rs)
@@ -137,3 +137,57 @@ cargo build
 - [ ] [vector](./src/bin/vec.rs)
 - [ ] [hash map](./src/bin/hash_map.rs)
 - [ ] [hash set](./src/bin/hash_set.rs)
+
+### Trait
+
+- [ ] trait
+  - [ ] [basic](./src/bin/trait_basic.rs)
+    - `trait`, `impl`, default impl
+  - [ ] common traits
+    - [ ] [`derive`, `Debug`, `Default`, `PartialEq`, `Clone`](./src/bin/trait_common)
+    - [ ] [`Clone` and `Copy`](./src/bin/trait_clone_copy.rs)
+    - [ ] [`Drop`](./src/bin/trait_drop.rs)
+  - [ ] [trait fn input and output](./src/bin/trait_fn_io.rs)
+  - [ ] [super trait `+`](./src/bin/trait_super.rs)
+  - [ ] [fully qualified trait](./src/bin/trait_qualified.rs)
+
+### Generic types
+
+- [ ] generic types
+  - basic
+    - [ ] [struct, `Option`, `Result`, vector, `_`](./src/bin/generic_data.rs)
+      - Monomorphization
+      - default G<T = A>
+    - [ ] [function](./src/bin/generic_func.rs)
+  - [ ] [method for generic typed struct](./src/bin/generic_method.rs)
+  - [ ] [generic traits](./src/bin/generic_trait.rs)
+  - [ ] [`From` and `Into`](./src/bin/generic_from_into.rs)
+  - [ ] [trait bound, `+`, `where`](./src/bin/generic_trait_bound.rs)
+  - [ ] [`Sized` and `?Sized`](./src/bin/generic_sized.rs)
+  - [ ] [dynamic dispatch](./src/bin/generic_dyn_dispatch.rs)
+    - dynamic dispatch, `dyn`, `Box<dyn T>`
+    - trait object
+    - `Box<dyn Error>`
+  - [ ] associated types
+    - [ ] [basic](./src/bin/generic_assoc_type.rs)
+    - [ ] [operator overloading](./src/bin/generic_op_overload.rs)
+    - [ ] [iterator](./src/bin/generic_iter.rs)
+      - vec, array, hashmap
+      - counter
+      - `iter` and `into_iter`, `iter_mut`
+    - [ ] [iterator adaptors `map`, `filter`, `collect`, `fold`, `enumerate`, `rev`, `zip`](./src/bin/generic_iter_adaptor.rs)
+    - [ ] [while let](./src/bin/while_let.rs)
+  - [ ] [lifetimes](./src/bin/generic_lifetime.rs)
+    - elision
+    - static
+    - `'_`
+
+### Closure
+
+- [ ] closures
+  - [ ] basic, `map`
+  - [ ] `move`
+  - [ ] `Fn`, `FnMut`, `FnOnce`
+  - [ ] using closure as input and output
+  - [ ] function pointer
+  - [ ] difference between func pointer and fn traits and closure
