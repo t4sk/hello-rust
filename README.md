@@ -101,7 +101,7 @@ cargo build
   - struct
   - [ ] `crate`
 
-### Error handling?
+### Error handling
 
 - [x] [error handling](./src/bin/error.rs)
   - panic
@@ -185,9 +185,14 @@ cargo build
 ### Closure
 
 - [ ] closures
-  - [ ] basic, `map`
-  - [ ] `move`
-  - [ ] `Fn`, `FnMut`, `FnOnce`
-  - [ ] using closure as input and output
+  - [ ] [basic](./src/bin/closure.rs)
+  - [ ] [`move`](./src/bin/closure_move.rs)
+  - [ ] [`Fn`, `FnMut`, `FnOnce`](./src/bin/closure_fn_traits.rs)
+  - [ ] [using closure as input and output](./src/bin/closure_out.rs)
   - [ ] function pointer
   - [ ] difference between func pointer and fn traits and closure
+
+### Concurrency
+
+- [ ] [thread](./src/bin/thread.rs)
+- [ ] [thread `move`](./src/bin/thread_move.rs)
