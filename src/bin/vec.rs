@@ -7,6 +7,8 @@ fn main() {
 
     // Vec<u8>
     let v = vec![1u8, 2, 3, 4];
+    // Initialize with all 5 elements equal to 1
+    let v = vec![1u8; 5];
     println!("vec = {:?}, length = {}", v, v.len());
 
     // Get
