@@ -1,5 +1,15 @@
 #![allow(unused)]
 
+// Memory
+// Stack
+// - Stores data of fixed size at compile time
+// - Fast
+// - LIFO
+// Heap
+// - Stores data of unknown size at compile time
+// - Slower than stack
+// - Data managed by ownership and borrowing rules
+
 // Ownership rules
 // 1. Each value has an owner
 // 2. There can only be one owner at a time
