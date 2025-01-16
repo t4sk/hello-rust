@@ -55,6 +55,13 @@ fn main() {
     // 3. When the owner goes out of scope, the value will be dropped
     let s = String::from("cat");
     {
+        s;
+    }
+    // This will not compile
+    // println!("{s}");
+
+    let s = String::from("cat");
+    {
         // Owner of s is s1
         let s1 = s;
         println!("{s1}");
