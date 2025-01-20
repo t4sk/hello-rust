@@ -127,7 +127,7 @@ cargo build
   - mutable reference
   - cannot return ref
   - [ ] [function](./src/bin/borrow_func.rs)
-  - [ ] [slice](./scr/bin/borrow_slice.rs)
+  - [ ] [slice](./src/bin/borrow_slice.rs)
     - slice is a reference to an collection so it's always borrowed
   - [ ] [`String` and `str`](./src/bin/borrow_string_str.rs)
   - [ ] [dereference](./src/bin/borrow_deref.rs)
