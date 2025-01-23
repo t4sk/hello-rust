@@ -70,8 +70,11 @@ fn main() {
 
     // str - string slice
     // - Dynamically sized type / unsized type
-    // - Size not known at compile time
-    // - Rust needs to know how much memory to allocate for each type at compile time
+    // - Size of the type not known at compile time
+    // - Compiler needs to know the size of each type
+    // Example - size of type cannot be determined, strings have different lengths
+    // let a: str = "hello";
+    // let b: str = "hello rust";
 
     // Cannot create a variable of type str or use for function input
     // let s: str = "hello";
