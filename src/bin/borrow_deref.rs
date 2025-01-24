@@ -1,7 +1,7 @@
 #![allow(unused)]
 
 fn borrow(s: &mut String) {
-    // Dereferencing doesn't transfer ownership fot &T and &mut T
+    // Dereferencing doesn't transfer ownership for &T and &mut T
     *s += "!";
 }
 
