@@ -184,13 +184,13 @@ cargo build
 
 ### Closure
 
-- [ ] closures
-  - [ ] [basic](./src/bin/closure.rs)
-  - [ ] [`move`](./src/bin/closure_move.rs)
-  - [ ] [`Fn`, `FnMut`, `FnOnce`](./src/bin/closure_fn_traits.rs)
-  - [ ] [using closure as input and output](./src/bin/closure_out.rs)
-  - [ ] function pointer
-  - [ ] difference between func pointer and fn traits and closure
+- [ ] [Function pointer](./src/bin/fn_pointer.rs)
+- [ ] [Basic](./src/bin/closure.rs)
+  - `map` example
+  - difference between func pointer
+- [ ] [Borrow, ownership and `move`](./src/bin/move.rs)
+- [ ] [`Fn`, `FnMut`, `FnOnce`](./src/bin/fn_traits.rs)
+- [ ] [using closure as input and output](./src/bin/closure_out.rs)
 
 ### Concurrency
 
