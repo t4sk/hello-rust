@@ -190,7 +190,7 @@ cargo build
   - difference between func pointer
 - [ ] [Borrow, ownership and `move`](./src/bin/move.rs)
 - [ ] [`Fn`, `FnMut`, `FnOnce`](./src/bin/fn_traits.rs)
-- [ ] [using closure as input and output](./src/bin/closure_out.rs)
+- [ ] [Closure as input and output](./src/bin/closure_out.rs)
 
 ### Concurrency
 
