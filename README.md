@@ -144,7 +144,7 @@ cargo build
   - [ ] [basic](./src/bin/trait_basic.rs)
     - `trait`, `impl`, default impl
   - [ ] common traits
-    - [ ] [`derive`, `Debug`, `Default`, `PartialEq`, `Clone`](./src/bin/trait_common)
+    - [ ] [`derive`, `Debug`, `Default`, `PartialEq`, `Clone`](./src/bin/trait_common.rs)
     - [ ] [`Clone` and `Copy`](./src/bin/trait_clone_copy.rs)
     - [ ] [`Drop`](./src/bin/trait_drop.rs)
   - [ ] [trait fn input and output](./src/bin/trait_fn_io.rs)
