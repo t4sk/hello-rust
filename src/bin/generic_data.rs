@@ -6,7 +6,7 @@ enum Option<T> {
     None,
 }
 
-// Enum - eneric over 2 types
+// Enum - generic over 2 types
 enum Result<T, E> {
     Ok(T),
     Err(E),
