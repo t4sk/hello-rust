@@ -158,7 +158,7 @@ cargo build
     - [ ] [struct, `Option`, `Result`, vector, `_`](./src/bin/generic_data.rs)
       - default G<T = A>
     - [ ] [function](./src/bin/generic_func.rs)
-      - Monomorphization
+    - [ ] [Monomorphization](./src/bin/monomorph.rs)
   - [ ] [method for generic typed struct](./src/bin/generic_method.rs)
   - [ ] [generic traits](./src/bin/generic_trait.rs)
   - [ ] [`From` and `Into`](./src/bin/generic_from_into.rs)
