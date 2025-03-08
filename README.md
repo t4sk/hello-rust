@@ -192,6 +192,18 @@ cargo build
 - [ ] [`Fn`, `FnMut`, `FnOnce`](./src/bin/fn_traits.rs)
 - [ ] [Closure as input and output](./src/bin/closure_out.rs)
 
+### Smart pointers
+
+- [x] [`Box`](./src/bin/box.rs)
+  - recursive data structure
+  - unbox (get value inside box)
+  - `Box<dyn Error>`
+- [x] [`Rc`](./src/bin/rc.rs)
+- [x] [`RefCell`](./src/bin/ref_cell.rs)
+  - interior mutability
+- [x] [Strong and weak references](./src/bin/weak.rs)
+  - `Weak`
+
 ### Concurrency
 
 - [ ] [thread](./src/bin/thread.rs)
