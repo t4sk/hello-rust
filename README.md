@@ -203,5 +203,15 @@ cargo build
 
 ### Concurrency
 
-- [thread](./src/bin/thread.rs)
-- [thread `move`](./src/bin/thread_move.rs)
+- [x] [thread](./src/bin/thread.rs)
+  - `join`
+  - `move`
+  - return values
+- [x] [scoped thread](./src/bin/scoped_thread.rs)
+  - auto join
+  - borrows
+  - return values
+- [x] [channel](./src/bin/channel.rs)
+  - `send` and `recv`
+- [x] [`Mutex`](./src/bin/mutex.rs)
+- [x] [`Arc`](./src/bin/arc.rs)
