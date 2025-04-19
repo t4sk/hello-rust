@@ -13,18 +13,24 @@ trait GenericIterator<T> {
     fn get_next(&mut self) -> Option<T>;
 }
 
-struct Counter {
-    pub count: u32,
+struct ArrayIter<T> {
+    array: [T; 5],
+    i: usize,
 }
 
-impl GenericIterator<u32> for Counter {
+impl GenericIterator<u32> for ArrayIter<u32> {
     fn get_next(&mut self) -> Option<u32> {
-        self.count += 1;
-        Some(self.count)
+        match self.array.get(self.i) {
+            Some(v) => {
+                self.i += 1;
+                Some(*v)
+            }
+            _ => None,
+        }
     }
 }
 
-impl GenericIterator<bool> for Counter {
+impl GenericIterator<bool> for ArrayIter<bool> {
     fn get_next(&mut self) -> Option<bool> {
         Some(true)
     }
@@ -36,18 +42,23 @@ trait Iterator {
     fn next(&mut self) -> Option<Self::Item>;
 }
 
-impl Iterator for Counter {
-    type Item = u32;
+impl<T: Copy> Iterator for ArrayIter<T> {
+    type Item = T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        self.count += 1;
-        Some(self.count)
+        match self.array.get(self.i) {
+            Some(v) => {
+                self.i += 1;
+                Some(*v)
+            }
+            _ => None,
+        }
     }
 }
 
 // This will not compile - only one implementation for associated type
 /*
-impl Iterator for Counter {
+impl Iterator for ArrayIter<bool> {
     type Item = bool;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -57,14 +68,12 @@ impl Iterator for Counter {
 */
 
 fn main() {
-    let mut counter = Counter { count: 0 };
+    let mut arr_iter: ArrayIter<u32> = ArrayIter {
+        array: [1, 2, 3, 4, 5],
+        i: 0,
+    };
 
-    let v = counter.next();
-    println!("{:?}", v);
-
-    let v = counter.next();
-    println!("{:?}", v);
-
-    let v = counter.next();
-    println!("{:?}", v);
+    while let Some(v) = arr_iter.next() {
+        println!("{:?}", v);
+    }
 }
