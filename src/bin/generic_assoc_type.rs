@@ -30,7 +30,7 @@ impl GenericIterator<u32> for ArrayIter<u32> {
     }
 }
 
-impl GenericIterator<bool> for ArrayIter<bool> {
+impl GenericIterator<bool> for ArrayIter<u32> {
     fn get_next(&mut self) -> Option<bool> {
         Some(true)
     }
@@ -42,8 +42,8 @@ trait Iterator {
     fn next(&mut self) -> Option<Self::Item>;
 }
 
-impl<T: Copy> Iterator for ArrayIter<T> {
-    type Item = T;
+impl Iterator for ArrayIter<u32> {
+    type Item = u32;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self.array.get(self.i) {
@@ -58,7 +58,7 @@ impl<T: Copy> Iterator for ArrayIter<T> {
 
 // This will not compile - only one implementation for associated type
 /*
-impl Iterator for ArrayIter<bool> {
+impl Iterator for ArrayIter<u32> {
     type Item = bool;
 
     fn next(&mut self) -> Option<Self::Item> {
