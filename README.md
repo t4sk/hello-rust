@@ -215,8 +215,8 @@ cargo build
   - `send` and `recv`
 - [`Mutex`](./src/bin/mutex.rs)
 - [`Arc`](./src/bin/arc.rs)
-- [`Send` and `Sync`](./src/send_sync.rs)
-- [`async` and `await`](./src/async.rs)
-- [`Future`](./src/future.rs)
-- [`join!` and `select!`](./src/join_select.rs)
-- [async `Mutex`](./src/async_mutex.rs)
+- [`Send` and `Sync`](./src/bin/send_sync.rs)
+- [`async` and `await`](./src/bin/async.rs)
+- [`Future`](./src/bin/future.rs)
+- [`join!` and `select!`](./src/bin/join_select.rs)
+- [async `Mutex`](./src/bin/async_mutex.rs)
