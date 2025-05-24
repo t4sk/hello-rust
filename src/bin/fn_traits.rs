@@ -28,7 +28,7 @@ fn main() {
     // - mutable borrow from environment
     // - can be called more than once
     // FnOnce (capture by value)
-    // - can be called atleast once
+    // - can be called at least once
     // - moves captured values into closure, if needed
 
     // Fn
