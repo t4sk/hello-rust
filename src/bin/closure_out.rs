@@ -1,44 +1,92 @@
 #![allow(unused)]
-// Return closure as output
+
+// Closure as function output
 
 /*
- move keyword must be used, which signals that all captures occur by value.
+move keyword must be used, which signals that all captures occur by value.
 This is required because any captures by reference would be dropped as soon as the
 function exited, leaving invalid references in the closure.
 */
 
-fn create_fn() -> impl Fn() {
-    let text = "hello".to_string();
-    move || println!("fn {}", text)
+fn fn_out() -> impl Fn(u32) -> u32 {
+    |x| x + 1
 }
 
-fn create_fn_mut() -> impl FnMut() {
-    let text = "hello".to_string();
-    move || println!("fn mut {}", text)
+fn fn_out_move() -> impl Fn() {
+    let s = "hello".to_string();
+    // Must move ownership into closure
+    move || {
+        println!("fn_out_move: {s}")
+        // Cannot return s (s is owned by this closure)
+        // and this closure can be called more than once
+        // s
+        // Can return s by cloning
+        // s.clone()
+    }
 }
 
-fn create_fn_once() -> impl FnOnce() {
-    let text = "hello".to_string();
-    move || println!("fn once {}", text)
+fn fn_mut_out() -> impl FnMut() {
+    let mut s = "hello".to_string();
+    move || {
+        s += "🦀";
+        println!("fn_mut_out: {}", s);
+        // Cannot return s (s is owned by this closure)
+        // and this closure can be called more than once
+        // s
+        // Can return s by cloning
+        // s.clone()
+    }
 }
 
-// TODO: dyn
-// fn create_fn_once() -> dyn FnOnce() {
-//     let text = "hello".to_string();
-//     move || println!("fn once {}", text)
-// }
+fn fn_mut_return_copy() -> impl FnMut() -> u32 {
+    let mut x = 0;
+    move || {
+        x += 1;
+        // x is copied so we can return it
+        x
+    }
+}
+
+fn fn_once_out() -> impl FnOnce() -> String {
+    let s = "hello".to_string();
+    move || {
+        println!("fn_once_out: {}", s);
+        // Can return s because this closure can only be called once
+        s
+    }
+}
 
 fn main() {
-    let f = create_fn();
+    // Fn
+    let f = fn_out();
+    // Call more than once
+    let z = f(1);
+    println!("main: z = {z}");
+    let z = f(2);
+    println!("main: z = {z}");
+
+    // Fn move
+    let f = fn_out_move();
     f();
     f();
 
-    let mut f = create_fn_mut();
+    // FnMut
+    let mut f = fn_mut_out();
     f();
     f();
 
-    let f = create_fn_once();
-    f();
-    // Note: cannot call again
+    // FnMut return value
+    let mut f = fn_mut_return_copy();
+    let z = f();
+    println!("z: {z}");
+    let z = f();
+    println!("z: {z}");
+    let z = f();
+    println!("z: {z}");
+
+    let f = fn_once_out();
+    let s = f();
+    println!("main: {s}");
+    // Cannot call twice
     // f();
 }
