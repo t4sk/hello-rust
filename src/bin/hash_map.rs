@@ -24,4 +24,6 @@ fn main() {
 
     let score = scores.get("blue");
     println!("blue: {:?}", score);
+
+    println!("scores: {:#?}", scores);
 }

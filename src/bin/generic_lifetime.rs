@@ -28,13 +28,13 @@ fn no_need_to_declare_lifetime(x: &str) {
 }
 
 // Struct example
+#[derive(Debug)]
 struct Book<'a> {
     title: &'a str,
-    id: u32,
 }
 
 impl<'a> Book<'a> {
-    fn edit(&'a mut self, new_title: &'a str) {
+    fn edit(&mut self, new_title: &'a str) {
         self.title = new_title;
     }
 }
@@ -45,4 +45,9 @@ fn main() {
 
     // Placeholder lifetime - let Rust infer the lifetime
     let s: &'_ str = "Rust";
+
+    // Book
+    let mut book = Book { title: "Rust" };
+    book.edit("Solidity");
+    println!("book: {:?}", book);
 }
