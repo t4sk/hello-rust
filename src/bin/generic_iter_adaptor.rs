@@ -28,7 +28,7 @@ fn main() {
         .map(|x| x * 2)
         .collect();
 
-    println!("map and then filter: {:?}", v);
+    println!("filter and then map: {:?}", v);
 
     // zip
     let vals: Vec<u32> = vec![1, 2, 3, 4, 5];
