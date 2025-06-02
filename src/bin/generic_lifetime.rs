@@ -40,6 +40,21 @@ impl<'a> Book<'a> {
 }
 
 fn main() {
+    let x = "Hello".to_string();
+    // This will not compile (z lives longer than y)
+    /*
+    let z = {
+        let y = "Rust".to_string();
+        longest_str(&x, &y)
+    };
+    println!("longest {:?}", z);
+    */
+
+    // This compiles (z lives atleast as long as both x and y)
+    let y = "Rust".to_string();
+    let z = longest_str(&x, &y);
+    println!("longest {:?}", z);
+
     // Static lifetime
     let s: &'static str = "Hello";
 
