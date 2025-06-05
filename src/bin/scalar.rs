@@ -4,20 +4,30 @@
 fn main() {
     // Signed integers
     // Range: -(2^(n-1)) to 2^(n-1) - 1
+    // -2^(8-1) ~ 2^(8-1) - 1
     let i0: i8 = -1;
+    // -2^(16-1) ~ 2^(16-1) - 1
     let i1: i16 = 2;
+    // -2^(32-1) ~ 2^(32-1) - 1
     let i2: i32 = 3;
+    // -2^(64-1) ~ 2^(64-1) - 1
     let i3: i64 = -4;
+    // -2^(128-1) ~ 2^(128-1) - 1
     let i4: i128 = 5;
     // Depends on computer architecture
     let i5: isize = -6;
 
     // Unsigned integers
-    // 0 to 2^n - 1
+    // Range: 0 to 2^n - 1
+    // 0 ~ 2^8 - 1
     let u0: u8 = 1;
+    // 0 ~ 2^16 - 1
     let u1: u16 = 2;
+    // 0 ~ 2^32 - 1
     let u2: u32 = 3;
+    // 0 ~ 2^64 - 1
     let u3: u64 = 4;
+    // 0 ~ 2^128 - 1
     let u4: u128 = 5;
     // Depends on computer architecture
     let u5: usize = 6;
