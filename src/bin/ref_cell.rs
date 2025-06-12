@@ -59,15 +59,18 @@ fn main() {
     let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
 
     // Example - traverse to update last element
-    let mut curr = Rc::clone(&a);
-    while let Cons(v, tail) = &*curr {
+    let mut curr: &List = &*a;
+    while let Cons(v, tail) = curr {
         print!("{} -> ", *(v.borrow()));
+        // tail = &Rc<List>
         if let Nil = **tail {
             let mut x = v.borrow_mut();
             *x += 100;
             break;
         }
-        curr = Rc::clone(tail);
+        // Deref coercion
+        // &Rc<List> is automatically coerced into &List
+        curr = tail;
     }
     println!("Nil");
 
@@ -138,5 +141,5 @@ fn main() {
     }
 
     // Infinite loop - panics
-    println!("{:?}", node0);
+    // println!("{:?}", node0);
 }
