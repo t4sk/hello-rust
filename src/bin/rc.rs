@@ -67,6 +67,7 @@ fn main() {
     let mut curr = &b;
     while let Cons(v, tail) = curr {
         print!("{v} -> ");
+        // tail = &Rc<List>
         if let Nil = **tail {
             break;
         }
