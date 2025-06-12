@@ -64,14 +64,13 @@ fn main() {
     println!("drop c: {}", Rc::strong_count(&a));
 
     // Example - print all values in List
-    let mut curr = Rc::clone(&a);
-    while let Cons(v, ref tail) = *curr {
+    let mut curr = &b;
+    while let Cons(v, tail) = curr {
         print!("{v} -> ");
-        // tail = &Rc<List>
         if let Nil = **tail {
             break;
         }
-        curr = Rc::clone(tail);
+        curr = tail;
     }
     println!("Nil");
 }
