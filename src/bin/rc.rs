@@ -64,14 +64,19 @@ fn main() {
     println!("drop c: {}", Rc::strong_count(&a));
 
     // Example - print all values in List
-    let mut curr = &b;
+    let mut curr: &List = &b;
     while let Cons(v, tail) = curr {
         print!("{v} -> ");
         // tail = &Rc<List>
         if let Nil = **tail {
             break;
         }
+
+        // Deref coercion
+        // &Rc<List> is automatically coerced into &List
         curr = tail;
+        // This also works
+        // curr = &**tail;
     }
     println!("Nil");
 }
