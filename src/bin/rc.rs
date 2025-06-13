@@ -65,12 +65,10 @@ fn main() {
 
     // Example - print all values in List
     let mut curr: &List = &b;
+    // v: &i32
+    // tail: &Rc<List>
     while let Cons(v, tail) = curr {
         print!("{v} -> ");
-        // tail = &Rc<List>
-        if let Nil = **tail {
-            break;
-        }
 
         // Deref coercion
         // &Rc<List> is automatically coerced into &List
