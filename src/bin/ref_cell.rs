@@ -13,7 +13,7 @@ use std::rc::Rc;
 
 #[derive(Debug)]
 enum List {
-    Cons(Rc<RefCell<i32>>, Rc<List>),
+    Cons(i32, Rc<RefCell<List>>),
     Nil,
 }
 
@@ -50,49 +50,16 @@ fn main() {
     // s is owned by r
     println!("{:#?}", r);
 
-    // Example - List
-    // 1 -> Nil
-    let mut a = Rc::new(Cons(Rc::new(RefCell::new(1)), Rc::new(Nil)));
-    // 2 -> a
-    let b = Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
-    // 3 -> a
-    let c = Cons(Rc::new(RefCell::new(4)), Rc::clone(&a));
-
-    // Example - traverse to update last element
-    let mut curr: &List = &*a;
-    while let Cons(v, tail) = curr {
-        print!("{} -> ", *(v.borrow()));
-        // tail = &Rc<List>
-        if let Nil = **tail {
-            let mut x = v.borrow_mut();
-            *x += 100;
-            break;
-        }
-        // Deref coercion
-        // &Rc<List> is automatically coerced into &List
-        curr = tail;
-    }
-    println!("Nil");
-
-    println!("a: {a:?}");
-    println!("b: {b:?}");
-    println!("c: {c:?}");
-
     // Example - update last element without traversing
-    let v = Rc::new(RefCell::new(1));
     // 1 -> Nil
-    let a = Rc::new(Cons(Rc::clone(&v), Rc::new(Nil)));
+    let a = Rc::new(RefCell::new(Cons(1, Rc::new(RefCell::new(Nil)))));
     // 2 -> a
-    let b = Cons(Rc::new(RefCell::new(2)), Rc::clone(&a));
+    let b = Cons(2, Rc::clone(&a));
     // 3 -> a
-    let c = Cons(Rc::new(RefCell::new(3)), Rc::clone(&a));
-    {
-        // Need to create new scope to drop x after update
-        let mut x: std::cell::RefMut<'_, i32> = (*v).borrow_mut();
-        *x += 100;
+    let c = Cons(3, Rc::clone(&a));
+    if let Cons(v, _) = &mut *a.borrow_mut() {
+        *v += 100;
     }
-    // Same as
-    // *(v.borrow_mut()) += 100;
 
     println!("a: {a:?}");
     println!("b: {b:?}");
