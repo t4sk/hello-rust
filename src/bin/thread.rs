@@ -43,7 +43,7 @@ fn main() {
     t.join().unwrap();
 
     // Panic
-    let t = thread::spawn(move || {
+    let t = thread::spawn(|| {
         panic!("💀");
     });
 
