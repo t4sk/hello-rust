@@ -2,7 +2,6 @@
 
 use std::sync::{Mutex, MutexGuard};
 use std::thread;
-use std::time::Duration;
 
 // Mutex
 // - Mutual exclusion
