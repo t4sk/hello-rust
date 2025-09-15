@@ -73,6 +73,7 @@ fn verify(root: B256, proof: &[B256], mut h: B256, mut idx: usize) -> bool {
     h == root
 }
 
+// cargo run test.txt 2
 fn main() {
     let args: Vec<String> = env::args().collect();
 
@@ -89,6 +90,10 @@ fn main() {
             hash_leaf(v)
         })
         .collect();
+
+    for h in hashes.iter() {
+        println!("hash {:?}", h);
+    }
 
     let root = calc_root_hash(&mut hashes.clone());
     let proof = get_proof(&mut hashes.clone(), idx);
