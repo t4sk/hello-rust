@@ -25,8 +25,6 @@ fn calc_root_hash(hashes: &mut [B256]) -> B256 {
             hashes[i / 2] = hash_pair(left, right);
         }
         // div by 2 and round up
-        // if n is even => n = n / 2
-        // else         => n = (n + 1) / 2
         n = (n + 1) / 2
     }
 
@@ -58,8 +56,6 @@ fn get_proof(hashes: &mut [B256], mut idx: usize) -> Vec<B256> {
             hashes[i / 2] = hash_pair(left, right);
         }
         // div by 2 and round up
-        // if n is even => n = n / 2
-        // else         => n = (n + 1) / 2
         n = (n + 1) / 2
     }
 
