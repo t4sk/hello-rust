@@ -62,7 +62,8 @@ fn get_proof(hashes: &mut [B256], mut idx: usize) -> Vec<B256> {
     proof
 }
 
-fn verify(root: B256, proof: &[B256], mut h: B256, mut idx: usize) -> bool {
+fn verify(root: B256, proof: &[B256], hashes: &[B256], mut idx: usize) -> bool {
+    let mut h = hashes[idx];
     for p in proof {
         let (left, right): (B256, B256) = if idx & 1 == 0 { (h, *p) } else { (*p, h) };
         h = hash_pair(left, right);
@@ -120,6 +121,6 @@ fn main() {
         println!("proof {i}: {:#?}", p);
     }
 
-    let is_valid = verify(root, &proof, hashes[idx], idx);
+    let is_valid = verify(root, &proof, &hashes, idx);
     println!("{:?}", is_valid);
 }
