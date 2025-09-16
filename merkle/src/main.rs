@@ -114,6 +114,7 @@ fn main() {
 
     println!("root {:?}", root);
     println!("leaf {:?}", hashes[idx]);
+    println!("index: {idx}");
 
     for (i, p) in proof.iter().enumerate() {
         println!("proof {i}: {:#?}", p);
